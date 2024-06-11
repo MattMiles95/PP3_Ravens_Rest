@@ -1,5 +1,12 @@
 from pyfiglet import figlet_format
 from pprint import pprint
+import time
+import random
+
+def type_text(text):
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(random.uniform(0.001, 0.1))
 
 def main_menu():
     raven_image = r"""
@@ -40,10 +47,13 @@ def main_menu():
     for a, b in zip(raven_image.split('\n'), title.split('\n')):
         print(f"{a}{spacer}{b}")
 
-    print("\nWelcome to Raven's Rest, a text-based adventure game!")
-    print("\nI'm Poe, your digital Game Master (or 'GM' for short). Type out what you want to do, and I'll try my best to make it happen! If this is your first time playing, please be sure to read the rules before you start.")
-    print("\nTo start the game, type 'play'.")
-    print("\nTo read how to play, type 'h2p'.\n")
+    intro = ("\nWelcome to Raven's Rest, a text-based adventure game!" 
+    "\nI'm Poe, your digital Game Master (or 'GM' for short)." 
+    "\nType out what you want to do, and I'll try my best to make it happen!" 
+    "\nIf this is your first time playing, please be sure to read the rules before you start.\n" 
+    "\nTo read how to play, type 'h2p'.\n"
+    "\nTo start the game, type 'play'.\n")
+    type_text(intro)
 
     while True:
         main_menu_choice = input()
@@ -55,7 +65,8 @@ def main_menu():
             how_to_play()
             break
         else:
-            print("\nI don't know that one... Type 'play' to start the game or 'h2p' to read how to play.\n")
+            main_menu_error = "\nI don't know that one... Type 'play' to start the game or 'h2p' to read how to play.\n"
+            type_text(main_menu_error)
 
 player_card = {
     "character": "Lee Kennedy",
@@ -66,9 +77,17 @@ player_card = {
 }
 
 def character_selection():
-    print("\nChoose your character:")
-    print("\nLee Kennedy \nAge: 36 \nOccupation: Locksmith \nHobby: Bird Watching")
-    print("\nClaire Greenfield \nAge: 29 \nOccupation: Programmer \nHobby: Kickboxing")
+    character_selection_text = ("\nChoose your character:\n"
+    "\nLee Kennedy" 
+    "\nAge: 36" 
+    "\nOccupation: Locksmith" 
+    "\nHobby: Bird Watching\n"
+    "\nClaire Greenfield" 
+    "\nAge: 29" 
+    "\nOccupation: Programmer" 
+    "\nHobby: Kickboxing\n")
+    type_text(character_selection_text)
+
     while True:
         character_choice = input("\nType 'l' for Lee or 'c' for Claire:")
 
@@ -83,7 +102,8 @@ def character_selection():
             start_game()
             break
         else:
-            print("\nI don't know that one... Type 'l' for Lee or 'c' for Claire.")
+            character_selection_error = "\nI don't know that one... Type 'l' for Lee or 'c' for Claire."
+            type_text(character_selection_error)
 
 def start_game():
     print("\nYou've started the game!")
