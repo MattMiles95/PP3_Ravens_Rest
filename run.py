@@ -1,4 +1,5 @@
 from pyfiglet import figlet_format
+from pprint import pprint
 
 def main_menu():
     raven_image = r"""
@@ -44,14 +45,49 @@ def main_menu():
     print("\nTo start the game, type 'play'.")
     print("\nTo read how to play, type 'h2p'.\n")
 
-    main_menu_choice = input()
+    while True:
+        main_menu_choice = input()
 
-    if main_menu_choice == "play":
-        start_game()
-    elif main_menu_choice == "h2p":
-        how_to_play()
-    else:
-        print("\nI don't know that one... Type 'play' to start the game or 'h2p' to read how to play.\n")
+        if main_menu_choice.lower() == "play":
+            character_selection()
+            break
+        elif main_menu_choice.lower() == "h2p":
+            how_to_play()
+            break
+        else:
+            print("\nI don't know that one... Type 'play' to start the game or 'h2p' to read how to play.\n")
+
+player_card = {
+    "character": "Lee Kennedy",
+    "health": 100,
+    "attack": 10,
+    "weapon": "Unarmed",
+    "inventory": []
+}
+
+def character_selection():
+    print("\nChoose your character:")
+    print("\nLee Kennedy \nAge: 36 \nOccupation: Locksmith \nHobby: Bird Watching")
+    print("\nClaire Greenfield \nAge: 29 \nOccupation: Programmer \nHobby: Kickboxing")
+    while True:
+        character_choice = input("\nType 'l' for Lee or 'c' for Claire:")
+
+        if character_choice.lower() == "l":
+            player_card["character"] = "Lee Kennedy"
+            player_card["attack"] = 10
+            start_game()
+            break
+        elif character_choice.lower() == "c":
+            player_card["character"] = "Claire Greenfield"
+            player_card["attack"] = 20
+            start_game()
+            break
+        else:
+            print("\nI don't know that one... Type 'l' for Lee or 'c' for Claire.")
+
+def start_game():
+    print("\nYou've started the game!")
+    pprint(player_card)
 
 # Start the game
 main_menu()
