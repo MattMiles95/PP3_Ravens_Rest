@@ -77,14 +77,14 @@ def main_menu():
     for a, b in zip(raven_image.split('\n'), title.split('\n')):
         print(f"{a}{spacer}{b}")
 
-    intro = ("\nWelcome to Raven's Rest, a text-based adventure game!" 
+    start_up_text = ("\nWelcome to Raven's Rest, a text-based adventure game!" 
     "\nI'm Poe, your digital Game Master (or 'GM' for short)." 
     "\nType out what you want to do, and I'll try my best to make it happen!" 
     "\nIf this is your first time playing, please be sure to read the rules before" 
     "\nyou start.\n" 
     "\nTo read how to play, type 'h2p'.\n"
     "\nTo start the game, type 'play'.\n")
-    type_text(intro)
+    type_text(start_up_text)
 
     while True:
         main_menu_choice = input()
@@ -108,7 +108,7 @@ def how_to_play():
     "\nentering commands in the terminal. The goal is to navigate the Raven's Rest" 
     "\nHotel and find your brother, completing puzzles and defeating enemies as you go.\n"
     "\nHere are the rules:\n")
-    
+
     how_to_play_text = ("\n1. Mind your manners! Don't interrupt your GM. If you type" 
                         "\nwhilst Poe is typing, you might cause an error, preventing your" 
                         "\nnext command from being recognised. Let him finish before typing" 
@@ -145,7 +145,7 @@ def how_to_play():
                         "\nstuck, or consult your Player Card by using the 'pc' command to see if" 
                         "\nyour character has a skill or item that might be useful.\n"
                         "\nGood luck, and have fun!\n")
-    
+
     how_to_play_text_color = "object"
     colored_how_to_play_text = how_to_play_text.replace(how_to_play_text_color, f"{Fore.YELLOW}{how_to_play_text_color}{Style.RESET_ALL}")
     type_text(how_to_play_intro)
@@ -186,10 +186,12 @@ def character_selection():
 
         if character_choice.lower() == "l":
             player_card.update(lee_kennedy)
+            type_text("\nYou have selected Lee Kennedy.\n")
             start_game()
             break
         elif character_choice.lower() == "c":
             player_card.update(claire_greenfield)
+            type_text("\nYou have selected Claire Greenfield.\n")
             start_game()
             break
         else:
@@ -200,8 +202,51 @@ def start_game():
     """
     The game's intro and first area
     """
-    print("\nYou've started the game!")
-    print(player_card)
+    intro_text = ("\nRain drops drum against the windshield of your car as you roll along the winding"
+                  "\ncountry road. The night is black and water blurs your view like ink poured over" 
+                  "\nglass. Between swipes of the wiperblades, you see it. Looming ahead of you," 
+                  "\ncaught in the beam of the headlights. The Raven's Rest Hotel.\n"
+                  "\nYou pull off the road into a small car park. Gravel crunches beneath the tyres" 
+                  "\nas you slowly come to a halt. You kill the engine and are immediately plummeted" 
+                  "\ninto pitch darkness. Neither the car park nor the hotel offer any light. You" 
+                  "\npull out your mobile phone, the dim glow flooding the interior of your car, and" 
+                  "\nopen a photo. Your brother, Chris, grins up at you. The photo was taken 1 week" 
+                  "\nago. The last time anyone had seen or heard from him. In the background of the" 
+                  "\nimage, lurking like a shadow, sits the Raven's Rest Hotel. Taking a moment to" 
+                  "\nsteel yourself, you switch on your phone's flashlight, release the lock on the" 
+                  "\ncar door and step out into the night.\n" 
+                  "\nCold bites at you as you turn your collar against the wind and rain. You hold"
+                  "\nthe light of your phone up to the hotel, though it's beam is almost instantly"
+                  "\nchoked by the unrelenting weather. You can make out the dark slate walls of the"
+                  "\nhotel, but as they stretch into the night sky, you're unable to see beyond even"
+                  "\nthe second storey. Skirting along a large, wooden porch, you eventually come"
+                  "\nacross a door.\n")
+    type_text(intro_text)
+
+    while True:
+        intro_choice = input("\nType 'o' to open the door.\n")
+
+        if intro_choice.lower() == "o":
+            type_text("\nWith a shrill creak, the door yawns open...\n")
+            foyer()
+            break
+        elif intro_choice.lower() == "help":
+            type_text("\nType 'exit' to quit to main menu.\n"
+            "\nType 'pc' to view Player Card")
+        elif intro_choice.lower() == "pc":
+            print(player_card)
+        elif intro_choice.lower() == "exit":
+            main_menu()
+            break
+        else:
+            intro_error = '\n"I have to go inside. For Chris."\n'
+            type_text(intro_error)   
+
+def foyer():
+    """
+    The Hotel Foyer - the first room the User enters.
+    """
+    print("You enter the hotel")
 
 # Start the game
 main_menu()
