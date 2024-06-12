@@ -150,7 +150,7 @@ def how_to_play():
     colored_how_to_play_text = how_to_play_text.replace(how_to_play_text_color, f"{Fore.YELLOW}{how_to_play_text_color}{Style.RESET_ALL}")
     type_text(how_to_play_intro)
     print(figlet_format("How to Play\n", justify="center"))
-    type_text(colored_how_to_play_text)
+    print(colored_how_to_play_text)
 
     while True:
         leave_how_to_play = input("\nType 'play' to start the game or 'back' to return to the main menu.\n")
