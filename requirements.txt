@@ -1,2 +1,3 @@
-pyfiglet
-colorama
+colorama==0.4.6
+keyboard==0.13.5
+pyfiglet==1.0.2
