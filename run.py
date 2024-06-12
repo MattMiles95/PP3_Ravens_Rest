@@ -3,6 +3,24 @@ from pprint import pprint
 import time
 import random
 
+lee_kennedy = {
+    "Name": "Lee Kennedy",
+    "Health": 100,
+    "Attack Power": 10,
+    "Weapon": "Unarmed",
+    "Inventory": []
+}
+
+claire_greenfield = {
+    "Name": "Claire Greenfield",
+    "Health": 100,
+    "Attack Power": 20,
+    "Weapon": "Unarmed",
+    "Inventory": []
+}
+
+player_card = {}
+
 def type_text(text):
     for char in text:
         print(char, end='', flush=True)
@@ -68,14 +86,6 @@ def main_menu():
             main_menu_error = "\nI don't know that one... Type 'play' to start the game or 'h2p' to read how to play.\n"
             type_text(main_menu_error)
 
-player_card = {
-    "character": "Lee Kennedy",
-    "health": 100,
-    "attack": 10,
-    "weapon": "Unarmed",
-    "inventory": []
-}
-
 def character_selection():
     character_selection_text = ("\nChoose your character:\n"
     "\nLee Kennedy" 
@@ -92,22 +102,20 @@ def character_selection():
         character_choice = input("\nType 'l' for Lee or 'c' for Claire:")
 
         if character_choice.lower() == "l":
-            player_card["character"] = "Lee Kennedy"
-            player_card["attack"] = 10
+            player_card.update(lee_kennedy)
             start_game()
             break
         elif character_choice.lower() == "c":
-            player_card["character"] = "Claire Greenfield"
-            player_card["attack"] = 20
+            player_card.update(claire_greenfield)
             start_game()
             break
         else:
-            character_selection_error = "\nI don't know that one... Type 'l' for Lee or 'c' for Claire."
-            type_text(character_selection_error)
+            character_choice_error = "\nI don't know that one... Type 'l' for Lee or 'c' for Claire."
+            type_text(character_choice_error)     
 
 def start_game():
     print("\nYou've started the game!")
-    pprint(player_card)
+    print(player_card)
 
 # Start the game
 main_menu()
