@@ -104,14 +104,14 @@ def how_to_play():
     """
     Section to explain the rules to the User and instructions on how to play the game.
     """
-    how_to_play_intro = ("\nRaven's Rest is a text-based adventure game. You control your" 
-    "\ncharacter by entering commands in the terminal. The goal is to navigate the Raven's" 
-    "\nRest Hotel and find your brother, completing puzzles and defeating enemies as you go.\n"
+    how_to_play_intro = ("\nRaven's Rest is a text-based adventure game. You control your character by" 
+    "\nentering commands in the terminal. The goal is to navigate the Raven's Rest" 
+    "\nHotel and find your brother, completing puzzles and defeating enemies as you go.\n"
     "\nHere are the rules:\n")
     
     how_to_play_text = ("\n1. Mind your manners! Don't interrupt your GM. If you type" 
                         "\nwhilst Poe is typing, you might cause an error, preventing your" 
-                        "\nnext answer from being recognised. Let him finish before typing" 
+                        "\nnext command from being recognised. Let him finish before typing" 
                         "\nanything.\n"
                         "\n2. If you type something that isn't a command, you'll be prompted" 
                         "\nto try again.\n"
@@ -162,7 +162,8 @@ def how_to_play():
             character_selection()
             break
         else:
-            leave_how_to_play_error = "\nI don't know that one... Type 'play' to start the game or 'back' to return to the main menu."
+            leave_how_to_play_error = ("\nI don't know that one... Type 'play' to start the game or 'back' to" 
+            "\nreturn to the main menu.")
             type_text(leave_how_to_play_error)
 
 def character_selection():
