@@ -50,6 +50,21 @@ help = ("\nType 'exit' to quit to main menu."
         "\nType 'atk' to attack."
         "\nType 'flee' to escape a room in a random direction.\n")
 
+# Enemies
+enemy = {
+    "Name": None,
+    "Health": 1,
+    "Attack Power": 1,
+    "Lootable": False
+}
+
+infected_bell_boy = {
+    "Name": "Infected Bell Boy",
+    "Health": 30,
+    "Attack Power": 10,
+    "Lootable": False
+}
+
 # Global functions for repeated actions
 def fa_kit_loot(): 
     """
@@ -69,6 +84,23 @@ def heal():
         return
     else:
         type_text("\nYou don't have any First Aid Kits!\n")
+
+def atk():
+    """
+    Function for Player to attack Enemy
+    """
+    if enemy["Health"] == 0:
+        print("They're already dead!")
+    else:
+        enemy["Health"] = enemy["Health"] - player_card["Attack Power"]
+        print(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
+        player_card["Health"] = player_card["Health"] - enemy["Attack Power"]
+        print(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
+
+        if enemy["Health"] == 0:
+            print("\nThe Infected Bell Boy drops to the floor, his body cold and still.\n")
+            infected_bell_boy["Lootable"] = True
+    return
 
 # End Game Functions
 #def game_over():
@@ -333,7 +365,7 @@ def foyer():
         if player_card["Skill"] == "lockpick":
             type_text(foyer_door_use_lee)
             foyer_staff_room()
-        elif player_card["Skill"] == "lockpick":
+        elif player_card["Skill"] == "hack":
             type_text(foyer_door_use_claire)
         else:
             RuntimeError
@@ -448,12 +480,12 @@ def gf_east_wing_1():
     "\nMaintenance Room. To the north ('n') are a set of double doors, continuing" 
     "\nfurther into the Ground Floor East Wing. To the west ('w') is the Foyer.\n")
 
-    foyer_staff_room_text_return = ("\nYou step into the Ground Floor East Wing corridor that abuts the Foyer.\n")
+    gf_east_wing_1_return = ("\nYou step into the Ground Floor East Wing corridor that abuts the Foyer.\n")
 
     if "Ground Floor East Wing 1" in checked_rooms:
-        type_text(foyer_staff_room_text_return)
+        type_text(gf_east_wing_1_return)
     else:
-        type_text(foyer_staff_room_text_initial)
+        type_text(gf_east_wing_1_initial)
         checked_rooms.append("Ground Floor East Wing 1")
 
     while True:
@@ -473,7 +505,7 @@ def gf_east_wing_1():
             break
         elif gf_east_wing_1_choice.lower() == "heal":
             heal()
-        if gf_east_wing_1_choice.lower() == "n":
+        elif gf_east_wing_1_choice.lower() == "n":
             type_text("\nYou pass through the double doors and continue through the GF East Wing.\n")
             gf_east_wing_2()
             break
@@ -484,7 +516,7 @@ def gf_east_wing_1():
                 break
             else:
                 type_text("\nThis door requires a keycard to unlock it.\n")
-        if gf_east_wing_1_choice.lower() == "s":
+        elif gf_east_wing_1_choice.lower() == "s":
             type_text("\nYou enter the Supplies Cupboard to the south.\n")
             supplies_cupboard_gfew()
             break
@@ -493,8 +525,8 @@ def gf_east_wing_1():
             foyer()
             break
         else:
-            foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
-            type_text(foyer_staff_room_error)
+            gf_east_wing_1_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
+            type_text(gf_east_wing_1_error)
 
 # Start the game
 #main_menu()
