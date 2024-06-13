@@ -38,6 +38,9 @@ player_card = {
 # List of rooms Player has checked
 checked_rooms = []
 
+# List of items Player has collected
+looted_items = []
+
 # Help variable, for use in game
 help = ("\nType 'exit' to quit to main menu."
         "\nType 'pc' to view Player Card."
@@ -49,6 +52,8 @@ help = ("\nType 'exit' to quit to main menu."
         "\nType 'heal' to use a First Aid Kit."
         "\nType 'atk' to attack."
         "\nType 'flee' to escape a room in a random direction.\n")
+
+generic_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
 
 # Enemies
 enemy = {
@@ -411,8 +416,7 @@ def foyer():
             type_text("\nYou ring the bell. A high-pitched 'ding' echoes throughout the empty room for" 
             "\na moment, before silence creeps back into the foyer. No one comes.\n")
         else:
-            foyer_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
-            type_text(foyer_error)
+            type_text(generic_error)
 
 def foyer_staff_room():
     """
@@ -439,10 +443,10 @@ def foyer_staff_room():
 
         if foyer_staff_room_choice.lower() == "l":
             if "Bloody Knife" in player_card["Inventory"]:
-                type_text("\nThere's nothing else of use here. The foyer is to your SOUTH ('s').\n")
+                type_text("\nThere's nothing else of use here. The foyer is to your south ('s').\n")
             else: 
                 type_text("\nYou take a moment to collect yourself, then look around the cupboard. The" 
-    "\nBLOODY KNIFE sticks out of the dead body's neck. The foyer is to your SOUTH" 
+    "\nBLOODY KNIFE sticks out of the dead body's neck. The foyer is to your south" 
     "\n('s').\n")
         elif foyer_staff_room_choice.lower() == "help":
             print(help)
@@ -454,11 +458,11 @@ def foyer_staff_room():
         elif foyer_staff_room_choice.lower() == "heal":
             heal()
         elif foyer_staff_room_choice.lower() == "loot bloody knife":
-            if "Bloody Knife" in player_card["Inventory"]:
+            if "Bloody Knife" in looted_items:
                 type_text("\nYou've already taken the bloody knife.\n")
             else:
                 type_text(bloody_knife_loot)
-                player_card["Inventory"].append("Bloody Knife")
+                looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
                 player_card["Attack Power"] = 20
         elif foyer_staff_room_choice.lower() == "s":
@@ -466,8 +470,7 @@ def foyer_staff_room():
             foyer()
             return
         else:
-            foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
-            type_text(foyer_staff_room_error)
+            type_text(generic_error)
 
 def gf_east_wing_1():
     """
@@ -525,8 +528,52 @@ def gf_east_wing_1():
             foyer()
             break
         else:
-            gf_east_wing_1_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
-            type_text(gf_east_wing_1_error)
+            type_text(generic_error)
+
+def supplies_cupboard_gfew():
+    """
+    Ground Floor East Wing Supplies Cupboard - Game Location.
+    """
+    supplies_cupboard_gfew_initial = ("\nYou step into a cramped cupboard space, littered with cleaning supplies and" 
+    "\nfresh bedding. You spot a FIRST AID KIT on the shelf.\n")
+
+    supplies_cupboard_gfew_return = ("\nYou enter the cramped cupboard.\n")
+
+    if "Supplies Cupboard (GFEW)" in checked_rooms:
+        type_text(supplies_cupboard_gfew_return)
+    else:
+        type_text(supplies_cupboard_gfew_initial)
+        checked_rooms.append("Supplies Cupboard (GFEW)")
+
+    while True:
+        supplies_cupboard_gfew_choice = input("\nWhat do you do?\n")
+
+        if supplies_cupboard_gfew_choice.lower() == "l":
+            if "First Aid Kit GFEW" in looted_items:
+                type_text("\nThere's nothing else of use here. The GF East Wing is to your north ('n').\n")
+            else: 
+                type_text("\nA FIRST AID KIT sits on the shelf. The GF East Wing is to your north ('n').\n")
+        elif supplies_cupboard_gfew_choice.lower() == "help":
+            print(help)
+        elif supplies_cupboard_gfew_choice.lower() == "pc":
+            print(player_card)
+        elif supplies_cupboard_gfew_choice.lower() == "exit":
+            main_menu()
+            break
+        elif supplies_cupboard_gfew_choice.lower() == "heal":
+            heal()
+        elif supplies_cupboard_gfew_choice.lower() == "loot first aid kit":
+            if "First Aid Kit GFEW" in looted_items:
+                type_text("\nYou've already taken the First Aid Kit.\n")
+            else:
+                fa_kit_loot()
+                looted_items.append("First Aid Kit GFEW")
+        elif supplies_cupboard_gfew_choice.lower() == "n":
+            type_text("\nYou exit to the north, returning to the GF East Wing.\n")
+            gf_east_wing_1()
+            return
+        else:
+            type_text(generic_error)
 
 # Start the game
 #main_menu()
