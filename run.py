@@ -41,6 +41,9 @@ checked_rooms = []
 # List of items Player has collected
 looted_items = []
 
+# List of all slain enemies
+slain_enemies = []
+
 # Help variable, for use in game
 help = ("\nType 'exit' to quit to main menu."
         "\nType 'pc' to view Player Card."
@@ -94,8 +97,8 @@ def atk():
     """
     Function for Player to attack Enemy
     """
-    if enemy["Health"] == 0:
-        print("They're already dead!")
+    if enemy["Name"] in slain_enemies:
+        print(f"{enemy['Name']} is already dead!")
     else:
         enemy["Health"] = enemy["Health"] - player_card["Attack Power"]
         print(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
@@ -103,8 +106,9 @@ def atk():
         print(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
 
         if enemy["Health"] == 0:
-            print("\nThe Infected Bell Boy drops to the floor, his body cold and still.\n")
-            infected_bell_boy["Lootable"] = True
+            print(f"\nWith a final rasping breath, {enemy['Name']} drops to the floor, their BODY cold and still.\n")
+            enemy["Lootable"] = True
+            slain.enemies.append(enemy["Name"])
     return
 
 # End Game Functions
@@ -341,9 +345,11 @@ def foyer():
         type_text(foyer_text_initial)
         checked_rooms.append("Foyer")
 
-    foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you, a door to"
-    "\nto the EAST ('e') and a door to the WEST ('w'). The entrance to the hotel is"
-    "\nbehind you, to the SOUTH ('s').")
+    foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you. A door to"
+    "\nthe east ('e') with a sign that reads, 'Maintenance, Security & East" 
+    "\nWing'. A door to the west ('w') with a sign that reads, 'Stairs to First Floor," 
+    "\nBasement Lift & West Wing'. The entrance to the hotel is behind you, to the" 
+    "\south ('s').")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and a BELL sit on the desk." 
     "\nBehind the desk is a DOOR with a sign that reads, 'Staff Only'.\n")
