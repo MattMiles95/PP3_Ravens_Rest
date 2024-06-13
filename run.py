@@ -25,7 +25,18 @@ claire_greenfield = {
 }
 
 # Populated once Player Character selected
-player_card = {}
+player_card = {
+    "Name": "",
+    "Health": 100,
+    "Attack Power": 10,
+    "Weapon": "Unarmed",
+    "Skill": "",
+    "Inventory": [],
+    "Insight": []
+    }
+
+# List of rooms Player has checked
+checked_rooms = []
 
 # Help variable, for use in game
 help = ("\nType 'exit' to quit to main menu."
@@ -45,6 +56,7 @@ def fa_kit_loot():
     Adds First Aid Kit to player inventory
     """
     player_card["Inventory"].append("First Aid Kit")
+    type_text("\nYou rummage through the First Aid Kit and take some supplies.\n")
 
 def heal():
     """
@@ -263,10 +275,10 @@ def start_game():
         if intro_choice.lower() == "o":
             type_text("\nWith a shrill creak, the door yawns open...\n")
             foyer()
+            checked_rooms.append("foyer")
             break
         elif intro_choice.lower() == "help":
-            print("\nType 'exit' to quit to main menu.\n"
-            "\nType 'pc' to view Player Card.\n")
+            print(help)
         elif intro_choice.lower() == "pc":
             print(player_card)
         elif intro_choice.lower() == "exit":
@@ -274,21 +286,21 @@ def start_game():
             break
         else:
             intro_error = '\n"I have to go inside. For Chris."\n'
-            type_text(intro_error)   
+            type_text(intro_error)  
 
 def foyer():
     """
     The Hotel Foyer - the first room the Player enters.
     """
-    foyer_text = ("\nYou step into a wide, empty foyer. The beam of your flashlight barely"
+    foyer_text = ("\nYou step into a wide, empty Foyer. The beam of your flashlight barely"
     "\npenertrates the surrounding shadows as you pan across the room. Ahead of you" 
-    "\nto the north, beneath the gloomy red glow of an emergency lamp, you see the" 
-    "\nreception DESK. On both the EAST and WEST sides of the room are doors leading" 
-    "\nout of the foyer.\n")
+    "\nbeneath the gloomy red glow of an emergency lamp, you see the reception DESK." 
+    "\nOn both the EAST and WEST sides of the room are doors leading out of the Foyer.\n")
     type_text(foyer_text)
 
-    foyer_look = ("\nYou look around the foyer. You see the reception DESK ahead of you, a door to"
-    "\nto the EAST ('e') and a door to the WEST ('w').\n")
+    foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you, a door to"
+    "\nto the EAST ('e') and a door to the WEST ('w'). The entrance to the hotel is"
+    "\nbehind you, to the SOUTH ('s').")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and a BELL sit on the desk." 
     "\nBehind the desk is a DOOR with a sign that reads, 'Staff Only'.\n")
@@ -313,8 +325,13 @@ def foyer():
 
     def foyer_door_use():
         if player_card["Skill"] == "lockpick":
-            type_text(foyer_door_use_lee)
-            foyer_staff_room()
+            if "Foyer Staff Room" in checked_rooms:
+                type_text("\nI'm not going back in there.\n")
+            else:
+                checked_rooms.append("Foyer Staff Room")
+                type_text(foyer_door_use_lee)
+                foyer_staff_room()
+                return
         elif player_card["Skill"] == "lockpick":
             type_text(foyer_door_use_claire)
         else:
@@ -357,8 +374,8 @@ def foyer_staff_room():
     type_text(foyer_staff_room_text)
 
     foyer_staff_room_look = ("\nYou take a moment to collect yourself, then look around the cupboard. The" 
-    "\nBLOODY KNIFE sticks out of the dead body's neck. A FIRST AID KIT sits on some" 
-    "\nshelves. The foyer is to your SOUTH ('s').\n")
+    "\nBLOODY KNIFE sticks out of the dead body's neck. The foyer is to your SOUTH" 
+    "\n('s').\n")
 
     bloody_knife_loot = ("\nYou crouch beside the body and grab the blade by its handle. With a sickening" 
     "\nsquelch, you slide the knife from their neck. Dark crimson pools around your" 
@@ -369,7 +386,7 @@ def foyer_staff_room():
 
         if foyer_staff_room_choice.lower() == "l":
             type_text(foyer_staff_room_look)
-        elif foyer_choice.lower() == "help":
+        elif foyer_staff_room_choice.lower() == "help":
             print(help)
         elif foyer_staff_room_choice.lower() == "pc":
             print(player_card)
@@ -379,16 +396,94 @@ def foyer_staff_room():
         elif foyer_staff_room_choice.lower() == "heal":
             heal()
         elif foyer_staff_room_choice.lower() == "loot bloody knife":
-            type_text(bloody_knife_loot)
-            player_card["Inventory"].append("Bloody Knife, ")
-            player_card["Attack Power"].update("20")
-        elif foyer_staff_room_choice.lower() == "loot first aid kit":
-            fa_kit_loot()
+            if "Bloody Knife" in player_card["Inventory"]:
+                type_text("\nYou've already taken the bloody knife.\n")
+            else:
+                type_text(bloody_knife_loot)
+                player_card["Inventory"].append("Bloody Knife")
+                player_card["Weapon"] = "Bloody Knife"
+                player_card["Attack Power"] = 20
+                foyer_staff_room_look = ("\nThere's nothing else of use here. The foyer is to your SOUTH ('s').\n")
         elif foyer_staff_room_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
+            foyer_return()
+            return
         else:
             foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
             type_text(foyer_staff_room_error)
+
+def foyer_return():
+    """
+    The Hotel Foyer - the Player returning to this location.
+    """
+    foyer_return_text = ("\nYou step again into the wide, empty Foyer.\n")
+    type_text(foyer_return_text)
+
+    foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you, a door to"
+    "\nto the EAST ('e') and a door to the WEST ('w'). The entrance to the hotel is"
+    "\nbehind you, to the SOUTH ('s').")
+
+    desk_inspect = ("You approach the desk for a closer look. A COMPUTER and a BELL sit on the desk." 
+    "\nBehind the desk is a DOOR with a sign that reads, 'Staff Only'.\n")
+
+    foyer_computer_claire = ("\nThe computer is locked, but you manage to hack it. You flick through some" 
+    "\nfiles nand discover Chris' room number, located on the 1st Floor East Wing.\n")
+    foyer_computer_lee = ("\nThe computer is locked.\n")
+
+    def foyer_computer_use():
+        if power == True and player_card["Skill"] == "hack":
+            type_text(foyer_computer_claire)
+            player_card["Insight"].append("Chris' Room Location")
+        elif power == True and player_card["Skill"] == "lockpick":
+            type_text("foyer_computer_lee")
+        elif power == False:
+            type_text("\nThe power is still out. Maybe you can find a way to turn it back on...\n")
+        else:
+            RuntimeError
+    
+    foyer_door_use_lee = "\nThe door is locked, but you manage to pick it.\n"
+    foyer_door_use_claire = "\nThe door is locked.\n"
+
+    def foyer_door_use():
+        if player_card["Skill"] == "lockpick":
+            if "Foyer Staff Room" in checked_rooms:
+                type_text("\nI'm not going back in there.\n")
+            else:
+                checked_rooms.append("Foyer Staff Room")
+                type_text(foyer_door_use_lee)
+                foyer_staff_room()
+                return
+        elif player_card["Skill"] == "lockpick":
+            type_text(foyer_door_use_claire)
+        else:
+            RuntimeError
+
+    while True:
+        foyer_choice = input("\nWhat do you do?\n")
+
+        if foyer_choice.lower() == "l":
+            type_text(foyer_look)
+        elif foyer_choice.lower() == "help":
+            print(help)
+        elif foyer_choice.lower() == "pc":
+            print(player_card)
+        elif foyer_choice.lower() == "exit":
+            main_menu()
+            break
+        elif foyer_choice.lower() == "heal":
+            heal()
+        elif foyer_choice.lower() == "i desk":
+            type_text(desk_inspect)
+        elif foyer_choice.lower() == "use computer":
+            foyer_computer_use()
+        elif foyer_choice.lower() == "use door":
+            foyer_door_use()
+        elif foyer_choice.lower() == "use bell":
+            type_text("\nYou ring the bell. A high-pitched 'ding' echoes throughout the empty room for" 
+            "\na moment, before silence creeps back into the foyer. No one comes.\n")
+        else:
+            foyer_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
+            type_text(foyer_error)
 
 
 # Start the game
