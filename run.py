@@ -1,10 +1,6 @@
 from pyfiglet import figlet_format
 import time
 import random
-from colorama import init, Fore, Style
-
-# Initialise colorama
-init(autoreset=True)
 
 # Player Charater Option 1
 lee_kennedy = {
@@ -12,7 +8,9 @@ lee_kennedy = {
     "Health": 100,
     "Attack Power": 10,
     "Weapon": "Unarmed",
-    "Inventory": []
+    "Skill": "lockpick",
+    "Inventory": [],
+    "Insight": []
 }
 
 # Player Charater Option 1
@@ -21,23 +19,64 @@ claire_greenfield = {
     "Health": 120,
     "Attack Power": 20,
     "Weapon": "Unarmed",
-    "Inventory": []
+    "Skill": "hack",
+    "Inventory": [],
+    "Insight": []
 }
 
 # Populated once Player Character selected
 player_card = {}
 
+# Help variable, for use in game
+help = ("\nType 'exit' to quit to main menu."
+        "\nType 'pc' to view Player Card."
+        "\nType 'n', 'e', 's', 'w', 'u', 'd' to move north, south, east, west, up or down."
+        "\nType 'l' to look around."
+        "\nType 'i' followed by an OBJECT to inspect that object."
+        "\nType 'use' followed by an OBJECT to inspect that object."
+        "\nType 'loot' followed by an OBJECT to add it to your inventory."
+        "\nType 'heal' to use a First Aid Kit."
+        "\nType 'atk' followed by an ENEMY to attack."
+        "\nType 'flee' to escape a room in a random direction.\n")
+
+# Global functions for repeated actions
+def fa_kit_loot(): 
+    """
+    Adds First Aid Kit to player inventory
+    """
+    player_card["Inventory"].append("First Aid Kit")
+
+def heal():
+    """
+    Uses a First Aid Kit to heal 30 hp
+    """
+    if "First Aid Kit" in player_card["Inventory"]:
+        player_card["Health"] += 30
+        player_card["Inventory"].remove("First Aid Kit")
+        type_text("\nYou use a First Aid Kit and heal 30 hp.\n")
+        return
+    else:
+        type_text("\nYou don't have any First Aid Kits!\n")
+
+# End Game Functions
+#def game_over():
+
+#def end_game_good():
+
+#def end_game_bad():
+
 def type_text(text):
     """
     Prints text one character at a time to create a 'typing' animation.
     """
-    for char in text:
-        print(char, end='', flush=True)
-        time.sleep(random.uniform(0.001, 0.09))
+    #for char in text:
+    #    print(char, end='', flush=True)
+    #    time.sleep(random.uniform(0.001, 0.09))
+    print(text)
 
 def main_menu():
     """
-    The menu the User is presented with when opening the app.
+    The menu the Player is presented with when opening the app.
     """
     raven_image = r"""
                       ⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -102,55 +141,49 @@ def main_menu():
 
 def how_to_play():
     """
-    Section to explain the rules to the User and instructions on how to play the game.
+    Section to explain the rules to the Player and instructions on how to play the game.
     """
-    how_to_play_intro = ("\nRaven's Rest is a text-based adventure game. You control your character by" 
+    how_to_play_poe_1 = ("\nRaven's Rest is a text-based adventure game. You control your character by" 
     "\nentering commands in the terminal. The goal is to navigate the Raven's Rest" 
     "\nHotel and find your brother, completing puzzles and defeating enemies as you go.\n"
     "\nHere are the rules:\n")
 
-    how_to_play_text = ("\n1. Mind your manners! Don't interrupt your GM. If you type" 
-                        "\nwhilst Poe is typing, you might cause an error, preventing your" 
-                        "\nnext command from being recognised. Let him finish before typing" 
-                        "\nanything.\n"
-                        "\n2. If you type something that isn't a command, you'll be prompted" 
-                        "\nto try again.\n"
-                        "\n3. You can quit to the main menu at any time by using the 'exit'" 
-                        "\ncommand. But be aware, you'll lose all progress and there's no way to" 
-                        "\nreload a previous game.\n"
-                        "\n4. If you get stuck, type 'help' to see a list of commands you" 
-                        "\ncan use.\n"
-                        "\n5. Once you start the game, you will have to select a character." 
-                        "\nTake note of your character's bio, as their individual skills and" 
-                        "\nexperiences might be useful later on.\n"
-                        "\n6. You can bring up your character's 'Player Card' at any time" 
-                        "\nby using the 'pc' command. Here you'll see your character's current" 
-                        "\nstats and any items in your inventory.\n"
-                        "\n7. The Raven's Rest can be a dangerous place. Your 'Attack Power'" 
-                        "\nstat determines how much damage you can do in a single attack." 
-                        "\nBe sure to pick up any weapons you might find to help you deal" 
-                        "\nmore damage.\n"
-                        "\n8. Keep an eye on your health. If it drops to zero, that's" 
-                        "\ngame over. Healing items can be found and used to keep you going.\n"
-                        "\nThe following are common commands you'll use throughout the game:\n"
-                        "\n'n', 's', 'e' and 'w' to move north, south, east and west, respectively."
-                        "\n'l' to look around the room you're in."
-                        "\n'i' followed by an object to inspect that object."
-                        "\n'u' followed by an object to use that object."
-                        "\n'loot' followed by an object to put that object in your inventory."
-                        "\n'atk' to attack an enemy."
-                        "\n'flee' to flee from a fight, back to the previous room.\n"
-                        "\nThis list is not exhaustive. It just gives examples of common"
+    rules = ("\n1. Mind your manners! Don't interrupt your GM. If you type" 
+             "\nwhilst Poe is typing, you might cause an error, preventing your" 
+             "\nnext command from being recognised. Let him finish before typing" 
+             "\nanything.\n"
+             "\n2. If you type something that isn't a command, you'll be prompted" 
+             "\nto try again.\n"
+             "\n3. You can quit to the main menu at any time by using the 'exit'" 
+             "\ncommand. But be aware, you'll lose all progress and there's no way to" 
+             "\nreload a previous game.\n"
+             "\n4. If you get stuck, type 'help' to see a list of commands you" 
+             "\ncan use.\n"
+             "\n5. Once you start the game, you will have to select a character." 
+             "\nTake note of your character's bio, as their individual skills and" 
+             "\nexperiences might be useful later on.\n"
+             "\n6. You can bring up your character's 'Player Card' at any time" 
+             "\nby using the 'pc' command. Here you'll see your character's current" 
+             "\nstats and any items in your inventory.\n"
+             "\n7. The Raven's Rest can be a dangerous place. Your 'Attack Power'" 
+             "\nstat determines how much damage you can do in a single attack." 
+             "\nBe sure to pick up any weapons you might find to help you deal" 
+             "\nmore damage.\n"
+             "\n8. Keep an eye on your health. If it drops to zero, that's" 
+             "\ngame over. Healing items can be found and used to keep you going.\n"
+             "\nThe following are common commands you'll use throughout the game:\n")
+
+    how_to_play_poe_2 = ("\nThis list is not exhaustive. It just gives examples of common"
                         "\ncommands you'll use. Remember to use the 'help' command if you get" 
                         "\nstuck, or consult your Player Card by using the 'pc' command to see if" 
                         "\nyour character has a skill or item that might be useful.\n"
                         "\nGood luck, and have fun!\n")
 
-    how_to_play_text_color = "object"
-    colored_how_to_play_text = how_to_play_text.replace(how_to_play_text_color, f"{Fore.YELLOW}{how_to_play_text_color}{Style.RESET_ALL}")
-    type_text(how_to_play_intro)
+    type_text(how_to_play_poe_1)
     print(figlet_format("How to Play\n", justify="center"))
-    print(colored_how_to_play_text)
+    type_text(rules)
+    type_text(help)
+    type_text(how_to_play_poe_2)
 
     while True:
         leave_how_to_play = input("\nType 'play' to start the game or 'back' to return to the main menu.\n")
@@ -168,13 +201,14 @@ def how_to_play():
 
 def character_selection():
     """
-    Section where the User must select their Player Character.
+    Section where the Player must select their Player Character.
     """
     character_selection_text = ("\nChoose your character:\n"
     "\nLee Kennedy" 
     "\nAge: 36" 
     "\nOccupation: Locksmith" 
     "\nHobby: Bird Watching\n"
+
     "\nClaire Greenfield" 
     "\nAge: 29" 
     "\nOccupation: Programmer" 
@@ -231,8 +265,8 @@ def start_game():
             foyer()
             break
         elif intro_choice.lower() == "help":
-            type_text("\nType 'exit' to quit to main menu.\n"
-            "\nType 'pc' to view Player Card")
+            print("\nType 'exit' to quit to main menu.\n"
+            "\nType 'pc' to view Player Card.\n")
         elif intro_choice.lower() == "pc":
             print(player_card)
         elif intro_choice.lower() == "exit":
@@ -244,9 +278,127 @@ def start_game():
 
 def foyer():
     """
-    The Hotel Foyer - the first room the User enters.
+    The Hotel Foyer - the first room the Player enters.
     """
-    print("You enter the hotel")
+    foyer_text = ("\nYou step into a wide, empty foyer. The beam of your flashlight barely"
+    "\npenertrates the surrounding shadows as you pan across the room. Ahead of you" 
+    "\nto the north, beneath the gloomy red glow of an emergency lamp, you see the" 
+    "\nreception DESK. On both the EAST and WEST sides of the room are doors leading" 
+    "\nout of the foyer.\n")
+    type_text(foyer_text)
+
+    foyer_look = ("\nYou look around the foyer. You see the reception DESK ahead of you, a door to"
+    "\nto the EAST ('e') and a door to the WEST ('w').\n")
+
+    desk_inspect = ("You approach the desk for a closer look. A COMPUTER and a BELL sit on the desk." 
+    "\nBehind the desk is a DOOR with a sign that reads, 'Staff Only'.\n")
+
+    foyer_computer_claire = ("\nThe computer is locked, but you manage to hack it. You flick through some" 
+    "\nfiles nand discover Chris' room number, located on the 1st Floor East Wing.\n")
+    foyer_computer_lee = ("\nThe computer is locked.\n")
+
+    def foyer_computer_use():
+        if power == True and player_card["Skill"] == "hack":
+            type_text(foyer_computer_claire)
+            player_card["Insight"].append("Chris' room location, ")
+        elif power == True and player_card["Skill"] == "lockpick":
+            type_text("foyer_computer_lee")
+        elif power == False:
+            type_text("\nThe power is still out. Maybe you can find a way to turn it back on...\n")
+        else:
+            RuntimeError
+    
+    foyer_door_use_lee = "\nThe door is locked, but you manage to pick it.\n"
+    foyer_door_use_claire = "\nThe door is locked.\n"
+
+    def foyer_door_use():
+        if player_card["Skill"] == "lockpick":
+            type_text(foyer_door_use_lee)
+            foyer_staff_room()
+        elif player_card["Skill"] == "lockpick":
+            type_text(foyer_door_use_claire)
+        else:
+            RuntimeError
+
+    while True:
+        foyer_choice = input("\nWhat do you do?\n")
+
+        if foyer_choice.lower() == "l":
+            type_text(foyer_look)
+        elif foyer_choice.lower() == "help":
+            print(help)
+        elif foyer_choice.lower() == "pc":
+            print(player_card)
+        elif foyer_choice.lower() == "exit":
+            main_menu()
+            break
+        elif foyer_choice.lower() == "heal":
+            heal()
+        elif foyer_choice.lower() == "i desk":
+            type_text(desk_inspect)
+        elif foyer_choice.lower() == "use computer":
+            foyer_computer_use()
+        elif foyer_choice.lower() == "use door":
+            foyer_door_use()
+        elif foyer_choice.lower() == "use bell":
+            type_text("\nYou ring the bell. A high-pitched 'ding' echoes throughout the empty room for" 
+            "\na moment, before silence creeps back into the foyer. No one comes.\n")
+        else:
+            foyer_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
+            type_text(foyer_error)
+
+def foyer_staff_room():
+    """
+    The Foyer Staff Room - Game Location.
+    """
+    foyer_staff_room_text = ("\nThe door leads into a small cupboard space. Whilst inspecting, the beam of your" 
+    "\nflashlight passes over something slumped on the floor. Your heart sinks. It's a"
+    "\ndead body. A BLOODY KNIFE protruding from the side of it's neck.\n")
+    type_text(foyer_staff_room_text)
+
+    foyer_staff_room_look = ("\nYou take a moment to collect yourself, then look around the cupboard. The" 
+    "\nBLOODY KNIFE sticks out of the dead body's neck. A FIRST AID KIT sits on some" 
+    "\nshelves. The foyer is to your SOUTH ('s').\n")
+
+    bloody_knife_loot = ("\nYou crouch beside the body and grab the blade by its handle. With a sickening" 
+    "\nsquelch, you slide the knife from their neck. Dark crimson pools around your" 
+    "\nfeet.\n")
+
+    while True:
+        foyer_staff_room_choice = input("\nWhat do you do?\n")
+
+        if foyer_staff_room_choice.lower() == "l":
+            type_text(foyer_staff_room_look)
+        elif foyer_choice.lower() == "help":
+            print(help)
+        elif foyer_staff_room_choice.lower() == "pc":
+            print(player_card)
+        elif foyer_staff_room_choice.lower() == "exit":
+            main_menu()
+            break
+        elif foyer_staff_room_choice.lower() == "heal":
+            heal()
+        elif foyer_staff_room_choice.lower() == "loot bloody knife":
+            type_text(bloody_knife_loot)
+            player_card["Inventory"].append("Bloody Knife, ")
+            player_card["Attack Power"].update("20")
+        elif foyer_staff_room_choice.lower() == "loot first aid kit":
+            fa_kit_loot()
+        elif foyer_staff_room_choice.lower() == "s":
+            type_text("\nYou exit to the south, returning to the Foyer.\n")
+        else:
+            foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
+            type_text(foyer_staff_room_error)
+
 
 # Start the game
-main_menu()
+#main_menu()
+
+# In-game feature to determine if the hotel has power
+power = False
+
+# 'If' statement to handle player death
+if player_card["Health"] == 0:
+    game_over()
+
+character_selection()
