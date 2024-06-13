@@ -47,7 +47,7 @@ help = ("\nType 'exit' to quit to main menu."
         "\nType 'use' followed by an OBJECT to inspect that object."
         "\nType 'loot' followed by an OBJECT to add it to your inventory."
         "\nType 'heal' to use a First Aid Kit."
-        "\nType 'atk' followed by an ENEMY to attack."
+        "\nType 'atk' to attack."
         "\nType 'flee' to escape a room in a random direction.\n")
 
 # Global functions for repeated actions
@@ -354,11 +354,11 @@ def foyer():
             heal()
         elif foyer_choice.lower() == "e":
             type_text("\nYou exit out of the east door.\n")
-            east_wing()
+            gf_east_wing_1()
             break
         elif foyer_choice.lower() == "w":
             type_text("\nYou exit out of the west door.\n")
-            west_wing()
+            gf_west_wing_1()
             break
         elif foyer_choice.lower() == "s":
             if chris_status == "alive":
@@ -437,11 +437,64 @@ def foyer_staff_room():
             foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
             type_text(foyer_staff_room_error)
 
-#def east_wing_1():
-    #checked_rooms.append("East Wing 1")
+def gf_east_wing_1():
+    """
+    Ground Floor East Wing 1 - Game Location.
+    """
+    gf_east_wing_1_initial = ("\nYou step into the Ground Floor East Wing. Dark wooden doors adorned with silver" 
+    "\nroom numbers run along both sides of the corridor. There is no trace of any" 
+    "\npatron or employee. As you creep through the silent passage, you notice a" 
+    "\nSupplies Cupboard to the south ('s'). Further east ('e') appears to be a" 
+    "\nMaintenance Room. To the north ('n') are a set of double doors, continuing" 
+    "\nfurther into the Ground Floor East Wing. To the west ('w') is the Foyer.\n")
 
-#def west_wing_1():
-    #checked_rooms.append("West Wing 1")
+    foyer_staff_room_text_return = ("\nYou step into the Ground Floor East Wing corridor that abuts the Foyer.\n")
+
+    if "Ground Floor East Wing 1" in checked_rooms:
+        type_text(foyer_staff_room_text_return)
+    else:
+        type_text(foyer_staff_room_text_initial)
+        checked_rooms.append("Ground Floor East Wing 1")
+
+    while True:
+        gf_east_wing_1_choice = input("\nWhat do you do?\n")
+
+        if gf_east_wing_1_choice.lower() == "l":
+            type_text("\nTo the north ('n') is a set of double doors continuing into the GF East Wing.\n"
+            "\nTo the east ('e') is the Maintenance Room.\n"
+            "\nTo the south ('s') is a Supplies Cupboard.\n"
+            "\nTo the west ('w') is the Foyer.\n")
+        elif gf_east_wing_1_choice.lower() == "help":
+            print(help)
+        elif gf_east_wing_1_choice.lower() == "pc":
+            print(player_card)
+        elif gf_east_wing_1_choice.lower() == "exit":
+            main_menu()
+            break
+        elif gf_east_wing_1_choice.lower() == "heal":
+            heal()
+        if gf_east_wing_1_choice.lower() == "n":
+            type_text("\nYou pass through the double doors and continue through the GF East Wing.\n")
+            gf_east_wing_2()
+            break
+        elif gf_east_wing_1_choice.lower() == "e":
+            if "Keycard" in player_card["Inventory"]:
+                type_text("\nYou use the keycard to access the Maintenance Room.\n")
+                maintenance_room()
+                break
+            else:
+                type_text("\nThis door requires a keycard to unlock it.\n")
+        if gf_east_wing_1_choice.lower() == "s":
+            type_text("\nYou enter the Supplies Cupboard to the south.\n")
+            supplies_cupboard_gfew()
+            break
+        elif gf_east_wing_1_choice.lower() == "w":
+            type_text("\nYou use the west door to the Foyer.\n")
+            foyer()
+            break
+        else:
+            foyer_staff_room_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
+            type_text(foyer_staff_room_error)
 
 # Start the game
 #main_menu()
