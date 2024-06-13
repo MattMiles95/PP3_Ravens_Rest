@@ -575,6 +575,76 @@ def supplies_cupboard_gfew():
         else:
             type_text(generic_error)
 
+def maintenance_room():
+    """
+    Maintenance Room - Game Location.
+    """
+    maintenance_room_initial = ("\nAs you quietly edge the door open, peering through the gap, your flashlight" 
+    "\nfalls upon a gruesome trail of red. That's when the stench hits you. Rotting" 
+    "\nflesh. You fight the urge to wretch and try to focus. Someone had been dragged" 
+    "\nthrough here, bleeding heavily. You feel a swell of desperation as fear grips" 
+    "\nyou, but you force yourself to go on. Swinging the door open, you discover the" 
+    "\nsource of the gory trail. Lying in the centre of the room, you find what" 
+    "\nremains of the grounds keeper. His BODY has been completely ripped apart. The" 
+    "\nurge to wretch rises in you again and this time you give in. You turn to the" 
+    "\ncorner of the room as you double over and deposit your lunch on the floor. You" 
+    "\nspit out the last traces of sick and wipe your mouth across your sleeve. As you" 
+    "\nlook up, you spot a CIRCUIT BREAKER across the room.\n")
+
+    maintenance_room_return = ("\nYou hold your breath and avoid looking at the mutilated corpse in the centre of" 
+    "\nthe room.\n")
+
+    if "Maintenance Room" in checked_rooms:
+        type_text(maintenance_room_return)
+    else:
+        type_text(maintenance_room_initial)
+        checked_rooms.append("Maintenance Room")
+
+    while True:
+        maintenance_room_choice = input("\nWhat do you do?\n")
+
+        if maintenance_room_choice.lower() == "l":
+            global power
+            if power == True:
+                type_text("\nThe grounds keeper's BODY lies in the centre of the room. Behind you, to the" 
+                "\nwest, is the GF East Wing. The generator across the room now hums with power.\n")
+            else: 
+                type_text("\nThe grounds keeper's BODY lies in the centre of the room. At the far end, you" 
+                "\nsee a CIRCUIT BREAKER, connected to a large generator. Behind you, to the" 
+                "\nwest, is the GF East Wing.\n")
+        elif maintenance_room_choice.lower() == "help":
+            print(help)
+        elif maintenance_room_choice.lower() == "pc":
+            print(player_card)
+        elif maintenance_room_choice.lower() == "exit":
+            main_menu()
+            break
+        elif maintenance_room_choice.lower() == "heal":
+            heal()
+        elif maintenance_room_choice.lower() == "i circuit breaker":
+            if power == True:
+                type_text("\nThe generator seems to be running smoothly.\n")
+            else: 
+                type_text("\nI wonder if this could restore the power?\n")
+        elif maintenance_room_choice.lower() == "use circuit breaker":
+            type_text("\nYou grab the handle of the circuit breaker and pull down hard. After a couple" 
+            "\nof seconds, the generator begins to rumble loudly. You hear the buzz of" 
+            "\nelectricity and a click from above as the lights finally flicker to life. With" 
+            "\na sigh of relief, you turn off your flashlight and stow your phone in your" 
+            "\npocket.\n")
+            power = True
+        elif maintenance_room_choice.lower() == "i body":
+            type_text("\nUpon closer inspection, the grounds keeper's body appears to have been torn" 
+            "\napart. What on earth has the strength to do this?\n")
+        elif maintenance_room_choice.lower() == "loot body":
+            type_text("\nGross! I'm not touching that!\n")
+        elif maintenance_room_choice.lower() == "w":
+            type_text("\nYou exit to the west, returning to the GF East Wing.\n")
+            gf_east_wing_1()
+            break
+        else:
+            type_text(generic_error)
+
 # Start the game
 #main_menu()
 
