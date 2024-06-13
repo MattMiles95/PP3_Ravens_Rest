@@ -351,6 +351,23 @@ def foyer():
             break
         elif foyer_choice.lower() == "heal":
             heal()
+        elif foyer_choice.lower() == "e":
+            type_text("\nYou exit out of the east door.\n")
+            east_wing()
+            break
+        elif foyer_choice.lower() == "w":
+            type_text("\nYou exit out of the west door.\n")
+            west_wing()
+            break
+        elif foyer_choice.lower() == "s":
+            if chris_status == "alive":
+                end_game_good()
+            elif chris_status == "dead":
+                end_game_bad()
+            elif chris_status == "infected":
+                end_game_bad()
+            else:
+                type_text("I'm not leaving until I've found Chris.")
         elif foyer_choice.lower() == "i desk":
             type_text(desk_inspect)
         elif foyer_choice.lower() == "use computer":
@@ -472,6 +489,23 @@ def foyer_return():
             break
         elif foyer_choice.lower() == "heal":
             heal()
+        elif foyer_choice.lower() == "e":
+            type_text("\nYou exit out of the east door.\n")
+            east_wing()
+            break
+        elif foyer_choice.lower() == "w":
+            type_text("\nYou exit out of the west door.\n")
+            west_wing()
+            break
+        elif foyer_choice.lower() == "s":
+            if chris_status == "alive":
+                end_game_good()
+            elif chris_status == "dead":
+                end_game_bad()
+            elif chris_status == "infected":
+                end_game_bad()
+            else:
+                type_text("I'm not leaving until I've found Chris.")
         elif foyer_choice.lower() == "i desk":
             type_text(desk_inspect)
         elif foyer_choice.lower() == "use computer":
@@ -491,6 +525,9 @@ def foyer_return():
 
 # In-game feature to determine if the hotel has power
 power = False
+
+# In-game feature to determine Chris' status
+chris_status = "Unknown"
 
 # 'If' statement to handle player death
 if player_card["Health"] == 0:
