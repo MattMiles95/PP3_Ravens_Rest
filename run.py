@@ -4,23 +4,23 @@ import random
 
 # Player Charater Option 1
 lee_kennedy = {
-    "Name": "Lee Kennedy",
+    "Name": "Lee",
     "Health": 100,
     "Attack Power": 10,
     "Weapon": "Unarmed",
     "Skill": "lockpick",
-    "Inventory": [],
+    "Inventory": ["flashlight"],
     "Insight": []
 }
 
 # Player Charater Option 1
 claire_greenfield = {
-    "Name": "Claire Greenfield",
+    "Name": "Claire",
     "Health": 120,
     "Attack Power": 20,
     "Weapon": "Unarmed",
     "Skill": "hack",
-    "Inventory": [],
+    "Inventory": ["flashlight"],
     "Insight": []
 }
 
@@ -97,7 +97,7 @@ help = ("\nType 'exit' to quit to main menu."
         "\nType 'loot' followed by an OBJECT to add it to your inventory."
         "\nType 'heal' to use a First Aid Kit."
         "\nType 'atk' to attack."
-        "\nType 'flee' to escape a room in a random direction.\n")
+        "\nType 'flee' to escape a fight in a random direction.\n")
 
 generic_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
 
@@ -108,6 +108,7 @@ def fa_kit_loot():
     """
     player_card["Inventory"].append("First Aid Kit")
     type_text("\nYou rummage through the First Aid Kit and take some supplies.\n")
+    return
 
 def heal():
     """
@@ -202,8 +203,8 @@ def main_menu():
     "\nType out what you want to do, and I'll try my best to make it happen!" 
     "\nIf this is your first time playing, please be sure to read the rules before" 
     "\nyou start.\n" 
-    "\nTo read how to play, type 'h2p'.\n"
-    "\nTo start the game, type 'play'.\n")
+    "\nTo read how to play, enter 'h2p'.\n"
+    "\nTo start the game, enter 'play'.\n")
     type_text(start_up_text)
 
     while True:
@@ -217,7 +218,7 @@ def main_menu():
             break
         else:
             main_menu_error = ("\nI don't know that one..." 
-                               "Type 'play' to start the game or 'h2p' to read how to play.\n")
+                               "Enter 'play' to start the game or 'h2p' to read how to play.\n")
             type_text(main_menu_error)
 
 def how_to_play():
@@ -310,51 +311,192 @@ def character_selection():
             start_game()
             break
         else:
-            character_choice_error = "\nI don't know that one... Type 'l' for Lee or 'c' for Claire."
+            character_choice_error = "\nI don't know that one...\n"
             type_text(character_choice_error)     
 
 def start_game():
-    """
-    The game's intro and first area
-    """
-    intro_text = ("\nRain drops drum against the windshield of your car as you roll along the winding"
-                  "\ncountry road. The night is black and water blurs your view like ink poured over" 
-                  "\nglass. Between swipes of the wiperblades, you see it. Looming ahead of you," 
-                  "\ncaught in the beam of the headlights. The Raven's Rest Hotel.\n"
-                  "\nYou pull off the road into a small car park. Gravel crunches beneath the tyres" 
-                  "\nas you slowly come to a halt. You kill the engine and are immediately plummeted" 
-                  "\ninto pitch darkness. Neither the car park nor the hotel offer any light. You" 
-                  "\npull out your mobile phone, the dim glow flooding the interior of your car, and" 
-                  "\nopen a photo. Your brother, Chris, grins up at you. The photo was taken 1 week" 
-                  "\nago. The last time anyone had seen or heard from him. In the background of the" 
-                  "\nimage, lurking like a shadow, sits the Raven's Rest Hotel. Taking a moment to" 
-                  "\nsteel yourself, you switch on your phone's flashlight, release the lock on the" 
-                  "\ncar door and step out into the night.\n" 
-                  "\nCold bites at you as you turn your collar against the wind and rain. You hold"
-                  "\nthe light of your phone up to the hotel, though it's beam is almost instantly"
-                  "\nchoked by the unrelenting weather. You can make out the dark slate walls of the"
-                  "\nhotel, but as they stretch into the night sky, you're unable to see beyond even"
-                  "\nthe second storey. Skirting along a large, wooden porch, you eventually come"
-                  "\nacross a door.\n")
-    type_text(intro_text)
 
     while True:
-        intro_choice = input("\nType 'o' to open the door.\n")
+        start_choice = input("\nEnter 'skip' to skip the intro and jump straight to Raven's Rest. Otherwise," 
+        "\nenter 'begin' to start the game.\n")
 
-        if intro_choice.lower() == "o":
-            type_text("\nWith a shrill creak, the door yawns open...\n")
+        if start_choice.lower() == "skip":
             foyer()
             break
-        elif intro_choice.lower() == "help":
+        elif start_choice.lower() == "begin":
+            intro_a()
+            break
+        else:
+            start_choice_error = ("\nI don't know that one...\n")
+
+def intro_a():
+    """
+    Part A of the games' intro, which also acts as a tutorial.
+    """
+    intro_a_text = ("\n9 Feb 1981\n"
+    "\nInnsmouth, England\n"
+    "\nYou wake with a jolt to the sound of knuckles rapping on glass. Sat in a" 
+    "\ncarriage being drawn by two horses - a far cry from the black cabs you're used" 
+    "\nto in London - you peer out of the window. Presumably the carriage driver was" 
+    "\nletting you know that you're approaching your destination, but there's no way" 
+    "\nof knowing that by looking outside. Nights never get this dark in the city," 
+    "\nbut here in Innsmouth, you may as well be staring into a pot of ink. Add to" 
+    "\nthat the heavy rain beating against the glass, and trying to make out anything" 
+    "\nbeyond the dimly light interior of the carriage was truly an exercise in" 
+    "\nfutility.\n"
+    "\nYou remove a PHOTOGRAPH from your jacket pocket. It's a picture of your" 
+    "\nbrother, Chris. The last time he was seen or heard from. He's grinning at the" 
+    "\ncamera and giving a cheery thumbs up. Behind him, lurking like a shadow, lies" 
+    "\na dark building. You can just about make out a sign that reads, 'Raven's Rest'.\n")
+    type_text(intro_a_text)
+
+    while True:
+        intro_a_choice = input("\nEnter 'i photograph' to inspect the photograph.\n")
+
+        if intro_a_choice.lower() == "i photograph":
+            intro_b()
+            break
+        elif intro_a_choice.lower() == "help":
             print(help)
-        elif intro_choice.lower() == "pc":
-            print(player_card)
-        elif intro_choice.lower() == "exit":
+        elif intro_a_choice.lower() == "exit":
             main_menu()
             break
         else:
-            intro_error = '\n"I have to go inside. For Chris."\n'
-            type_text(intro_error)  
+            type_text("\nYou can't do that now.\n")
+
+def intro_b():
+    """
+    Part B of the games' intro, which continues to act as a tutorial.
+    """
+    intro_b_text = ("\nThere's a message on the back:\n"
+    f"\n{player_card["Name"]},\n"
+    "\nThink I've finally made some headway with the article… Currently visiting a" 
+    "\nchap in Innsmouth who apparently knew one of the students that went missing -" 
+    "\nhis brother in fact! I'm staying at an old hotel, the Raven’s Rest. Feels like" 
+    "\nit's been pulled straight out of the 1800s - but then again, so does the rest" 
+    "\nof this town. Anyways, hope you're well. Give mum & dad my love. Hopefully the" 
+    "\nnext time you read my words, it'll be on the front page of the newspaper! Got a" 
+    "\nfeeling I'm onto something big here.\n"
+    "\nYours,\n"
+    "\nChris\n")
+    type_text(intro_b_text)
+
+    while True:
+        intro_b_choice = input("\nEnter 'loot photograph' to store the photograph in your inventory.\n")
+
+        if intro_b_choice.lower() == "loot photograph":
+            player_card["Inventory"].append("photograph")
+            intro_c()
+            break
+        elif intro_b_choice.lower() == "help":
+            print(help)
+        elif intro_b_choice.lower() == "exit":
+            main_menu()
+            break
+        else:
+            type_text("\nYou can't do that now.\n")
+
+def intro_c():
+    """
+    Part C of the games' intro, which continues to act as a tutorial.
+    """
+    intro_c_text = ("\nYou slide the photograph back into your pocket. A loud crunch comes from the" 
+    "\nwheels as the carriage veers off the road and onto a gravel track. Bouncing" 
+    "\nuncomfortably on the bench for a minute or so, you're relieved when the horses" 
+    "\ncome to a halt. A thin grate on the driver's side of the carriage slides open.\n"
+    "\n'Make it quick,' he says. 'The horses are spooked.'\n"
+    "\nYou swing open the door and step into the stormy night, tossing the driver's" 
+    "\nfare into a cup on the way out. You're immediately bitten by the cold and" 
+    "\nfumble with your collar to turn it against the wind and rain.\n"
+    "\n'What's got them spooked?' you call out, fighting to be heard over the weather.\n"
+    "\n'You'll find out soon enough, I'm sure.' He called back. With that, he spurred" 
+    "\nhis horses and set off. It seems to you as though it wasn't just the horses" 
+    "\nthat were spooked. As the carriage draws away with its lantern, so does your" 
+    "\nonly source of light. You're quickly plummeted into pitch darkness.\n")
+    type_text(intro_c_text)
+    type_text("\nEnter 'pc' to open your Player Card and view your inventory.\n")
+
+    while True:
+        intro_c_choice = input()
+        global flashlight 
+
+        if intro_c_choice.lower() == "pc":
+            print(player_card)
+            type_text("\nA flashlight! That'll help. Enter 'use flashlight'.\n")
+        elif intro_c_choice.lower() == "use flashlight":
+            if flashlight == True:
+                type_text("\nYou've already swithced your flashlight on. Try entering 'l' to look around.\n")
+            elif flashlight == False:
+                type_text("\nYou pull your flashlight from your pocket and switch it on. A beam of bright" 
+                "\nlight bursts forth, slicing through the dark like a butcher's knife.\n"
+                "\nEnter 'l' to look around.\n")
+                flashlight = True
+            else:
+                RuntimeError
+        elif intro_c_choice.lower() == "l":
+            if flashlight == True:
+                type_text("\nYou're stood in a small, wooded enclosure, just off the gravel track. A path" 
+                "\nthrough the trees to the NORTH appears to be your only choice forward.\n"
+                "\nEnter 'n' to walk northwards.")
+            elif flashlight == False:
+                type_text("\n'I can't see a thing!'\n")
+            else:
+                RuntimeError
+        elif intro_c_choice.lower() == "n":
+            if flashlight == True:
+                intro_d()
+                break
+            elif flashlight == False:
+                type_text("\n'I can't see where I'm going!'\n")
+            else:
+                RuntimeError
+        elif intro_c_choice.lower() == "help":
+            print(help)
+        elif intro_c_choice.lower() == "exit":
+            main_menu()
+            break
+        else:
+            if flashlight == False:
+                type_text("\n'I can't see a thing!'\n")
+            elif flashlight == True:
+                type_text("\nYou can't do that now.\n")
+            else: 
+                RuntimeError
+
+def intro_d():
+    """
+    Part D of the games' intro, which continues to act as a tutorial.
+    """
+    intro_d_text = ("\nNearly completely hidden amongst the darkness, the black building seems to" 
+    "\nappear almost out of nowhere. You shine your flashlight at the looming" 
+    "\nstructure, but the beam is almost immediately choked by the unrelenting" 
+    "\nweather, preventing you from seeing even above the first storey. You get an" 
+    "\nuneasy feeling as your eyes follow the slate grey walls, receding into the" 
+    "\ndarkness above. As though the hotel seems much larger than it really is.\n"
+    "\nEventually you come across a long wooden porch that leads you to the hotel" 
+    "\nentrance. Double black doors set against white wooden slats. In the gloom of" 
+    "\nnight, it looks like the gaping maw of a beast. 'Raven's Rest', is scrawled in" 
+    "\nblack lettering above the doors.\n")
+    type_text(intro_d_text)
+
+    while True:
+        intro_d_choice = input("\nEnter 'o' to open the doors and enter the Raven's Rest.\n")
+
+        if intro_d_choice.lower() == "o":
+            type_text("\nWith a shrill creak, the doors yawn open...\n")
+            foyer()
+            break
+        elif intro_d_choice.lower() == "l":
+            type_text("The entrance to the Raven's Rest stands before you. No where to go but forward.")
+        elif intro_d_choice.lower() == "help":
+            print(help)
+        elif intro_d_choice.lower() == "pc":
+            print(player_card)
+        elif intro_d_choice.lower() == "exit":
+            main_menu()
+            break
+        else:
+            type_text("\nYou can't do that now.\n")  
 
 def foyer():
     """
@@ -682,8 +824,11 @@ def maintenance_room():
 # Start the game
 #main_menu()
 
-# In-game feature to determine if the hotel has power
+# Determines if the hotel has power
 power = False
+
+# Determines if the player's flashlight is on
+flashlight = False
 
 # In-game feature to determine Chris' status
 chris_status = "Unknown"
