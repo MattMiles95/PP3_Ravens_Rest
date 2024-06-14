@@ -44,6 +44,49 @@ looted_items = []
 # List of all slain enemies
 slain_enemies = []
 
+# Enemies
+enemy = {
+    "Name": None,
+    "Health": 1,
+    "Attack Power": 1,
+    "Lootable": False
+}
+
+cultist_bar = {
+    "Name": "Cultist (Bar)",
+    "Health": 30,
+    "Attack Power": 15,
+    "Lootable": False
+}
+
+cultist_chris_room = {
+    "Name": "Cultist (Chris Room)",
+    "Health": 40,
+    "Attack Power": 20,
+    "Lootable": False
+}
+
+cultist_restaurant = {
+    "Name": "Cultist (Restaurant)",
+    "Health": 40,
+    "Attack Power": 15,
+    "Lootable": False
+}
+
+cult_leader = {
+    "Name": "Cult Leader",
+    "Health": 100,
+    "Attack Power": 30,
+    "Lootable": False
+}
+
+chris = {
+    "Name": "Cult Leader",
+    "Health": 120,
+    "Attack Power": 40,
+    "Lootable": False
+}
+
 # Help variable, for use in game
 help = ("\nType 'exit' to quit to main menu."
         "\nType 'pc' to view Player Card."
@@ -57,21 +100,6 @@ help = ("\nType 'exit' to quit to main menu."
         "\nType 'flee' to escape a room in a random direction.\n")
 
 generic_error = "\nYou can't do that... Use the 'help' command if you're stuck.\n"
-
-# Enemies
-enemy = {
-    "Name": None,
-    "Health": 1,
-    "Attack Power": 1,
-    "Lootable": False
-}
-
-infected_bell_boy = {
-    "Name": "Infected Bell Boy",
-    "Health": 30,
-    "Attack Power": 10,
-    "Lootable": False
-}
 
 # Global functions for repeated actions
 def fa_kit_loot(): 
