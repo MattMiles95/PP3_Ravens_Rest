@@ -333,7 +333,7 @@ def intro_a():
     """
     Part A of the games' intro, which also acts as a tutorial.
     """
-    intro_a_text = ("\n9 Feb 1981\n"
+    intro_a_text = ("\n9 Nov 1981\n"
     "\nInnsmouth, England\n"
     "\nYou wake with a jolt to the sound of knuckles rapping on glass. Sat in a" 
     "\ncarriage being drawn by two horses - a far cry from the black cabs you're used" 
@@ -516,38 +516,36 @@ def foyer():
         checked_rooms.append("Foyer")
 
     foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you. A door to"
-    "\nthe east ('e') with a sign that reads, 'Maintenance, Security & East" 
-    "\nWing'. A door to the west ('w') with a sign that reads, 'Stairs to First Floor," 
-    "\nBasement Lift & West Wing'. The entrance to the hotel is behind you, to the" 
-    "\south ('s').")
+    "\nthe east ('e') with a sign that reads, 'East Wing, Maintenance and Bar'. A door" 
+    "\nto the west ('w') with a sign that reads, 'West Wing and Restaurant'. On a" 
+    "\nsmall table nearby is a NEWSPAPER. Behind you, to the south ('s'), is the Hotel" 
+    "\nentrance.")
+
+    newspaper_inspect = ("You take a closer look at the newspaper. 'The Innsmouth Daily'. The headline" 
+    "\nreads, 'BODY SNATCHER STRIKES AGAIN? FOURTH MISSING PERSON REPORTED THIS YEAR'." 
+    "\nYou flick through the paper, pausing when your eye is caught by a picture of" 
+    "\nthe Raven's Rest. The caption reads 'One year since the Raven's Rest came under" 
+    "\nnew management. New owner Mr Whateley says he has 'big plans' for the hotel'.")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and a BELL sit on the desk." 
     "\nBehind the desk is a DOOR with a sign that reads, 'Staff Only'.\n")
 
-    foyer_computer_claire = ("\nThe computer is locked, but you manage to hack it. You flick through some" 
-    "\nfiles nand discover Chris' room number, located on the 1st Floor East Wing.\n")
-    foyer_computer_lee = ("\nThe computer is locked.\n")
-
     def foyer_computer_use():
         if power == True and player_card["Skill"] == "hack":
-            type_text(foyer_computer_claire)
-            player_card["Insight"].append("Chris' room location, ")
+            foyer_computer()
         elif power == True and player_card["Skill"] == "lockpick":
-            type_text("foyer_computer_lee")
+            type_text("\nThe computer is locked.\n")
         elif power == False:
             type_text("\nThe power is still out. Maybe you can find a way to turn it back on...\n")
         else:
             RuntimeError
-    
-    foyer_door_use_lee = "\nThe door is locked, but you manage to pick it.\n"
-    foyer_door_use_claire = "\nThe door is locked.\n"
 
     def foyer_door_use():
         if player_card["Skill"] == "lockpick":
-            type_text(foyer_door_use_lee)
-            foyer_staff_room()
+            type_text("\nThe door is locked, but you manage to pick it.\n")
+            foyer_staff_cupboard()
         elif player_card["Skill"] == "hack":
-            type_text(foyer_door_use_claire)
+            type_text("\nThe door is locked.\n")
         else:
             RuntimeError
 
@@ -578,12 +576,15 @@ def foyer():
                 end_game_good()
             elif chris_status == "dead":
                 end_game_bad()
-            elif chris_status == "infected":
+            elif chris_status == "vessel":
                 end_game_bad()
             else:
                 type_text("I'm not leaving until I've found Chris.")
         elif foyer_choice.lower() == "i desk":
             type_text(desk_inspect)
+        elif foyer_choice.lower() == "i newspaper":
+            type_text(newspaper_inspect)
+            player_card["Insight"].append("Raven's Rest Owner")
         elif foyer_choice.lower() == "use computer":
             foyer_computer_use()
         elif foyer_choice.lower() == "use door":
@@ -594,46 +595,98 @@ def foyer():
         else:
             type_text(generic_error)
 
-def foyer_staff_room():
+def foyer_computer():
     """
-    The Foyer Staff Room - Game Location.
+    The Foyer Computer - Options
     """
-    foyer_staff_room_text_initial = ("\nThe door leads into a small cupboard space. Whilst inspecting, the beam of your" 
+    type_text("\nThe computer is locked, but you manage to hack it.")
+    
+    while True:
+        foyer_computer_choice = input("\nEnter 'rooms' to see reservation list.\n"
+        "\nEnter 'messages' to see saved massages.\n"
+        "\nEnter 'back' to log off computer.")
+
+        if foyer_computer_choice.lower() == "rooms":
+            if "Raven's Rest Owner" in player_card["Insight"]:
+                type_text("\nYou flick through some files and discover Chris' room number, located in the" 
+                "\nWest Wing. You also notice that Mr Whateley, the owner, has a room adjacent to" 
+                "\nthe restaurant.\n")
+                player_card["Insight"].append("Chris' Room Location")
+                player_card["Insight"].append("Whateley's Room Location")
+            elif "Chris' Room Location" in player_card["Insight"]:
+                type_text("You've already read these files.")
+            else:
+                type_text("\nYou flick through some files and discover Chris' room number, located in the" 
+                "\nWest Wing.")
+                player_card["Insight"].append("Chris' Room Location")
+        elif foyer_computer_choice.lower() == "messages":
+            type_text("\nYou find a message that reads:\n"
+            "\nDear employees,\n"
+            "\nI understand there has been some confusion about the new locking systems I've" 
+            "\nhad installed. Whilst I appreciate that some of you may find them" 
+            "\n'impractical', or perhaps even 'excessive', may I remind you that we have a" 
+            "\ncertain aesthetic to maintain here in the Raven's Rest. To that end, please" 
+            "\nremember:\n"
+            "\nThe Raven's Beak Key opens the Maintenance Room.\n"
+            "\nThe Raven's Wing Key opens the service lift.\n"
+            "\nThe Raven's Foot key opens the Cellar.\n"
+            "\nI needn't remind you that the Cellar is strictly out of bounds to ALL" 
+            "\nemployees. If you require something from the Cellar, you are to inform me and I" 
+            "\nshall fetch it for you.\n"
+            "\nI hope this clears things up. Now please stop asking if we can go back to using" 
+            "\nthe old locks.\n"
+            "\n - Mr Whateley\n")
+        elif foyer_computer_choice.lower() == "back":
+            foyer()
+            break
+        elif foyer_computer_choice.lower() == "help":
+            print(help)
+        elif foyer_computer_choice.lower() == "pc":
+            print(player_card)
+        elif foyer_computer_choice.lower() == "exit":
+            main_menu()
+            break
+
+def foyer_staff_cupboard():
+    """
+    The Foyer Staff Cupboard - Game Location.
+    """
+    foyer_staff_cupboard_text_initial = ("\nThe door leads into a small cupboard space. Whilst inspecting, the beam of your" 
     "\nflashlight passes over something slumped on the floor. Your heart sinks. It's a"
     "\ndead body. A BLOODY KNIFE protruding from the side of it's neck.\n")
 
-    foyer_staff_room_text_return = ("\nYou enter the cupboard, trying your best not to look at the dead body.\n")
+    foyer_staff_cupboard_text_return = ("\nYou enter the cupboard, trying your best not to look at the dead body.\n")
 
-    if "Foyer Staff Room" in checked_rooms:
-        type_text(foyer_staff_room_text_return)
+    if "Foyer Staff Cupboard" in checked_rooms:
+        type_text(foyer_staff_cupboard_text_return)
     else:
-        type_text(foyer_staff_room_text_initial)
-        checked_rooms.append("Foyer Staff Room")
+        type_text(foyer_staff_cupboard_text_initial)
+        checked_rooms.append("Foyer Staff Cupboard")
 
     bloody_knife_loot = ("\nYou crouch beside the body and grab the blade by its handle. With a sickening" 
     "\nsquelch, you slide the knife from their neck. Dark crimson pools around your" 
     "\nfeet.\n")
 
     while True:
-        foyer_staff_room_choice = input("\nWhat do you do?\n")
+        foyer_staff_cupboard_choice = input("\nWhat do you do?\n")
 
-        if foyer_staff_room_choice.lower() == "l":
+        if foyer_staff_cupboard_choice.lower() == "l":
             if "Bloody Knife" in player_card["Inventory"]:
                 type_text("\nThere's nothing else of use here. The foyer is to your south ('s').\n")
             else: 
                 type_text("\nYou take a moment to collect yourself, then look around the cupboard. The" 
     "\nBLOODY KNIFE sticks out of the dead body's neck. The foyer is to your south" 
     "\n('s').\n")
-        elif foyer_staff_room_choice.lower() == "help":
+        elif foyer_staff_cupboard_choice.lower() == "help":
             print(help)
-        elif foyer_staff_room_choice.lower() == "pc":
+        elif foyer_staff_cupboard_choice.lower() == "pc":
             print(player_card)
-        elif foyer_staff_room_choice.lower() == "exit":
+        elif foyer_staff_cupboard_choice.lower() == "exit":
             main_menu()
             break
-        elif foyer_staff_room_choice.lower() == "heal":
+        elif foyer_staff_cupboard_choice.lower() == "heal":
             heal()
-        elif foyer_staff_room_choice.lower() == "loot bloody knife":
+        elif foyer_staff_cupboard_choice.lower() == "loot bloody knife":
             if "Bloody Knife" in looted_items:
                 type_text("\nYou've already taken the bloody knife.\n")
             else:
@@ -641,7 +694,7 @@ def foyer_staff_room():
                 looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
                 player_card["Attack Power"] = 20
-        elif foyer_staff_room_choice.lower() == "s":
+        elif foyer_staff_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
             foyer()
             return
