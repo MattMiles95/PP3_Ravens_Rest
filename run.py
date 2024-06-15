@@ -6,7 +6,7 @@ import random
 lee_kennedy = {
     "Name": "Lee",
     "Health": 100,
-    "Attack Power": 10,
+    "Attack Power": random.randint(5, 10),
     "Weapon": "Unarmed",
     "Skill": "lockpick",
     "Inventory": ["flashlight"],
@@ -17,7 +17,7 @@ lee_kennedy = {
 claire_greenfield = {
     "Name": "Claire",
     "Health": 120,
-    "Attack Power": 20,
+    "Attack Power": random.randint(15, 20),
     "Weapon": "Unarmed",
     "Skill": "hack",
     "Inventory": ["flashlight"],
@@ -48,49 +48,43 @@ slain_enemies = []
 enemy = {
     "Name": None,
     "Health": 1,
-    "Attack Power": 1,
-    "Lootable": False
+    "Attack Power": 1
 }
 
 cultist_bar = {
-    "Name": "Cultist (Bar)",
+    "Name": "Eyeless Madman",
     "Health": 30,
-    "Attack Power": 15,
-    "Lootable": False
+    "Attack Power": random.randint(10, 20)
 }
 
 cultist_chris_room = {
     "Name": "Cultist (Chris Room)",
     "Health": 40,
-    "Attack Power": 20,
-    "Lootable": False
+    "Attack Power": random.randint(15, 25)
 }
 
-cultist_restaurant = {
-    "Name": "Cultist (Restaurant)",
+cultist_library = {
+    "Name": "Cultist (Library)",
     "Health": 40,
-    "Attack Power": 15,
-    "Lootable": False
+    "Attack Power": random.randint(10, 20)
 }
 
 cult_leader = {
-    "Name": "Cult Leader",
+    "Name": "Mr Whateley",
     "Health": 100,
-    "Attack Power": 30,
-    "Lootable": False
+    "Attack Power": random.randint(25, 35)
 }
 
 chris = {
-    "Name": "Cult Leader",
+    "Name": "Chris",
     "Health": 120,
-    "Attack Power": 40,
-    "Lootable": False
+    "Attack Power": random.randint(35, 45)
 }
 
 # Help variable, for use in game
 help = ("\nType 'exit' to quit to main menu."
         "\nType 'pc' to view Player Card."
-        "\nType 'n', 'e', 's', 'w', 'u', 'd' to move north, south, east, west, up or down."
+        "\nType 'n', 'e', 's', 'w', to move north, east, south and west."
         "\nType 'l' to look around."
         "\nType 'i' followed by an OBJECT to inspect that object."
         "\nType 'use' followed by an OBJECT to inspect that object."
@@ -126,18 +120,35 @@ def atk():
     """
     Function for Player to attack Enemy
     """
+    # Vary Enemy Attack Power per Attack
+    if enemy["Name"] == "Eyeless Madman":
+        enemy["Attack Power"] = random.randint(10, 20)
+        
+    # Vary Player Attack Power per Attack
+    if player_card["Weapon"] == "Unarmed":
+        if player_card["Name"] == "Claire":
+            player_card["Attack Power"] = random.randint(10, 20)
+        else:
+            player_card["Attack Power"] = random.randint(1, 10)
+    elif player_card["Weapon"] == "Bloody Knife":
+        player_card["Attack Power"] = random.randint(10, 20)
+    elif player_card["Weapon"] == "Handgun":
+        player_card["Attack Power"] = random.randint(30, 40)
+    elif player_card["Weapon"] == "Shotgun":
+        player_card["Attack Power"] = random.randint(35, 50)
+
     if enemy["Name"] in slain_enemies:
-        print(f"{enemy['Name']} is already dead!")
+        type_text(f"{enemy['Name']} is already dead!")
     else:
         enemy["Health"] = enemy["Health"] - player_card["Attack Power"]
-        print(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
+        type_text(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
         player_card["Health"] = player_card["Health"] - enemy["Attack Power"]
-        print(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
+        type_text(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
+        type_text(f"You have {player_card["Health"]} remaining health. Attack again or flee?")
 
-        if enemy["Health"] == 0:
-            print(f"\nWith a final rasping breath, {enemy['Name']} drops to the floor, their BODY cold and still.\n")
-            enemy["Lootable"] = True
-            slain.enemies.append(enemy["Name"])
+        if enemy["Health"] <= 0:
+            type_text(f"\nWith a final rasping breath, {enemy['Name']} drops to the floor, his BODY cold and still.\n")
+            slain_enemies.append(enemy["Name"])
     return
 
 # End Game Functions
@@ -517,7 +528,7 @@ def foyer():
 
     foyer_look = ("\nYou look around the Foyer. You see the reception DESK ahead of you. A door to"
     "\nthe east ('e') with a sign that reads, 'East Wing, Maintenance and Bar'. A door" 
-    "\nto the west ('w') with a sign that reads, 'West Wing and Restaurant'. On a" 
+    "\nto the west ('w') with a sign that reads, 'West Wing and Library'. On a" 
     "\nsmall table nearby is a NEWSPAPER. Behind you, to the south ('s'), is the Hotel" 
     "\nentrance.")
 
@@ -565,11 +576,11 @@ def foyer():
             heal()
         elif foyer_choice.lower() == "e":
             type_text("\nYou exit out of the east door.\n")
-            gf_east_wing_1()
+            east_wing()
             break
         elif foyer_choice.lower() == "w":
             type_text("\nYou exit out of the west door.\n")
-            gf_west_wing_1()
+            west_wing()
             break
         elif foyer_choice.lower() == "s":
             if chris_status == "alive":
@@ -610,7 +621,7 @@ def foyer_computer():
             if "Raven's Rest Owner" in player_card["Insight"]:
                 type_text("\nYou flick through some files and discover Chris' room number, located in the" 
                 "\nWest Wing. You also notice that Mr Whateley, the owner, has a room adjacent to" 
-                "\nthe restaurant.\n")
+                "\nthe Library.\n")
                 player_card["Insight"].append("Chris' Room Location")
                 player_card["Insight"].append("Whateley's Room Location")
             elif "Chris' Room Location" in player_card["Insight"]:
@@ -693,7 +704,7 @@ def foyer_staff_cupboard():
                 type_text(bloody_knife_loot)
                 looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
-                player_card["Attack Power"] = 20
+                player_card["Attack Power"] = random.randint(15, 20)
         elif foyer_staff_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
             foyer()
@@ -701,112 +712,131 @@ def foyer_staff_cupboard():
         else:
             type_text(generic_error)
 
-def gf_east_wing_1():
+def east_wing():
     """
-    Ground Floor East Wing 1 - Game Location.
+    East Wing - Game Location.
     """
-    gf_east_wing_1_initial = ("\nYou step into the Ground Floor East Wing. Dark wooden doors adorned with silver" 
-    "\nroom numbers run along both sides of the corridor. There is no trace of any" 
-    "\npatron or employee. As you creep through the silent passage, you notice a" 
-    "\nSupplies Cupboard to the south ('s'). Further east ('e') appears to be a" 
-    "\nMaintenance Room. To the north ('n') are a set of double doors, continuing" 
-    "\nfurther into the Ground Floor East Wing. To the west ('w') is the Foyer.\n")
+    east_wing_initial = ("\nYou step into the East Wing. Dark wooden doors adorned with silver room numbers" 
+    "\nrun along both sides of the corridor. There is no trace of any patron or" 
+    "\nemployee. As you creep through the silent passage, you notice a Supplies" 
+    "\nCupboard to the south ('s'). Further east ('e') appears to be a Maintenance" 
+    "\nRoom. To the north ('n') are a set of double doors, leading to the Bar. To the" 
+    "\nwest ('w') is the Foyer.\n")
 
-    gf_east_wing_1_return = ("\nYou step into the Ground Floor East Wing corridor that abuts the Foyer.\n")
+    east_wing_return = ("\nYou step into the East Wing.\n")
 
-    if "Ground Floor East Wing 1" in checked_rooms:
-        type_text(gf_east_wing_1_return)
+    if "East Wing" in checked_rooms:
+        type_text(east_wing_return)
     else:
-        type_text(gf_east_wing_1_initial)
-        checked_rooms.append("Ground Floor East Wing 1")
+        type_text(east_wing_initial)
+        checked_rooms.append("East Wing")
 
     while True:
-        gf_east_wing_1_choice = input("\nWhat do you do?\n")
+        east_wing_choice = input("\nWhat do you do?\n")
 
-        if gf_east_wing_1_choice.lower() == "l":
-            type_text("\nTo the north ('n') is a set of double doors continuing into the GF East Wing.\n"
+        if east_wing_choice.lower() == "l":
+            type_text("\nTo the north ('n') is a set of double doors leading to the Bar.\n"
             "\nTo the east ('e') is the Maintenance Room.\n"
             "\nTo the south ('s') is a Supplies Cupboard.\n"
             "\nTo the west ('w') is the Foyer.\n")
-        elif gf_east_wing_1_choice.lower() == "help":
+        elif east_wing_choice.lower() == "help":
             print(help)
-        elif gf_east_wing_1_choice.lower() == "pc":
+        elif east_wing_choice.lower() == "pc":
             print(player_card)
-        elif gf_east_wing_1_choice.lower() == "exit":
+        elif east_wing_choice.lower() == "exit":
             main_menu()
             break
-        elif gf_east_wing_1_choice.lower() == "heal":
+        elif east_wing_choice.lower() == "heal":
             heal()
-        elif gf_east_wing_1_choice.lower() == "n":
-            type_text("\nYou pass through the double doors and continue through the GF East Wing.\n")
-            gf_east_wing_2()
+        elif east_wing_choice.lower() == "n":
+            type_text("\nYou pass through the double doors into the Bar.\n")
+            bar()
             break
-        elif gf_east_wing_1_choice.lower() == "e":
-            if "Keycard" in player_card["Inventory"]:
-                type_text("\nYou use the keycard to access the Maintenance Room.\n")
+        elif east_wing_choice.lower() == "e":
+            if "Beak Key" in player_card["Inventory"]:
+                type_text("\nYou use the Raven's Beak Key to access the Maintenance Room.\n")
                 maintenance_room()
                 break
             else:
-                type_text("\nThis door requires a keycard to unlock it.\n")
-        elif gf_east_wing_1_choice.lower() == "s":
+                if player_card["Skill"] == "lockpick":
+                    type_text("\nThis door is locked with a strange mechanism. It looks like the key would need" 
+                    "\nto be beak shaped...\n")
+                else:
+                    type_text("This door is locked.")
+        elif east_wing_choice.lower() == "s":
             type_text("\nYou enter the Supplies Cupboard to the south.\n")
-            supplies_cupboard_gfew()
+            supplies_cupboard()
             break
-        elif gf_east_wing_1_choice.lower() == "w":
-            type_text("\nYou use the west door to the Foyer.\n")
+        elif east_wing_choice.lower() == "w":
+            type_text("\nYou use the western door to the Foyer.\n")
             foyer()
             break
         else:
             type_text(generic_error)
 
-def supplies_cupboard_gfew():
+def supplies_cupboard():
     """
-    Ground Floor East Wing Supplies Cupboard - Game Location.
+    Supplies Cupboard - Game Location.
     """
-    supplies_cupboard_gfew_initial = ("\nYou step into a cramped cupboard space, littered with cleaning supplies and" 
+    supplies_cupboard_initial = ("\nYou step into a cramped cupboard space, littered with cleaning supplies and" 
     "\nfresh bedding. You spot a FIRST AID KIT on the shelf.\n")
 
-    supplies_cupboard_gfew_return = ("\nYou enter the cramped cupboard.\n")
+    supplies_cupboard_return = ("\nYou enter the cramped cupboard.\n")
 
-    if "Supplies Cupboard (GFEW)" in checked_rooms:
-        type_text(supplies_cupboard_gfew_return)
+    if "Supplies Cupboard" in checked_rooms:
+        type_text(supplies_cupboard_return)
     else:
-        type_text(supplies_cupboard_gfew_initial)
-        checked_rooms.append("Supplies Cupboard (GFEW)")
+        type_text(supplies_cupboard_initial)
+        checked_rooms.append("Supplies Cupboard")
 
     while True:
-        supplies_cupboard_gfew_choice = input("\nWhat do you do?\n")
+        supplies_cupboard_choice = input("\nWhat do you do?\n")
 
-        if supplies_cupboard_gfew_choice.lower() == "l":
+        if supplies_cupboard_choice.lower() == "l":
             if "First Aid Kit GFEW" in looted_items:
-                type_text("\nThere's nothing else of use here. The GF East Wing is to your north ('n').\n")
+                type_text("\nThere's nothing else of use here. The East Wing is to your north ('n').\n")
             else: 
-                type_text("\nA FIRST AID KIT sits on the shelf. The GF East Wing is to your north ('n').\n")
-        elif supplies_cupboard_gfew_choice.lower() == "help":
+                type_text("\nA FIRST AID KIT sits on the shelf. The East Wing is to your north ('n').\n")
+        elif supplies_cupboard_choice.lower() == "help":
             print(help)
-        elif supplies_cupboard_gfew_choice.lower() == "pc":
+        elif supplies_cupboard_choice.lower() == "pc":
             print(player_card)
-        elif supplies_cupboard_gfew_choice.lower() == "exit":
+        elif supplies_cupboard_choice.lower() == "exit":
             main_menu()
             break
-        elif supplies_cupboard_gfew_choice.lower() == "heal":
+        elif supplies_cupboard_choice.lower() == "heal":
             heal()
-        elif supplies_cupboard_gfew_choice.lower() == "loot first aid kit":
-            if "First Aid Kit GFEW" in looted_items:
+        elif supplies_cupboard_choice.lower() == "loot first aid kit":
+            if "First Aid Kit SC" in looted_items:
                 type_text("\nYou've already taken the First Aid Kit.\n")
             else:
                 fa_kit_loot()
-                looted_items.append("First Aid Kit GFEW")
-        elif supplies_cupboard_gfew_choice.lower() == "n":
-            type_text("\nYou exit to the north, returning to the GF East Wing.\n")
-            gf_east_wing_1()
+                looted_items.append("First Aid Kit SC")
+                type_text("\nAs you put the First Aid Kit back, a previously hidden note is knocked to the floor. It reads:\n"
+                "\nJill,\n"
+                "\nThings here have been getting weirder and weirder lately. I was working a shift" 
+                "\nthe other night, and when I went for a smoke in the Garden, I could've sworn I" 
+                "\nheard chanting coming from the Cellar. And those freaks with the black robes" 
+                "\n- I still get shivers when I remember seeing them come up from the basement." 
+                "\nThe screams I heard coming from down there... I'm still sure it's got something" 
+                "\nto do with all these missing people. And I'm not waiting around to be the next" 
+                "\nface on a 'Missing' poster. Apparently Whateley's got a hidden safe somewhere" 
+                "\nin his room - I'm breaking in there tonight, clearing out anything worth a damn" 
+                "\nand getting the hell out of this town. I'll be gone by the time you read this," 
+                "\nbut if you know what's good for you, you'll follow my lead.\n"
+                "\nSerious, get out before it's too late.\n"
+                "\n- Jack\n")
+                player_card["Insight"].append("Hidden Safe")
+        elif supplies_cupboard_choice.lower() == "n":
+            type_text("\nYou exit to the north, returning to the East Wing.\n")
+            east_wing()
             return
         else:
             type_text(generic_error)
 
 def maintenance_room():
     """
-    Maintenance Room - Game Location.
+    Maintenance Room - Game Location where power can be restored.
     """
     maintenance_room_initial = ("\nAs you quietly edge the door open, peering through the gap, your flashlight" 
     "\nfalls upon a gruesome trail of red. That's when the stench hits you. Rotting" 
@@ -831,16 +861,17 @@ def maintenance_room():
 
     while True:
         maintenance_room_choice = input("\nWhat do you do?\n")
+        global power
+        global flashlight
 
         if maintenance_room_choice.lower() == "l":
-            global power
             if power == True:
                 type_text("\nThe grounds keeper's BODY lies in the centre of the room. Behind you, to the" 
-                "\nwest, is the GF East Wing. The generator across the room now hums with power.\n")
+                "\nwest, is the East Wing. The generator across the room now hums with power.\n")
             else: 
                 type_text("\nThe grounds keeper's BODY lies in the centre of the room. At the far end, you" 
                 "\nsee a CIRCUIT BREAKER, connected to a large generator. Behind you, to the" 
-                "\nwest, is the GF East Wing.\n")
+                "\nwest, is the East Wing.\n")
         elif maintenance_room_choice.lower() == "help":
             print(help)
         elif maintenance_room_choice.lower() == "pc":
@@ -859,20 +890,125 @@ def maintenance_room():
             type_text("\nYou grab the handle of the circuit breaker and pull down hard. After a couple" 
             "\nof seconds, the generator begins to rumble loudly. You hear the buzz of" 
             "\nelectricity and a click from above as the lights finally flicker to life. With" 
-            "\na sigh of relief, you turn off your flashlight and stow your phone in your" 
-            "\npocket.\n")
+            "\na sigh of relief, you turn off your flashlight and stow it in your pocket.\n")
             power = True
+            flashlight = False
         elif maintenance_room_choice.lower() == "i body":
             type_text("\nUpon closer inspection, the grounds keeper's body appears to have been torn" 
             "\napart. What on earth has the strength to do this?\n")
         elif maintenance_room_choice.lower() == "loot body":
             type_text("\nGross! I'm not touching that!\n")
         elif maintenance_room_choice.lower() == "w":
-            type_text("\nYou exit to the west, returning to the GF East Wing.\n")
-            gf_east_wing_1()
+            type_text("\nYou exit to the west, returning to the East Wing.\n")
+            east_wing()
             break
         else:
             type_text(generic_error)
+
+def bar():
+    """
+    Bar - Game Location where Beak Key can be found
+    """
+    if "Cultist (Bar)" in slain_enemies and "Bar" in checked_rooms:
+        bar_complete()
+    elif "Cultist (Bar)" not in slain_enemies and "Bar" in checked_rooms:
+        bar_return()
+    else:
+        bar_initial()
+
+def bar_initial():
+    """
+    Bar - Function that executes on Player's first time entering
+    """
+    checked_rooms.append("Bar")
+    global flashlight
+    enemy.update(cultist_bar)
+
+    type_text("\nAs you enter the bar, the eerie silence of the hotel is disturbed. Your heart" 
+    "\njumps into your mouth as you realise you're not alone in this room. You quickly" 
+    "\nsnuff out your flashlight and root yourself to the spot, terrified you'll make" 
+    "\na sound if you move. Somewhere across the room, hidden amongst the darkness," 
+    "\nyou hear a voice. Faintly, it mutters to itself in a language you've never" 
+    "\nheard before. The more you listen to the incessant mumbling, the more you begin" 
+    "\nto wonder if the language is even human. Suddenly, the muttering stops, and the" 
+    "\npitch-black room falls into silence.\n")
+
+    flashlight = False
+
+    "\nEnter 'use flashlight' to turn on your flashlight.\n"
+
+    while True:
+        bar_initial_choice = input()
+
+        if bar_initial_choice == "use flashlight":
+            if flashlight == True:
+                type_text("\nYour flashlight is already on!\n")
+            else:
+                flashlight = True
+                type_text("\nAlmost paralysed with fear, you force yourself to switch your flashlight on. As" 
+                "\nthe beam of light leaps forward, you see a man in black robes stood less than a" 
+                "\nmetre in front of you. Your instinct is to scream but luckily fear strangles" 
+                "\nyour voice, as you realise after a moment that the man hasn't seen you. In" 
+                "\nfact, he hasn't seen anything. Two dark sockets of crimson sit where his eyes" 
+                "\nshould be, and dried blood streaks his face like tears of gore. A strange" 
+                "\nsymbol is carved into the ghostly white flesh of his forehead, adding to his" 
+                "\nnightmareish visage. Despite his lack of eyes, he appears to be staring" 
+                "\nstraight at you.\n"
+                "\nVery slowly, you begin to edge backwards towards the door. Despite your efforts" 
+                "\nto remain silent, however, he hears you. Without uttering a single word, the" 
+                "\ncrazed man begins lumbering towards you, hands reaching out to grab you.\n"
+                "\nEnter 'atk' to attack, or 'flee' to run away.\n")
+        elif bar_initial_choice.lower() == "atk":
+            if flashlight == True:
+                atk()
+            else:
+                type_text("\nI can't see a thing!\n")
+        elif bar_initial_choice.lower() == "flee":
+            available_directions = [east_wing, garden]
+            random_direction = random.choice(available_directions)
+            random_direction()
+            break
+        elif bar_initial_choice.lower() == "l":
+            if flashlight == False:
+                type_text("\nI can't see a thing!\n")
+            elif flashlight == True and "Cultist (Bar)" not in slain_enemies:
+                "\nNows not the time for looking around!\n"
+            elif flashlight == True and "Cultist (Bar)" in slain_enemies:
+                type_text("\nWith the crazed man dead on the floor, you look around the bar. To the west," 
+                "\nyou see a door that leads outside. A sign next to it reads, 'Garden area this" 
+                "\nway'. At the far end of the room is a rather impressive BAR, with plenty of" 
+                "\nexpensive looking bottles on display. The door to East Wing is to your south." 
+                "\nLastly, you look again at the dead BODY lying before you.\n")
+            else:
+                RuntimeError
+        elif bar_initial_choice.lower() == "loot body":
+            if "Eyeless Madman" in slain_enemies and "Beak Key" not in player_card["Inventory"]:
+                type_text("\nYou crouch down and rummage through the dead man's robes. You find a strange, beak shaped key in his pocket.\n")
+                player_card["Inventory"].append("Beak Key")
+            elif "Eyeless Madman" in slain_enemies and "Beak Key" in player_card["Inventory"]:
+                type_text("\nYou've already looted this body for anything usesful.\n")
+            else:
+                type_text("\n'I can't loot him whilst he's attacking me!'\n")
+        elif bar_initial_choice.lower() == "help":
+            print(help)
+        elif bar_initial_choice.lower() == "pc":
+            print(player_card)
+        elif bar_initial_choice.lower() == "exit":
+            main_menu()
+            break
+        elif bar_initial_choice.lower() == "heal":
+            heal()
+        else:
+            (generic_error)
+        
+def bar_return():
+    type_text("\nThis is the bar_return function\n")
+
+def bar_complete():
+    type_text("\nThis is the bar_complete function\n")
+
+def garden():
+    type_text("\nThis is a garden.\n")
 
 # Start the game
 #main_menu()
