@@ -46,36 +46,42 @@ slain_enemies = []
 
 # Enemies
 enemy = {
+    "ID": None,
     "Name": None,
     "Health": 1,
     "Attack Power": 1
 }
 
 cultist_bar = {
-    "Name": "Eyeless Madman",
+    "ID": "Cultist (Bar)",
+    "Name": "Mutilated Cultist",
     "Health": 30,
     "Attack Power": random.randint(10, 20)
 }
 
 cultist_chris_room = {
-    "Name": "Cultist (Chris Room)",
+    "ID": "Cultist (Chris Room)",
+    "Name": "Jawless Cultist",
     "Health": 40,
     "Attack Power": random.randint(15, 25)
 }
 
 cultist_library = {
-    "Name": "Cultist (Library)",
+    "ID": "Cultist (Library)",
+    "Name": "Mutilated Cultist",
     "Health": 40,
     "Attack Power": random.randint(10, 20)
 }
 
-cult_leader = {
+mr_whateley = {
+    "ID": "Mr Whateley",
     "Name": "Mr Whateley",
     "Health": 100,
     "Attack Power": random.randint(25, 35)
 }
 
 chris = {
+    "ID": "Chris",
     "Name": "Chris",
     "Health": 120,
     "Attack Power": random.randint(35, 45)
@@ -121,8 +127,16 @@ def atk():
     Function for Player to attack Enemy
     """
     # Vary Enemy Attack Power per Attack
-    if enemy["Name"] == "Eyeless Madman":
+    if enemy["ID"] == "Cultist (Bar)":
         enemy["Attack Power"] = random.randint(10, 20)
+    elif enemy["ID"] == "Cultist (Chris Room)":
+        enemy["Attack Power"] = random.randint(15, 25)
+    elif enemy["ID"] == "Cultist (Library)":
+        enemy["Attack Power"] = random.randint(10, 20)
+    elif enemy["ID"] == "Mr Whateley":
+        enemy["Attack Power"] = random.randint(25, 35)
+    elif enemy["ID"] == "Chris":
+        enemy["Attack Power"] = random.randint(35, 45)
         
     # Vary Player Attack Power per Attack
     if player_card["Weapon"] == "Unarmed":
@@ -137,23 +151,59 @@ def atk():
     elif player_card["Weapon"] == "Shotgun":
         player_card["Attack Power"] = random.randint(35, 50)
 
-    if enemy["Name"] in slain_enemies:
+    if enemy["ID"] in slain_enemies:
         type_text(f"{enemy['Name']} is already dead!")
     else:
         enemy["Health"] = enemy["Health"] - player_card["Attack Power"]
         type_text(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
-        player_card["Health"] = player_card["Health"] - enemy["Attack Power"]
-        type_text(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
-        type_text(f"You have {player_card["Health"]} remaining health. Attack again or flee?")
-
         if enemy["Health"] <= 0:
             type_text(f"\nWith a final rasping breath, {enemy['Name']} drops to the floor, his BODY cold and still.\n")
-            slain_enemies.append(enemy["Name"])
+            slain_enemies.append(enemy["ID"])
+            return
+        else:
+            player_card["Health"] = player_card["Health"] - enemy["Attack Power"]
+            type_text(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
+            if player_card["Health"] <= 0:
+                game_over()
+            else:
+                type_text(f"You have {player_card["Health"]} remaining health. Attack again or flee?")
     return
 
 # End Game Functions
-#def game_over():
+def reset_game_values():
+    """
+    Resets game values to prepare for new game data.
+    """
+    global checked_rooms
+    global slain_enemies
+    global looted_items
+    
+    checked_rooms = []
+    slain_enemies = []
+    looted_items = []
+    return
+    
+def game_over():
+    type_text("\nYou let out a grunt as you drop to one knee. Bloodied and beaten, you struggle" 
+    "\nto focus your vision.\n"
+    "\n'I'm sorry, Chris...', you mutter, before collapsing on the floor.\n")
+    print(figlet_format("GAME OVER\n", justify="center"))
 
+    while True:
+        game_over_choice = input("\nEnter 'ng' to start a new game from the Character Selection Menu.\n"
+        "\nEnter 'exit' to return to the Main Menu.\n")
+
+        if game_over_choice.lower() == "ng":
+            reset_game_values()
+            character_selection()
+            return
+        elif game_over_choice.lower() == "exit":
+            reset_game_values()
+            main_menu()
+            return
+        else:
+            type_text("\nThat's not an option right now...\n")
+            
 #def end_game_good():
 
 #def end_game_bad():
@@ -918,7 +968,7 @@ def bar():
 
 def bar_initial():
     """
-    Bar - Function that executes on Player's first time entering
+    Bar (Initial) - Function that executes on Player's first time entering
     """
     checked_rooms.append("Bar")
     global flashlight
@@ -982,10 +1032,11 @@ def bar_initial():
             else:
                 RuntimeError
         elif bar_initial_choice.lower() == "loot body":
-            if "Eyeless Madman" in slain_enemies and "Beak Key" not in player_card["Inventory"]:
-                type_text("\nYou crouch down and rummage through the dead man's robes. You find a strange, beak shaped key in his pocket.\n")
+            if "Cultist (Bar)" in slain_enemies and "Beak Key" not in player_card["Inventory"]:
+                type_text("\nYou crouch down and rummage through the dead man's robes. You find a strange, beak shaped key in his pocket.\n"
+                "\n'Raven's Beak Key' added to Inventory.\n")
                 player_card["Inventory"].append("Beak Key")
-            elif "Eyeless Madman" in slain_enemies and "Beak Key" in player_card["Inventory"]:
+            elif "Cultist (Bar)" in slain_enemies and "Beak Key" in player_card["Inventory"]:
                 type_text("\nYou've already looted this body for anything usesful.\n")
             else:
                 type_text("\n'I can't loot him whilst he's attacking me!'\n")
@@ -999,7 +1050,7 @@ def bar_initial():
         elif bar_initial_choice.lower() == "heal":
             heal()
         else:
-            (generic_error)
+            type_text(generic_error)
         
 def bar_return():
     type_text("\nThis is the bar_return function\n")
@@ -1021,9 +1072,5 @@ flashlight = False
 
 # In-game feature to determine Chris' status
 chris_status = "Unknown"
-
-# 'If' statement to handle player death
-if player_card["Health"] == 0:
-    game_over()
 
 character_selection()
