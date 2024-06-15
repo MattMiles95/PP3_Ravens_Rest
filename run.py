@@ -152,6 +152,8 @@ def atk():
             player_card["Attack Power"] = random.randint(1, 10)
     elif player_card["Weapon"] == "Bloody Knife":
         player_card["Attack Power"] = random.randint(10, 20)
+    elif player_card["Weapon"] == "Pitchfork":
+        player_card["Attack Power"] = random.randint(20, 30)
     elif player_card["Weapon"] == "Handgun":
         player_card["Attack Power"] = random.randint(30, 40)
     elif player_card["Weapon"] == "Shotgun":
@@ -614,7 +616,8 @@ def foyer():
             type_text("\nThe door is locked.\n")
 
     while True:
-        foyer_choice = input("\nWhat do you do?\n")
+        foyer_choice = input("\nWhat do you do? (If you're stuck, try using"
+        " the 'l' command to look around.)\n")
 
         if foyer_choice.lower() == "l":
             type_text(foyer_look)
@@ -734,7 +737,8 @@ def foyer_staff_cupboard():
         checked_rooms.append("Foyer Staff Cupboard")
 
     while True: 
-        foyer_staff_cupboard_choice = input("\nWhat do you do?\n")
+        foyer_staff_cupboard_choice = input("\nWhat do you do? (If you're"
+        " stuck, try using the 'l' command to look around.)\n")
 
         if foyer_staff_cupboard_choice.lower() == "l":
             if "Bloody Knife" in looted_items:
@@ -771,7 +775,7 @@ def foyer_staff_cupboard():
                 "\n'Bloody Knife' is now equipped.\n")
                 looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
-                player_card["Attack Power"] = random.randint(15, 20)
+                player_card["Attack Power"] = random.randint(10, 20)
         elif foyer_staff_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
             foyer()
@@ -808,7 +812,8 @@ def east_wing():
         checked_rooms.append("East Wing")
 
     while True:
-        east_wing_choice = input("\nWhat do you do?\n")
+        east_wing_choice = input("\nWhat do you do? (If you're stuck, try"
+        " using the 'l' command to look around.)\n")
 
         if east_wing_choice.lower() == "l":
             type_text("\nLooking around the East Wing corridor, you spot a"
@@ -877,7 +882,8 @@ def supplies_cupboard():
         checked_rooms.append("Supplies Cupboard")
 
     while True:
-        supplies_cupboard_choice = input("\nWhat do you do?\n")
+        supplies_cupboard_choice = input("\nWhat do you do? (If you're stuck,"
+        " try using the 'l' command to look around.)\n")
 
         if supplies_cupboard_choice.lower() == "l":
             if "First Aid Kit EW" in looted_items:
@@ -957,7 +963,8 @@ def maintenance_room():
         checked_rooms.append("Maintenance Room")
 
     while True:
-        maintenance_room_choice = input("\nWhat do you do?\n")
+        maintenance_room_choice = input("\nWhat do you do? (If you're stuck,"
+        " try using the 'l' command to look around.)\n")
         global power
         global flashlight
 
@@ -1165,9 +1172,133 @@ def bar():
             type_text(generic_error)
 
 def garden():
-    type_text("\nThis is a garden.\n")
+    """
+    The Garden - Game Location.
+    """
+    global flashlight
+    if power == True:
+        flashlight = True
+        type_text("\nStepping into the dark and stormy night, you turn your flashlight on.\n")
 
-# Start the game
+    garden_initial = ("\nA sense of relief washes over you as you escape into"
+    " the downpour outside. It's \na welcome break from the oppressive hotel,"
+    " which felt as though it had \nswallowed you whole. You take a moment to catch"
+    " your breathe. Feeling the sting \nof cold wind and rain on your face"
+    " reassures you that you're not simply trapped \nin a nightmare. After a"
+    " moment, you allow your mind to be dragged back to the \nhorrors of the"
+    " Raven's Rest and the task at hand. Sweeping the beam of your"
+    "\nflashlight across the garden, you make out a tall hedge that runs the"
+    " perimeter. \nAn impressive water fountain takes the pride of the garden"
+    " space, sporting an \nelegent statue of (rather predictably) a raven at"
+    " it's centre. Benches are \nscattered throughout the garden, with several"
+    " FLOWER BEDS dotted around. \nTo the west, a set of doors lead into the"
+    " Hotel's Library. The Bar is to the \neast. In between these doors, up"
+    " against the southern wall of the Hotel, you \nsee the entrance to the"
+    " cellar.\n")
+
+    garden_return = ("\nYou step outside into the wind and rain, glad to"
+    " escape the suffocating \ninterior of the Raven's Rest for a while.\n"
+    "\nTo the west is the Library.\n"
+    "\nTo the East is the Bar.\n"
+    "\nTo the South is the Cellar entrance.\n")
+
+    if "Garden" in checked_rooms:
+        type_text(garden_return)
+    else:
+        type_text(garden_initial)
+        checked_rooms.append("Garden")
+
+    while True: 
+        garden_choice = input("\nWhat do you do? (If you're stuck, try using"
+        " the 'l' command to look around.)\n")
+
+        if garden_choice.lower() == "l":
+            type_text("\nSeveral FLOWER BEDS are dotted around the garden.\n"
+            "\nTo the west is the Library.\n"
+            "\nTo the East is the Bar.\n"
+            "\nTo the South is the Cellar entrance.\n")
+        elif garden_choice.lower() == "help":
+            print(help)
+        elif garden_choice.lower() == "pc":
+            print(player_card)
+        elif garden_choice.lower() == "exit":
+            main_menu()
+            break
+        elif garden_choice.lower() == "heal":
+            heal()
+        elif garden_choice.lower() == "i flower beds":
+            type_text("\nYou inspect a nearby flowerbed. Unusual plants seem to"
+            " be growing here. Thick \npurple stems support dark, drooping"
+            " leaves. It's as though the corruption within \nthe Hotel has"
+            " seeped into the earth around it, bearing these ominious plants"
+            " as \nit's fruit. One section of the flower bed looks recently"
+            " dug up, with a muddied \nPITCHFORK staked into the dirt.\n")
+        elif garden_choice.lower() == "i pitchfork":
+            if "Pitchfork" in looted_items:
+                type_text("\nYou've already taken the Pitchfork.\n")
+            elif "Handgun" in looted_items:
+                type_text("\nI think I'll stick with this hangun...\n")
+            elif "Shotgun" in looted_items:
+                type_text("\nI think I'll stick with this shotgun...\n")
+            else:
+                type_text("\nYou lean down and grab the pitchfork, freeing it"
+                " from the earth. Testing it's \nweight, you give it a couple"
+                " of practice thrusts. Not bad.\n"
+                "\n'Pitchfork' is now equipped.\n")
+                looted_items.append("Pitchfork")
+                player_card["Weapon"] = "Pitchfork"
+                player_card["Attack Power"] = random.randint(20, 30)
+        elif garden_choice.lower() == "w":
+            if power == True:
+                type_text("\nYou switch off your flashlight before heading"
+                " into the Library.\n")
+                flashlight = False
+            else:
+                type_text("\nYou head through the western door into the"
+                " Library.\n")
+            library()
+            break
+        elif garden_choice.lower() == "e":
+            if power == True:
+                type_text("\nYou switch off your flashlight before heading"
+                " into the Bar.\n")
+                flashlight = False
+            else:
+                type_text("\nYou head through the eastern door into the"
+                " Bar.\n")
+            bar()
+            break
+        elif garden_choice.lower() == "s":
+            if "Cellar" not in checked_rooms:
+                type_text("\nApproaching the Cellar doors, you begin to hear"
+                " strange sounds coming from \nwithin. As you get closer, you"
+                " realise it's a voice, chanting. The voice is \nthat of a"
+                " man's, but the language sounds completely alien. The only"
+                " words you \ncan make out are... 'Yog'... 'Sothoth'..."
+                " Whatever that means.\n"
+                "\nA sense of unease stirs within you. Whatever evil"
+                " permeates this Hotel, \nyou can't help but feel like it's"
+                " festering source is coming from below.\n")
+                enter_cellar = input("\nAre you sure you want to enter? y /"
+                " n\n")
+                if enter_cellar.lower() == "y":
+                    type_text("\nThe answer to finding Chris is in this"
+                    " Cellar. You know it. You open one of the \ndoors and"
+                    " quietly descend the hard, stone steps.\n")
+                    cellar()
+                    break
+                elif enter_cellar.lower() == "n":
+                    type_text("\n'I should prepare some more before going down"
+                    " there.'\n")
+                else:
+                    type_text("You can't do that now.")
+            else:
+                cellar()
+                break
+        else:
+            type_text(generic_error)
+
+# Title Screen
 #main_menu()
 
 # Determines if the hotel has power
