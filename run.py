@@ -88,16 +88,22 @@ chris = {
 }
 
 # Help variable, for use in game
-help = ("\nType 'exit' to quit to main menu."
-        "\nType 'pc' to view Player Card."
-        "\nType 'n', 'e', 's', 'w', to move north, east, south and west."
-        "\nType 'l' to look around."
-        "\nType 'i' followed by an OBJECT to inspect that object."
-        "\nType 'use' followed by an OBJECT to inspect that object."
-        "\nType 'loot' followed by an OBJECT to add it to your inventory."
-        "\nType 'heal' to use a First Aid Kit."
-        "\nType 'atk' to attack."
-        "\nType 'flee' to escape a fight in a random direction.\n")
+help = (
+"\nHere are a few common commands you will use:\n" 
+"\n(Not all of these can be used all \nof the time - for example, you can't"
+" move north if there's nowhere north to go!)\n"
+"\nEnter 'exit' to quit to main menu."
+"\nEnter 'pc' to view Player Card."
+"\nEnter 'n', 'e', 's', 'w', to move north, east, south and west."
+"\nEnter 'l' to look around."
+"\nEnter 'i' followed by an OBJECT to inspect that object."
+"\nEnter 'use' followed by an OBJECT to inspect that object."
+"\nEnter 'loot' followed by an OBJECT to add it to your inventory."
+"\nEnter 'heal' to use a First Aid Kit."
+"\nEnter 'atk' to attack."
+"\nEnter 'flee' to escape a fight in a random direction.\n"
+"\nHINT: The 'l' command is great if you need a clue as to what you can do in"
+" the room you're in!\n")
 
 generic_error = ("\nYou can't do that... Use the 'help' command if you're "
 "stuck, or 'l' to look around for clues.\n")
@@ -549,15 +555,15 @@ def intro_d():
     " eyes follow the slate grey walls, receding into the \ndarkness above. As"
     " though the hotel seems much larger than it really is.\n"
     "\nEventually you come across a long wooden porch that leads you to the"
-    " hotel \nentrance. Double black doors set against white wooden slats. In"
+    " hotel \nentrance. Double black DOORS set against white wooden slats. In"
     " the gloom of \nnight, it looks like the gaping maw of a beast. 'Raven's"
-    " Rest', is scrawled in \nblack lettering above the doors.\n")
+    " Rest', is scrawled in \nblack lettering above the DOORS.\n")
 
     while True:
-        intro_d_choice = input("\nEnter 'o' to open the doors and enter the"
+        intro_d_choice = input("\nEnter 'use doors' to open the DOORS and enter the"
         " Raven's Rest.\n")
 
-        if intro_d_choice.lower() == "o":
+        if intro_d_choice.lower() == "use door":
             type_text("\nWith a shrill creak, the doors yawn open...\n")
             foyer()
             break
@@ -595,18 +601,9 @@ def foyer():
 
     foyer_look = ("\nYou look around the Foyer. You see the reception DESK"
     " ahead of you. A door to \nthe east ('e') with a sign that reads, 'East"
-    " Wing, Maintenance and Bar'. A door \nto the west ('w') with a sign that"
-    " reads, 'West Wing and Library'. On a \nsmall table nearby is a"
-    " NEWSPAPER. Behind you, to the south ('s'), is the Hotel" 
-    "\nentrance.")
-
-    newspaper_inspect = ("You take a closer look at the newspaper. 'The"
-    " Innsmouth Daily'. The headline \nreads, 'BODY SNATCHER STRIKES AGAIN?"
-    " FOURTH MISSING PERSON REPORTED THIS YEAR'. \nYou flick through the"
-    " paper, pausing when your eye is caught by a picture of \nthe Raven's"
-    " Rest. The caption reads 'One year since the Raven's Rest came under"
-    "\nnew management. New owner Mr Whateley says he has 'big plans' for the"
-    " hotel'.\n")
+    " Wing, Maintenance and Bar'. A door to \nthe west ('w') with a sign that"
+    " reads, 'West Wing and Library'. Behind you, to \nthe south ('s'), is the"
+    " Hotel entrance.\n")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and"
     " a BELL sit on the desk. \nBehind the desk is a DOOR with a sign that"
@@ -663,9 +660,6 @@ def foyer():
                 type_text("I'm not leaving until I've found Chris.")
         elif foyer_choice.lower() == "i desk":
             type_text(desk_inspect)
-        elif foyer_choice.lower() == "i newspaper":
-            type_text(newspaper_inspect)
-            player_card["Insight"].append("Raven's Rest Owner")
         elif foyer_choice.lower() == "use computer":
             foyer_computer_use()
         elif foyer_choice.lower() == "use door":
@@ -739,10 +733,10 @@ def foyer_staff_cupboard():
     foyer_staff_cupboard_text_initial = ("\nThe door leads into a small"
     " cupboard space. Whilst inspecting, the beam of your \nflashlight passes"
     " over something slumped on the floor. Your heart sinks. It's a \ndead"
-    " body. A BLOODY KNIFE protruding from the side of it's neck.\n")
+    " BODY. A bloody KNIFE protruding from the side of it's neck.\n")
 
     foyer_staff_cupboard_text_return = ("\nYou enter the cupboard, trying your"
-    " best not to look at the dead body.\n")
+    " best not to look at the dead BODY.\n")
 
     if "Foyer Staff Cupboard" in checked_rooms:
         type_text(foyer_staff_cupboard_text_return)
@@ -750,7 +744,7 @@ def foyer_staff_cupboard():
         type_text(foyer_staff_cupboard_text_initial)
         checked_rooms.append("Foyer Staff Cupboard")
 
-    bloody_knife_loot = ("\nYou crouch beside the body and grab the blade by"
+    bloody_knife_loot = ("\nYou crouch beside the BODY and grab the blade by"
     " its handle. With a sickening \nsquelch, you slide the knife from their"
     " neck. Dark crimson pools around your \nfeet.\n"
     "\n'Bloody Knife' is now equipped.\n")
@@ -759,14 +753,13 @@ def foyer_staff_cupboard():
         foyer_staff_cupboard_choice = input("\nWhat do you do?\n")
 
         if foyer_staff_cupboard_choice.lower() == "l":
-            if "Bloody Knife" in player_card["Inventory"]:
-                type_text("\nThere's nothing else of use here. The foyer is to"
-                " your south ('s').\n")
+            if "Bloody Knife" in looted_items:
+                type_text("\nA dead BODY lies slumped on the floor. The foyer"
+                " is to your south ('s').\n")
             else: 
                 type_text("\nYou take a moment to collect yourself, then look"
-                " around the cupboard. The" 
-    "\nBLOODY KNIFE sticks out of the dead body's neck. The foyer is to your"
-    " south \n('s').\n")
+                " around the cupboard. The \nbloody KNIFE sticks out of the"
+                " dead BODY's neck. The foyer is to your south \n('s').\n")
         elif foyer_staff_cupboard_choice.lower() == "help":
             print(help)
         elif foyer_staff_cupboard_choice.lower() == "pc":
@@ -776,9 +769,13 @@ def foyer_staff_cupboard():
             break
         elif foyer_staff_cupboard_choice.lower() == "heal":
             heal()
-        elif foyer_staff_cupboard_choice.lower() == "loot bloody knife":
+        elif foyer_staff_cupboard_choice.lower() == "i body":
+            type_text("\nYou take a closer look at the body. It's a young"
+            " man, probably in his 20s. He looks to be one of the staff"
+            " members of the Hotel. His name tag reads, 'Jack'.\n")
+        elif foyer_staff_cupboard_choice.lower() == "loot knife":
             if "Bloody Knife" in looted_items:
-                type_text("\nYou've already taken the bloody knife.\n")
+                type_text("\nYou've already taken the Bloody Knife.\n")
             else:
                 type_text(bloody_knife_loot)
                 looted_items.append("Bloody Knife")
@@ -805,6 +802,14 @@ def east_wing():
 
     east_wing_return = ("\nYou step into the East Wing.\n")
 
+    newspaper_inspect = ("You take a closer look at the newspaper. 'The"
+    " Innsmouth Daily'. The headline \nreads, 'BODY SNATCHER STRIKES AGAIN?"
+    " FOURTH MISSING PERSON REPORTED THIS YEAR'. \nYou flick through the"
+    " paper, pausing when your eye is caught by a picture of \nthe Raven's"
+    " Rest. The caption reads 'One year since the Raven's Rest came under"
+    "\nnew management. New owner Mr Whateley says he has 'big plans' for the"
+    " hotel'.\n")
+
     if "East Wing" in checked_rooms:
         type_text(east_wing_return)
     else:
@@ -815,7 +820,10 @@ def east_wing():
         east_wing_choice = input("\nWhat do you do?\n")
 
         if east_wing_choice.lower() == "l":
-            type_text("\nTo the north ('n') is a set of double doors leading"
+            type_text("\nLooking around the East Wing corridor, you spot a"
+            " cleaning trolley by one of the \nrooms. A NEWSPAPER is sticking"
+            " out of the trash.\n"
+            "\nTo the north ('n') is a set of double doors leading"
             " to the Bar.\n"
             "\nTo the east ('e') is the Maintenance Room.\n"
             "\nTo the south ('s') is a Supplies Cupboard.\n"
@@ -829,6 +837,9 @@ def east_wing():
             break
         elif east_wing_choice.lower() == "heal":
             heal()
+        elif foyer_choice.lower() == "i newspaper":
+            type_text(newspaper_inspect)
+            player_card["Insight"].append("Raven's Rest Owner")
         elif east_wing_choice.lower() == "n":
             type_text("\nYou pass through the double doors into the Bar.\n")
             bar()
