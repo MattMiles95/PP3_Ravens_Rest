@@ -70,18 +70,18 @@ cultist_bar = {
     "Attack Power": random.randint(10, 20)
 }
 
-cultist_chris_room = {
-    "ID": "Cultist (Chris Room)",
-    "Name": "Jawless Cultist",
-    "HP": 40,
-    "Attack Power": random.randint(15, 25)
-}
-
 cultist_library = {
     "ID": "Cultist (Library)",
     "Name": "Mutilated Cultist",
+    "HP": 50,
+    "Attack Power": random.randint(15, 25)
+}
+
+cultist_chris_room = {
+    "ID": "Cultist (CR)",
+    "Name": "Mutilated Cultist",
     "HP": 40,
-    "Attack Power": random.randint(10, 20)
+    "Attack Power": random.randint(20, 30)
 }
 
 mr_whateley = {
@@ -147,12 +147,13 @@ def atk():
     # Vary Enemy Attack Power per Attack
     if enemy["ID"] == "Cultist (Bar)":
         enemy["Attack Power"] = random.randint(10, 20)
-    
-    elif enemy["ID"] == "Cultist (Chris Room)":
+
+    elif enemy["ID"] == "Cultist (Library)":
         enemy["Attack Power"] = random.randint(15, 25)
     
-    elif enemy["ID"] == "Cultist (Library)":
-        enemy["Attack Power"] = random.randint(10, 20)
+    elif enemy["ID"] == "Cultist (Chris Room)":
+        enemy["Attack Power"] = random.randint(20, 30)
+
     
     elif enemy["ID"] == "Mr Whateley":
         enemy["Attack Power"] = random.randint(25, 35)
@@ -487,7 +488,7 @@ def intro_b():
     f"\n{player_card["Name"]},\n"
     "\nThink I've finally made some headway with the article… Currently"
     " visiting a \nchap in Innsmouth who apparently knew one of the students"
-    " that went missing - \nhis brother in fact! I'm staying at an old hotel,"
+    " that went missing - \nhis son in fact! I'm staying at an old hotel,"
     " the Raven's Rest. Feels like \nit's been pulled straight out of the"
     " 1800s - but then again, so does the rest \nof this town. Anyways, hope"
     " you're well. Give mum & dad my love. Hopefully the \nnext time you read"
@@ -737,12 +738,12 @@ def foyer_computer():
     type_text("\nThe computer is locked, but you manage to hack it.\n")
     
     while True:
-        foyer_computer_choice = input("\nEnter 'rooms' to see reservation"
+        foyer_computer_choice = input("\nEnter 'r' to see reservation"
         " list.\n"
-        "\nEnter 'messages' to see saved massages.\n"
+        "\nEnter 'm' to see saved messages.\n"
         "\nEnter 'back' to log off computer.\n")
 
-        if foyer_computer_choice.lower() == "rooms":
+        if foyer_computer_choice.lower() == "r":
             if "Raven's Rest Owner Name" in player_card["Insight"]:
                 type_text("\nYou flick through some files and discover Chris'"
                 " room number, located in the \nWest Wing. You also notice"
@@ -762,7 +763,7 @@ def foyer_computer():
                     player_card["Insight"].append("Chris' Room Location")
                     type_text("\n'Chris' Room Location' added to Insight.\n")
         
-        elif foyer_computer_choice.lower() == "messages":
+        elif foyer_computer_choice.lower() == "m":
             type_text("\nYou find a message that reads:\n"
             "\nDear employees,\n"
             "\nI understand there has been some confusion about the new"
@@ -782,6 +783,7 @@ def foyer_computer():
             "\n - Mr Whateley\n")
         
         elif foyer_computer_choice.lower() == "back":
+            type_text("\nYou log off the computer.\n")
             foyer()
             break
         
@@ -794,6 +796,9 @@ def foyer_computer():
         elif foyer_computer_choice.lower() == "exit":
             main_menu()
             break
+
+        else:
+            type_text(generic_error)
 
 def staff_only_cupboard():
     """
@@ -863,7 +868,7 @@ def staff_only_cupboard():
                 "\n'Bloody Knife' is now equipped.\n")
                 looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
-                player_card["Attack Power"] = random.randint(10, 20)
+                player_card["Attack Power"] = "10 - 20"
         
         elif staff_only_cupboard_choice.lower() == "i note":
             type_text("\nYou pick up the note from the laundry basket and give"
@@ -1015,13 +1020,14 @@ def west_wing():
         " Library.\n"
         "\nTo the East ('e') is the Foyer.\n"
         "\nOn the Western ('w') side of the corridor, you see a service lift"
-        " with a sign next to it that reads 'Basement Access'.\n")
+        " with a sign \nnext to it that reads 'Basement Access'.\n")
 
     west_wing_return = ("\nYou step into the West Wing, averting your eyes"
     " from the mangled BODY on the \nfloor.\n")
 
     if "West Wing" in checked_rooms:
         type_text(west_wing_return)
+    
     else:
         type_text(west_wing_initial)
         checked_rooms.append("West Wing")
@@ -1276,8 +1282,8 @@ def library():
             available_directions = [west_wing, garden, whateleys_room]
         else:
             available_directions = [west_wing, garden]
-        random_direction = random.choice(available_directions)
-        random_direction()
+            random_direction = random.choice(available_directions)
+            random_direction()
 
     library_initial = ("\nThe door to the Library creaks open, and you're met"
     " with the largest room in \nRaven's Rest. High ceilings stretch far"
@@ -1348,7 +1354,7 @@ def library():
         
         if "Cultist (Library)" in slain_enemies:
             library_choice = input("\nWhat do you do? (If you're stuck, try"
-        " using the 'l' command to look around.)\n")
+            " using the 'l' command to look around.)\n")
         
         else:
             library_choice = input("\nWhat do you do? Use the 'atk' command to"
@@ -1364,6 +1370,7 @@ def library():
                 type_text("\nIn a blind panic, you sprint for the nearest"
                 " door.\n")
                 flee()
+                break
 
         elif library_choice.lower() == "l":
             if "Cultist (Library)" not in slain_enemies:
@@ -1751,7 +1758,7 @@ def garden():
                 "\n'Pitchfork' is now equipped.\n")
                 looted_items.append("Pitchfork")
                 player_card["Weapon"] = "Pitchfork"
-                player_card["Attack Power"] = random.randint(20, 30)
+                player_card["Attack Power"] = "20 - 30"
         
         elif garden_choice.lower() == "w":
             if power == True:
@@ -1806,16 +1813,303 @@ def garden():
         else:
             type_text(generic_error)
 
+def chris_room():
+    """
+    Chris' Room - Game Location.
+    """
+    global chris_safe
+
+    chris_room_initial = ("\nCautiously, you step into Chris' Room. Hunched"
+    " over a desk in the corner is \nanother robed figure shrouded by a black"
+    " hood. You watch as they rifle through \na pile of loose sheets of paper,"
+    " seeming not to notice you. Slowly and \nquietly, you sneak towards them"
+    " - hoping to get the drop on them. To your \ndismay, as you get within a"
+    " few feet of the cultist, they happen to turn \naround. Shock flashes"
+    " across the man’s face before quickly twisting to \ncontempt. He howls a"
+    " string of alien words at you as he grasps a knife from the \ndesk and"
+    " lunges towards you.\n")
+
+    chris_room_return = ("\nAs you step back into Chris' Room, for a moment,"
+    " it appears empty. Then, \nannouncing himself with an animalistic roar,"
+    " you spin around to see the hooded \nfigure charge at you from the"
+    " bathroom.\n")
+
+    chris_room_safe = ("\nYou walk into Chris' Room and look around.\n"
+    "\nThere's an en suite BATHROOM to your right.\n"
+    "\nIn the corner of the room is the desk the cultist was pouring over,"
+    " littered \nin NOTES of paper. Also on the desk sits a COMPUTER.\n"
+    "\nBeneath the desk sits a small SAFE.\n"
+    "\nBehind you, to the North ('n') is the West Wing corridor.\n")
+
+    if "Cultist (CR)" in slain_enemies:
+        type_text(chris_room_safe)
+
+    elif "Cultist (CR)" not in slain_enemies and "CR" in checked_rooms:
+        enemy.update(cultist_chris_room)
+        type_text(chris_room_return)
+        
+    else:
+        enemy.update(cultist_chris_room)
+        checked_rooms.append("CR")
+        type_text(chris_room_initial)
+    
+    def trapped():
+        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+        type_text(f"You attempt to flee, but {enemy['Name']} blocks the door"
+        f" and slashes at you \nfor {enemy['Attack Power']}")
+        if player_card["HP"] <= 0:
+            game_over()
+        else:
+            type_text(f"You have {player_card["HP"]} remaining HP."
+            " Attack or attempt to flee?\n")
+
+    def flee():
+        possible_outcomes = [west_wing, trapped]
+        random_outcome = random.choice(possible_outcomes)
+        random_outcome()
+
+    while True:
+        
+        if "Cultist (CR)" in slain_enemies:
+            cr_choice = input("\nWhat do you do? (If you're stuck, try"
+            " using the 'l' command to look around.)\n")
+        else:
+            cr_choice = input("\nWhat do you do? Use the 'atk' command to"
+            " attack, or the 'flee' command to flee.\n")
+
+        if cr_choice.lower() == "atk":
+            atk()
+
+        elif cr_choice.lower() == "flee":
+            if "Cultist (CR)" in slain_enemies:
+                type_text("\nThere's nothing to run from right now.\n")
+            else:
+                flee()
+
+        elif cr_choice.lower() == "l":
+            if "Cultist (CR)" not in slain_enemies:
+                type_text("\nNow's not the time for looking around!\n")
+            else:
+                type_text("\nYou look around the room.\n"
+                "\nThe cultist lies dead on the floor, his BODY still.\n"
+                "\nThere's an en suite BATHROOM to your right.\n"
+                "\nIn the corner of the room is the desk the cultist was"
+                " pouring over, littered \nin NOTES of paper. Also on the"
+                " desk sits a COMPUTER.\n"
+                "\nBeneath the desk sits a small SAFE.\n"
+                "\nBehind you, to the North ('n'), is the West Wing"
+                " corridor.\n")
+                    
+        elif cr_choice.lower() == "i computer":
+            if "Cultist (CR)" not in slain_enemies:
+                type_text("\n'I can't do that now.'\n")
+            else:
+                if power == False:
+                    type_text("\nThe power is still out. Maybe you can find a"
+                    " way to turn it back on...\n")
+                else:
+                    chris_computer()
+                
+        elif cr_choice.lower() == "i safe":
+            if "Cultist (CR)" not in slain_enemies:
+                type_text("\n'I can't do that now.'\n")
+            else:
+                if "hack" not in player_card["Skill"]:
+                    type_text("\nIt's secured with an electrical lock. A small"
+                    " terminal is built into the side of it.\n"
+                    "\n'No way I'm breaking into this.'\n")
+                else:
+                    if "Handgun" in looted_items:
+                        type_text("\nYou've already emptied the safe.\n")
+                    else:
+                        type_text("\nYou manage to hack into the safe's"
+                        " terminal and find a Handgun inside.\n")
+                        looted_items.append("Handgun")
+                        player_card["Weapon"] = "Handgun"
+                        player_card["Attack Power"] = "30 - 40"
+                        type_text("'Handgun' is now equipped.")
+
+        elif cr_choice.lower() == "i notes":
+            if "Cultist (CR)" in slain_enemies:
+                if "Ciper" not in looted_items:
+                    type_text("\nYou look through the notes on Chris' desk."
+                    " Page after page of strange glyphs, \nsome with letters"
+                    " or numbers scribbled in the margins. Then it dawns on"
+                    " you - \nyou're looking at a cipher. Chris was working on"
+                    " translating this strange \nlanguage. Eventually you find"
+                    " a page that looks to show a complete alphabet, \nwhich"
+                    " you hastily stuff into your pocket.\n")
+                    player_card["Inventory"].append("Ciper")
+                    looted_items.append("Ciper")
+                    type_text("\n'Cipher' added to Inventory.\n")
+                else:
+                    type_text("\nYou've already picked up the Cipher.\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+        
+        elif cr_choice.lower() == "i body":
+            if "Cultist (CR)" in slain_enemies:
+                type_text("\nYou take a closer look at the dead cultist. You"
+                " realise now why you were able \nto sneak up on him at first."
+                " The sides of his head and neck are stained a dark \nred."
+                " Judging by the jagged wounds, it looks like his ears had"
+                " been torn off. \nDid he do this to himself? He has the same"
+                " strange marking carved into his \nforehead.\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+
+        elif cr_choice.lower() == "n":
+            if "Cultist (CR)" in slain_enemies:
+                type_text("\nYou exit out the North door to the West Wing corridor.\n")
+                west_wing()
+                break
+            else:
+                flee()
+
+        elif cr_choice.lower() == "help":
+            print(help)
+
+        elif cr_choice.lower() == "pc":
+            print(player_card)
+
+        elif cr_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif cr_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
+def chris_computer():
+    """
+    Chris' Computer - Options
+    """
+    while True:
+        chris_computer_choice = input("\nEnter 'j' to open Journal Entries.\n"
+        "\nEnter 'back' to log off the computer.\n")
+
+        if chris_computer_choice.lower() == "j":
+            type_text("\nJournal Entry #1\n"
+            "\nJournal Entry #2\n"
+            "\nJournal Entry #3\n"
+            "\nJournal Entry #4\n"
+            "\nJournal Entry #5\n")
+            read_journal = input("\nWhich entry do you want to read? 1 / 2 /"
+            " 3 / 4 / 5 / back\n")
+            if read_journal.lower() == "1":
+                type_text("\nJust arrived at the Raven's Rest. This place is"
+                " about as old school as they \ncome, but Whateley's arranged"
+                " a room for me with a desk and computer, so I \ncan't"
+                " complain.\n"
+                "\nSpent the day in town talking to people about the"
+                " disappearances. Most were \nunderstandably keen to avoid the"
+                " topic, but I met a couple of the town's \ngossips who were"
+                " more loose lipped about it. Apparently the 6 missing persons"
+                "\nreported in the papers is just the official number, some"
+                " reckon the number is \nmuch higher. Of course, the rumour"
+                " factory always works double shifts in \nremote backwaters"
+                " like this. One day someone sees a stray cat and by the end"
+                "\nof the week it's a panther stalking about, so I'll take"
+                " what they say with a \npinch of salt. Tomorrow I meet with"
+                " Mr Whateley. I can't wait to hear what he \nhas to say. I"
+                " only hope it's worth the 8-hour round trip I've made to be"
+                " here!\n")
+            elif read_journal.lower() == "2":
+                type_text("\nFinally spoke with the man that brought me all"
+                " the way to Innsmouth today - Mr \nWhateley. The very owner"
+                " of this Hotel. I have to say, the conversation wasn't \nat"
+                " all what I thought it would be. He seemed exceptionally"
+                " uninterested in the \nmissing persons. Rather, he wanted to"
+                " talk about me. Strange questions, like \nwhether there's any"
+                " history of health conditions in my family. He backed off"
+                "\nthe questions a bit when I brought up his son. Withdrew a"
+                " little into himself. \nClearly the wound is still fresh. I"
+                " think I'll finish writing up yesterday's \nnotes tonight"
+                " then have another crack at him tomorrow.\n")
+            elif read_journal.lower() == "3":
+                type_text("\nSomething very strange is going on. One of the"
+                " townsfolk approached me at the \nbar last night. Said he'd"
+                " heard about the questions I've been asking and knew I \nwas"
+                " staying in the old Raven's Rest Hotel. He told me there have"
+                " been strange \ngoings on at this Hotel ever since Mr Whateley"
+                " took over last year, and that \nhe's brought with him a band"
+                " of merry weirdos to boot. Apparently, he's seen \nthem at"
+                " night, travelling to and from the Hotel and dancing around"
+                " burning \neffigies in the moors. The craziest thing is that I"
+                " believe him. There's \nsomething very off with Whateley. I"
+                " get a real uneasy feeling around him. And \nthe other night I"
+                " was chatting with one of the staff, Jack I think his name is,"
+                "\nand he told me he's seen gatherings of men in black robes"
+                " emerging from the \ncellar in the garden. I'll keep a keen"
+                " eye on Whateley and his acquaintances \nfrom now on. I'm"
+                " starting to think he's at the centre of these"
+                " disappearances.\n")
+            elif read_journal.lower() == "4":
+                type_text("\nIt's a cult. Like a full blown, robe wearing,"
+                " ritual sacrificing c u l t. I \nmanaged to sneak into the"
+                " Cellar the other night and I couldn't believe what \nI saw."
+                " There's this, shrine, I guess, down there. Real mad hatter"
+                " stuff. I \nspoke to that employee again about it and he"
+                " managed to snag this terrifying \nbook he says they're"
+                " obsessed with. The 'Necronomicon' or something. Apparently" 
+                "\nit's written in a dead language, but I found a book on"
+                " cryptography in the \nLibrary, so I'm going to spend the"
+                " next couple nights trying to figure this \nout. Hopefully"
+                " they don't notice their favourite book has gone"
+                " walkabouts…\n")
+            elif read_journal.lower() == "5":
+                type_text("\nWhateley definitely suspects something. I'm not"
+                " safe here anymore. Tonight, I'm \nsneaking back into that"
+                " cellar and finding something tangible I can take to the"
+                "\npolice. I may not have any proof, but Whately and his"
+                " lunatic cult are behind \nthose disappearances, I'm sure of"
+                " it. That book was pure evil. I got Jack to \nstick it in the"
+                " library so it looks like it just got tidied away by accident,"
+                " \nbut Whateley definitely suspects me. For now, I've locked"
+                " myself in my room. \nThere's a gun in the safe should things"
+                " get desperate. Just one more night, \nthen I'm getting out of"
+                " this nightmare town and never looking back.\n")
+            elif read_journal.lower() == "back":
+                chris_computer()
+            else: 
+                type_text("\nAn Error Message appears on screen.\n")
+        
+        elif chris_computer_choice.lower() == "back":
+            type_text("\nYou log off the computer.\n")
+            chris_room()
+            break
+        
+        elif chris_computer_choice.lower() == "help":
+            print(help)
+        
+        elif chris_computer_choice.lower() == "pc":
+            print(player_card)
+        
+        elif chris_computer_choice.lower() == "exit":
+            main_menu()
+            break
+
+        else:
+            type_text(generic_error)
+
 # Title Screen
 #main_menu()
 
-# Determines if the hotel has power
+# Determines if the Hotel has power
 power = False
 
-# Determines if the player's flashlight is on
+# Determines if the Player's flashlight is on
 flashlight = False
 
-# In-game feature to determine Chris' status
+# Determines if Chris' safe is locked
+chris_safe = False
+
+# Determines if Whateley's safe is locked
+whateley_safe = False
+
+# Determines Chris' status
 chris_status = "Unknown"
 
 character_selection()
