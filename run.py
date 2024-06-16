@@ -8,18 +8,29 @@ lee_kennedy = {
     "HP": 100,
     "Attack Power": random.randint(5, 10),
     "Weapon": "Unarmed",
-    "Skill": "lockpick",
+    "Skill": ["lockpick"],
     "Inventory": ["flashlight"],
     "Insight": []
 }
 
-# Player Charater Option 1
+# Player Charater Option 2
 claire_greenfield = {
     "Name": "Claire",
     "HP": 120,
     "Attack Power": random.randint(15, 20),
     "Weapon": "Unarmed",
-    "Skill": "hack",
+    "Skill": ["hack"],
+    "Inventory": ["flashlight"],
+    "Insight": []
+}
+
+# Secret Player Charater Option
+god_mode = {
+    "Name": "Super Shaggy",
+    "HP": 1000,
+    "Attack Power": 1000,
+    "Weapon": "Super Punch",
+    "Skill": ["hack", "lockpick"],
     "Inventory": ["flashlight"],
     "Insight": []
 }
@@ -30,7 +41,7 @@ player_card = {
     "HP": 100,
     "Attack Power": 10,
     "Weapon": "Unarmed",
-    "Skill": "",
+    "Skill": [],
     "Inventory": [],
     "Insight": []
     }
@@ -90,11 +101,11 @@ chris = {
 # Help variable, for use in game
 help = (
 "\nHere are a few common commands you will use:\n" 
-"\n(Not all of these can be used all \nof the time - for example, you can't"
-" move north if there's nowhere north to go!)\n"
+"\n(Not all of these can be used all of the time - for example, you can't"
+" move \nNorth if there's nowhere North to go!)\n"
 "\nEnter 'exit' to quit to main menu."
 "\nEnter 'pc' to view Player Card."
-"\nEnter 'n', 'e', 's', 'w', to move north, east, south and west."
+"\nEnter 'n', 'e', 's', 'w', to move north, east, South and west."
 "\nEnter 'l' to look around."
 "\nEnter 'i' followed by an OBJECT to interact with that OBJECT."
 "\nEnter 'heal' to use a First Aid Kit."
@@ -158,6 +169,8 @@ def atk():
         player_card["Attack Power"] = random.randint(30, 40)
     elif player_card["Weapon"] == "Shotgun":
         player_card["Attack Power"] = random.randint(35, 50)
+    elif player_card["Weapon"] == "Super Punch":
+        player_card["Attack Power"] = 1000
 
     if enemy["ID"] in slain_enemies:
         type_text(f"{enemy['Name']} is already dead!")
@@ -166,7 +179,7 @@ def atk():
         type_text(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
         if enemy["HP"] <= 0:
             type_text(f"\nWith a final rasping breath, {enemy['Name']} drops "
-            "to the floor, his BODY cold and still.\n")
+            "to the floor, his BODY cold \nand still.\n")
             slain_enemies.append(enemy["ID"])
             return
         else:
@@ -379,9 +392,14 @@ def character_selection():
             type_text("\nYou have selected Claire Greenfield.\n")
             start_game()
             break
+        elif character_choice.lower() == "god mode":
+            player_card.update(god_mode)
+            type_text("You have selected... Super Shaggy? That can't be"
+            " right.")
+            start_game()
+            break
         else:
-            character_choice_error = "\nI don't know that one...\n"
-            type_text(character_choice_error)     
+            type_text("\nI don't know that one...\n")
 
 def start_game():
 
@@ -514,7 +532,7 @@ def intro_c():
             if flashlight == True:
                 type_text("\nYou're stood in a small, wooded enclosure, just"
                 " off the gravel track. A path \nthrough the trees to the"
-                " north appears to be your only choice forward.\n"
+                " North appears to be your only choice forward.\n"
                 "\nEnter 'n' to walk northwards.")
             else:
                 type_text("\n'I can't see a thing!'\n")
@@ -578,7 +596,7 @@ def foyer():
     " your flashlight barely \npenetrates the surrounding shadows as you pan"
     " across the room. Ahead of you \nbeneath the gloomy red glow of an"
     " emergency lamp, you see the reception DESK."
-    "\nOn both the EAST and WEST sides of the room are doors leading out of"
+    "\nOn both the East and West sides of the room are doors leading out of"
     " the Foyer.\n")
 
     foyer_text_return = ("\nYou step again into the wide, empty Foyer.\n")
@@ -590,9 +608,9 @@ def foyer():
         checked_rooms.append("Foyer")
 
     foyer_look = ("\nYou look around the Foyer. You see the reception DESK"
-    " ahead of you. A door to \nthe east ('e') with a sign that reads, 'East"
-    " Wing, Maintenance and Bar'. A door to \nthe west ('w') with a sign that"
-    " reads, 'West Wing and Library'. Behind you, to \nthe south ('s'), is the"
+    " ahead of you. A door to \nthe East ('e') with a sign that reads, 'East"
+    " Wing, Maintenance and Bar'. A door to \nthe West ('w') with a sign that"
+    " reads, 'West Wing and Library'. Behind you, to \nthe South ('s'), is the"
     " Hotel entrance.\n")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and"
@@ -600,19 +618,20 @@ def foyer():
     " reads, 'Staff Only'.\n")
 
     def foyer_computer_use():
-        if power == True and player_card["Skill"] == "hack":
-            foyer_computer()
-        elif power == True and player_card["Skill"] == "lockpick":
-            type_text("\nThe computer is locked.\n")
-        elif power == False:
+        if power == False:
             type_text("\nThe power is still out. Maybe you can find a way to"
             " turn it back on...\n")
+        else:
+            if "hack" in player_card["Skill"]:
+                foyer_computer()
+            else:
+                type_text("\nThe computer is locked.\n")
 
     def foyer_door_use():
-        if player_card["Skill"] == "lockpick":
+        if "lockpick" in player_card["Skill"]:
             type_text("\nThe door is locked, but you manage to pick it.\n")
-            foyer_staff_cupboard()
-        elif player_card["Skill"] == "hack":
+            staff_only_cupboard()
+        else:
             type_text("\nThe door is locked.\n")
 
     while True:
@@ -631,11 +650,11 @@ def foyer():
         elif foyer_choice.lower() == "heal":
             heal()
         elif foyer_choice.lower() == "e":
-            type_text("\nYou exit out of the east door.\n")
+            type_text("\nYou exit out of the East door.\n")
             east_wing()
             break
         elif foyer_choice.lower() == "w":
-            type_text("\nYou exit out of the west door.\n")
+            type_text("\nYou exit out of the West door.\n")
             west_wing()
             break
         elif foyer_choice.lower() == "s":
@@ -664,13 +683,13 @@ def foyer_computer():
     """
     The Foyer Computer - Options
     """
-    type_text("\nThe computer is locked, but you manage to hack it.")
+    type_text("\nThe computer is locked, but you manage to hack it.\n")
     
     while True:
         foyer_computer_choice = input("\nEnter 'rooms' to see reservation"
         " list.\n"
         "\nEnter 'messages' to see saved massages.\n"
-        "\nEnter 'back' to log off computer.")
+        "\nEnter 'back' to log off computer.\n")
 
         if foyer_computer_choice.lower() == "rooms":
             if "Raven's Rest Owner Name" in player_card["Insight"]:
@@ -678,17 +697,19 @@ def foyer_computer():
                 " room number, located in the \nWest Wing. You also notice"
                 " that Mr Whateley, the owner, has a room adjacent to \nthe"
                 " Library.\n")
-                player_card["Insight"].append("Chris' Room Location")
-                player_card["Insight"].append("Whateley's Room Location")
-                type_text("\n'Chris' Room Location' added to Insight.\n")
-                type_text("\n'Whateley's Room Location' added to Insight.\n")
-            elif "Chris' Room Location" in player_card["Insight"]:
-                type_text("You've already read these files.")
+                if "Whateley's Room Location" not in player_card["Insight"]:
+                    player_card["Insight"].append("Whateley's Room Location")
+                    type_text("\n'Whateley's Room Location' added to"
+                    " Insight.\n")
+                if "Chris' Room Location" not in player_card["Insight"]:
+                    player_card["Insight"].append("Chris' Room Location")
+                    type_text("\n'Chris' Room Location' added to Insight.\n")
             else:
                 type_text("\nYou flick through some files and discover Chris'"
-                " room number, located in the \nWest Wing.")
-                player_card["Insight"].append("Chris' Room Location")
-                type_text("\n'Chris' Room Location' added to Insight.\n")
+                " room number, located in the \nWest Wing.\n")
+                if "Chris' Room Location" not in player_card["Insight"]:
+                    player_card["Insight"].append("Chris' Room Location")
+                    type_text("\n'Chris' Room Location' added to Insight.\n")
         elif foyer_computer_choice.lower() == "messages":
             type_text("\nYou find a message that reads:\n"
             "\nDear employees,\n"
@@ -718,50 +739,55 @@ def foyer_computer():
             main_menu()
             break
 
-def foyer_staff_cupboard():
+def staff_only_cupboard():
     """
-    The Foyer Staff Cupboard - Game Location.
+    Staff Only Cupboard - Game Location.
     """
-    foyer_staff_cupboard_text_initial = ("\nThe door leads into a small"
+    staff_only_cupboard_initial = ("\nThe door leads into a small"
     " cupboard space. Whilst inspecting, the beam of your \nflashlight passes"
     " over something slumped on the floor. Your heart sinks. It's a \ndead"
     " BODY. A bloody KNIFE protruding from the side of it's neck.\n")
 
-    foyer_staff_cupboard_text_return = ("\nYou enter the cupboard, trying your"
+    staff_only_cupboard_return = ("\nYou enter the cupboard, trying your"
     " best not to look at the dead BODY.\n")
 
-    if "Foyer Staff Cupboard" in checked_rooms:
-        type_text(foyer_staff_cupboard_text_return)
+    if "Staff Only Cupboard" in checked_rooms:
+        type_text(staff_only_cupboard_return)
     else:
-        type_text(foyer_staff_cupboard_text_initial)
-        checked_rooms.append("Foyer Staff Cupboard")
+        type_text(staff_only_cupboard_initial)
+        checked_rooms.append("Staff Only Cupboard")
 
     while True: 
-        foyer_staff_cupboard_choice = input("\nWhat do you do? (If you're"
+        staff_only_cupboard_choice = input("\nWhat do you do? (If you're"
         " stuck, try using the 'l' command to look around.)\n")
 
-        if foyer_staff_cupboard_choice.lower() == "l":
+        if staff_only_cupboard_choice.lower() == "l":
             if "Bloody Knife" in looted_items:
-                type_text("\nA dead BODY lies slumped on the floor. The foyer"
-                " is to your south ('s').\n")
+                type_text("\nA dead BODY lies slumped on the floor.\n" 
+                "\nA washing machine sits in the corner with a basket of"
+                " laundry on top. A small NOTE \nlies amongst the clothes.\n"
+                "\nThe foyer is to your South ('s').\n")
             else: 
                 type_text("\nYou take a moment to collect yourself, then look"
-                " around the cupboard. The \nbloody KNIFE sticks out of the"
-                " dead BODY's neck. The foyer is to your south \n('s').\n")
-        elif foyer_staff_cupboard_choice.lower() == "help":
+                " around the cupboard.\n" 
+                "\nA bloody KNIFE sticks out of the dead BODY's neck.\n"
+                "\nA washing machine sits in the corner with a basket of"
+                " laundry on top. A small NOTE \nlies amongst the clothes.\n"
+                "\nThe foyer is behind you, to the South \n('s').\n")
+        elif staff_only_cupboard_choice.lower() == "help":
             print(help)
-        elif foyer_staff_cupboard_choice.lower() == "pc":
+        elif staff_only_cupboard_choice.lower() == "pc":
             print(player_card)
-        elif foyer_staff_cupboard_choice.lower() == "exit":
+        elif staff_only_cupboard_choice.lower() == "exit":
             main_menu()
             break
-        elif foyer_staff_cupboard_choice.lower() == "heal":
+        elif staff_only_cupboard_choice.lower() == "heal":
             heal()
-        elif foyer_staff_cupboard_choice.lower() == "i body":
+        elif staff_only_cupboard_choice.lower() == "i body":
             type_text("\nYou take a closer look at the body. It's a young"
-            " man, probably in his 20s. He \nlooks to be one of the staff"
-            " members of the Hotel. His name tag reads, 'Jack'.\n")
-        elif foyer_staff_cupboard_choice.lower() == "i knife":
+            " woman, probably in her 20s. She \nlooks to be one of the staff"
+            " members of the Hotel. Her name tag reads, 'Jill'.\n")
+        elif staff_only_cupboard_choice.lower() == "i knife":
             if "Bloody Knife" in looted_items:
                 type_text("\nYou've already taken the Bloody Knife.\n")
             elif "Handgun" in looted_items:
@@ -776,7 +802,22 @@ def foyer_staff_cupboard():
                 looted_items.append("Bloody Knife")
                 player_card["Weapon"] = "Bloody Knife"
                 player_card["Attack Power"] = random.randint(10, 20)
-        elif foyer_staff_cupboard_choice.lower() == "s":
+        elif staff_only_cupboard_choice.lower() == "i note":
+            type_text("\nYou pick up the note from the laundry basket and give"
+            " it a read.\n"
+            "\n'Dan,\n"
+            "\nI don't know why the boss has so many black robes in his"
+            " laundry. Nor do I \nreally care. Just deliver the basket to his"
+            " room (the one by the library) and \nstop asking pointless"
+            " questions. He's little on patience and big on temper, so \ndo"
+            " yourself a favour and don't pry where your nose ain't welcome.\n"
+            "\nP.S.\n"
+            "\nThose robes you're so interested were covered in red wine by the"
+            " looks of it, so \ndon't skimp on the stain remover.'\n")
+            if "Whateley's Room Location" not in player_card["Insight"]:
+                    player_card["Insight"].append("Whateley's Room Location")
+                    type_text("\n'Whateley's Room Location' added to Insight.\n")
+        elif staff_only_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
             foyer()
             return
@@ -790,8 +831,8 @@ def east_wing():
     east_wing_initial = ("\nYou step into the East Wing. Dark wooden doors"
     " adorned with silver room numbers \nrun along both sides of the corridor."
     " There is no trace of any patron or \nemployee. As you creep through the"
-    " silent passage, you notice a Supplies \nCupboard to the south ('s')." 
-    " Further east ('e') appears to be a Maintenance \nRoom. To the north"
+    " silent passage, you notice a Supplies \nCupboard to the South ('s')." 
+    " Further East ('e') appears to be a Maintenance \nRoom. To the north"
     " ('n') are a set of double doors, leading to the Bar. To the \nwest ('w')"
     " is the Foyer.\n")
 
@@ -819,11 +860,11 @@ def east_wing():
             type_text("\nLooking around the East Wing corridor, you spot a"
             " cleaning trolley by one of the \nrooms. A NEWSPAPER is sticking"
             " out of the trash.\n"
-            "\nTo the north ('n') is a set of double doors leading"
+            "\nTo the North ('n') is a set of double doors leading"
             " to the Bar.\n"
-            "\nTo the east ('e') is the Maintenance Room.\n"
-            "\nTo the south ('s') is a Supplies Cupboard.\n"
-            "\nTo the west ('w') is the Foyer.\n")
+            "\nTo the East ('e') is the Maintenance Room.\n"
+            "\nTo the South ('s') is a Supplies Cupboard.\n"
+            "\nTo the West ('w') is the Foyer.\n")
         elif east_wing_choice.lower() == "help":
             print(help)
         elif east_wing_choice.lower() == "pc":
@@ -848,7 +889,7 @@ def east_wing():
                 maintenance_room()
                 break
             else:
-                if player_card["Skill"] == "lockpick":
+                if "lockpick" in player_card["Skill"]:
                     type_text("\nThis door is locked with a strange mechanism."
                     " It looks like the key would need \nto be beak"
                     " shaped...\n")
@@ -886,12 +927,12 @@ def supplies_cupboard():
         " try using the 'l' command to look around.)\n")
 
         if supplies_cupboard_choice.lower() == "l":
-            if "First Aid Kit EW" in looted_items:
+            if "First Aid Kit (SC)" in looted_items:
                 type_text("\nThere's nothing else of use here. The East Wing"
-                " is to your north ('n').\n")
+                " is to your North ('n').\n")
             else: 
                 type_text("\nA FIRST AID KIT sits on the shelf. The East Wing"
-                " is to your north ('n').\n")
+                " is to your North ('n').\n")
         elif supplies_cupboard_choice.lower() == "help":
             print(help)
         elif supplies_cupboard_choice.lower() == "pc":
@@ -902,11 +943,11 @@ def supplies_cupboard():
         elif supplies_cupboard_choice.lower() == "heal":
             heal()
         elif supplies_cupboard_choice.lower() == "i first aid kit":
-            if "First Aid Kit SC" in looted_items:
+            if "First Aid Kit (SC)" in looted_items:
                 type_text("\nYou've already taken the First Aid Kit.\n")
             else:
                 fa_kit_loot()
-                looted_items.append("First Aid Kit SC")
+                looted_items.append("First Aid Kit (SC)")
                 type_text("\nAs you put the First Aid Kit back, a previously"
                 " hidden note is knocked to the floor. It reads:\n"
                 "\nJill,\n"
@@ -1010,6 +1051,227 @@ def maintenance_room():
         else:
             type_text(generic_error)
 
+def library():
+    """
+    Library - Game Location.
+    """
+    def flee():
+        """
+        When called during fight, Player randomly triggers function for an
+        adjacent room.
+        """
+        if "Whateley's Room Location" in player_card["Insight"]:
+            available_directions = [west_wing, garden, whateleys_room]
+        else:
+            available_directions = [west_wing, garden]
+        random_direction = random.choice(available_directions)
+        random_direction()
+
+    library_initial = ("\nThe door to the Library creaks open, and you're met"
+    " with the largest room in \nRaven's Rest. High ceilings stretch far"
+    " overhead, surpassing the equally \nimposing bookselves that divide the"
+    " room.\n"
+    "\nAs you roam the makeshift halls of this literary forest, you notice the"
+    " warm \nglow of candlelight coming from one of the aisles. You watch for"
+    " a moment as \nthe flicking light mingles with shadow, casting long dark"
+    " shapes across the \nbooks. Studying the shapes as they dance from side"
+    " to side, you realise their \nmovements aren't being caused by the twitch"
+    " of the flame, but by the thing \ncasting the shadows. Someone else is in"
+    " this library. You peer around the \ncorner and spot a figure about"
+    " halfway down the aisle. Dressed in a hooded \nblack robe and stood with"
+    " their back to you, they appear to be searching one of \nthe shelves. You"
+    " stifle your breath for fear of making a sound and begin to \nslowly back"
+    " away. Suddenly, something hard hits you in the back. You hear a \nbrief"
+    " sound of fluttering then a loud thud. Spinning around, you realise you've"
+    " \nbacked into one of the bookcases, and to your horror knocked one of the"
+    " books \nto the floor. Instinctively, you shoot a glance towards the"
+    " candlelight. The \nhooded figure is gone.\n"
+    "\nPanic sets in. You take flight towards the door you \nentered from,"
+    " keeping your footsteps as light and quiet as you can. Rounding \nthe"
+    " corner of a bookcase, you feel a large hand grip the top of your arm and"
+    " \nspin you around. From a distance, dwarfed by the size of the room and"
+    " its \ncontents, you hadn't realised how big the figure was.  He towers"
+    " over you, \nstood at close to 7 feet tall and about half as wide. But"
+    " the sheer size of the \nman isn't what shocks you. His bottom jaw is"
+    " gone. His tongue lolling limply \nfrom the gaping wound, spit and blood"
+    " drooling down the front of his robes. An \nawful groaning noise bellows"
+    " from remainder of his mouth as he wraps his \nimpossibly large hands"
+    " around your throat and lifts you off the ground. \nSquirming for your"
+    " life, you manage to kick off his chest and leverage yourself \nfree,"
+    " dropping to your feet.\n")
+
+    library_return = ("\nYou quietly creep back into the library, carefully"
+    " closing the door behind you. \nBut the hulking figure in black was"
+    " waiting for you. Looking up, you see him pacing \ntowards you, his"
+    " ghastly tongue swinging from side to side as he marches.\n")
+
+    if "Whateley's Room Location" in player_card["Insight"]:
+        library_safe = ("\nYou enter the Library, casting a glance in the"
+        " diretion of the jawless man's \nBODY.\n"
+        "\nTo the West, you see the door to Mr Whateley's Room.\n"
+        "\nTo the South is the West Wing corridor.\n"
+        "\nThe door to the East takes you to the Garden.\n")
+    else:
+        library_safe = ("\nYou enter the Library, casting a glance in the"
+        " diretion of the jawless man's \nBODY.\n"
+        "\nOver by the still flickering candles, you see a pile of NOTES.\n"
+        "\nTo the South is the West Wing corridor.\n"
+        "\nThe door to the East takes you to the Garden.\n")
+
+    if "Cultist (Library)" in slain_enemies:
+        type_text(bar_safe)
+    elif "Cultist (Library)" not in slain_enemies and "Library" in checked_rooms:
+        enemy.update(cultist_library)
+        type_text(library_return)
+    else:
+        enemy.update(cultist_library)
+        checked_rooms.append("Library")
+        type_text(library_initial)
+
+    while True:
+        if "Cultist (Library)" in slain_enemies:
+            library_choice = input("\nWhat do you do? (If you're stuck, try"
+        " using the 'l' command to look around.)\n")
+        else:
+            library_choice = input("\nWhat do you do? Use the 'atk' command to"
+            " attack, or the 'flee' command to flee.\n")
+
+        if library_choice.lower() == "atk":
+            atk()
+
+        elif library_choice.lower() == "flee":
+            if "Cultist (Library)" in slain_enemies:
+                type_text("\nThere's nothing to run from right now.\n")
+            else:
+                type_text("\nIn a blind panic, you sprint for the nearest"
+                " door.\n")
+                flee()
+
+        elif library_choice.lower() == "l":
+            if "Cultist (Library)" not in slain_enemies:
+                type_text("\nNow's not the time for looking around!\n")
+            else:
+                if "Whateley's Room Location" in player_card["Insight"]:
+                    type_text("\nThe enormous BODY of the jawless man is sprawled"
+                    " across the \nfloor.\n"
+                    "\nOver by the still flickering candles, you see a pile of"
+                    " NOTES. Not far from \nthere is the BOOK you knocked off"
+                    " the shelf.\n"
+                    "\nTo the South is the West Wing corridor.\n"
+                    "\nThe door to the East takes you to the Garden.\n"
+                    "\nYou also notice, hidden just out of view, a door"
+                    " leading West. This must be \nMr Whateley's Room.\n")
+                else:
+                    type_text("\nThe enormous BODY of the jawless man is sprawled"
+                    " across the \nfloor.\n"
+                    "\nOver by the still flickering candles, you see a pile of"
+                    " NOTES. Not far from \nthere is the BOOK you knocked off"
+                    " the shelf.\n"
+                    "\nTo the South is the West Wing corridor.\n"
+                    "\nThe door to the East takes you to the Garden.\n")
+                    
+        elif library_choice.lower() == "i notes":
+            type_text("\nYou head over to the pile of notes and begin to read."
+            " Some of the notes are \ncovered in scribblings of strange runes."
+            " One, written in English, reads:\n"
+            "\n'Albert.\n"
+            "\nOne of my idiot employees found the book when they were tidying"
+            " up and placed \nit in the library. Without the Necronomicon, we"
+            " can't finish the ritual to \nseed our Banished Lord the vessel."
+            " Find it, before I rip that disgusting tongue \nout of your"
+            " hideous face.\n"
+            "\n- W'\n"
+            "\nScanning the other notes you find what appears to be a"
+            " description of \nthis 'Necronomicon':\n"
+            "\n'The cover off the tombe bears a striking resemblence to a face"
+            " enduring \nterrible agony. The leathery material that binds its"
+            " pages is wrinkled and \nfleshy to the touch.'\n")
+            player_card["Insight"].append("Necronomicon")
+            type_text("\n'Necronomicon Description' added to Insight.\n")
+
+        elif library_choice.lower() == "i book":
+            if "Necronomicon" in player_card["Insight"]:
+                type_text("\nWhat are the odds... The book you knocked off the"
+                " shelf matches the description \nof the Necronomicon. You"
+                " bend down to pick it off the floor. As you touch the \ncover"
+                " of the book there's a flash of light and you're struck with"
+                " a terrible \nvision: a writhing mass of blinking eyes and"
+                " blackened tendrils wrapped around \ndozens of small, glowing"
+                " orbs. At once, all the eyes focus on you. Another \nflash of"
+                " light, and the vision fades. You find yourself in the"
+                " Library of \nthe Raven's Rest once more.\n")
+                player_card["Inventory"].append("Necronomicon")
+                type_text("\n'Necronomicon' added to Inventory.\n")
+            else:
+                type_text("\nYou look down at the book on the floor. Maybe"
+                " you're losing it, but you could \nswear the cover looks like"
+                " a twisted face. You shudder and leave the book where \nit"
+                " lies.\n")
+
+        elif library_choice.lower() == "i body":
+            if "Cultist (Library)" in slain_enemies:
+                type_text("\nYou take a closer look at the body of the jawless"
+                " man. You notice a strange \nsymbol carved into the flesh of his"
+                " forehead. His robes are completely \nsoiled with saliva and"
+                " blood.\n")
+                if "First Aid Kit (Library)" not in looted_items:
+                    type_text("\nYou take a knee beside the giant and pat down"
+                    " his robes. You find medical \nsupplies in his pockets."
+                    "\n'First Aid Kit' added to Inventory.\n")
+                    fa_kit_loot()
+                    looted_items.append("First Aid Kit (Library)")
+            else:
+                type_text("\n'I can't do that now.'\n")
+
+        elif library_choice.lower() == "s":
+            if "Cultist (Library)" not in slain_enemies:
+                type_text("\nIn your panic, you flee in a random direction.\n")
+                flee()
+                break
+            else:
+                type_text("\nYou leave out the South door to the West Wing.\n")
+                west_wing()
+                break
+
+        elif library_choice.lower() == "w":
+            if "Whateley's Room Location" not in player_card["Insight"]:
+                type_text(generic_error)
+            else:
+                if "Cultist (Library)" not in slain_enemies:
+                    type_text("\nIn your panic, you flee in a random direction.\n")
+                    flee()
+                    break
+                else:
+                    type_text("\nYou head through the West door into Mr Whateley's Room.\n")
+                    whateleys_room()
+                    break
+        
+        elif library_choice.lower() == "e":
+            if "Cultist (Library)" not in slain_enemies:
+                type_text("\nIn your panic, you flee in a random direction.\n")
+                flee()
+                break
+            else:
+                type_text("\nYou leave out the East door into the Garden.\n")
+                garden()
+                break
+
+        elif library_choice.lower() == "help":
+            print(help)
+
+        elif library_choice.lower() == "pc":
+            print(player_card)
+
+        elif library_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif library_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
 def bar():
     """
     Bar - Game Location where Raven's Beak Key can be found
@@ -1031,17 +1293,20 @@ def bar():
     " begin \nto wonder if the language is even human. Suddenly, the muttering"
     " stops, and the \npitch-black room falls into silence.\n")
 
-    bar_return = ("\nYou cautiously creep back into the bar. Immediately you spot"
-    " the \nmutilated man, frantically searching around with his hands"
+    bar_return = ("\nYou cautiously creep back into the bar. Immediately you"
+    " spot the \nmutilated man, frantically searching around with his hands"
     " outstretched.\n")
 
-    bar_safe = ("\nYou step into the bar. To the west, a door leads into the Garden. Behind you, to the south, is the East Wing.\n")
+    bar_safe = ("\nYou step into the bar. To the west, a door leads into the"
+    " Garden. Behind you, \nto the south, is the East Wing.\n")
 
-    if "Cultist (Bar)" in slain_enemies and "Bar" in checked_rooms:
+    if "Cultist (Bar)" in slain_enemies:
         type_text(bar_safe)
+
     elif "Cultist (Bar)" not in slain_enemies and "Bar" in checked_rooms:
         enemy.update(cultist_bar)
         type_text(bar_return)
+        
     else:
         enemy.update(cultist_bar)
         checked_rooms.append("Bar")
@@ -1077,6 +1342,7 @@ def bar():
                 "\nEnter 'atk' to attack, or 'flee' to run away.\n")
             else:
                 type_text(generic_error)
+
         elif bar_choice.lower() == "atk":
             if flashlight == True and enemy not in slain_enemies:
                 atk()
@@ -1084,8 +1350,11 @@ def bar():
                 type_text("\n'I can't see a thing!'\n")
             else:
                 type_text(generic_error)
+
         elif bar_choice.lower() == "flee":
             if flashlight == True and enemy not in slain_enemies:
+                type_text("\nIn a blind panic, you sprint for the nearest"
+                " door.\n")
                 flee()
                 break
             elif "Cultist (Bar)" in slain_enemies:
@@ -1094,6 +1363,7 @@ def bar():
                 type_text("\n'I can't see a thing!'\n")
             else:
                 type_text(generic_error)
+
         elif bar_choice.lower() == "l":
             if flashlight == False and power == False:
                 type_text("\n'I can't see a thing!'\n")
@@ -1101,12 +1371,12 @@ def bar():
                 type_text("\nNow's not the time for looking around!\n")
             elif "Cultist (Bar)" in slain_enemies:
                 type_text("\nThe BODY of the mutilated man lies still on the"
-                " floor, a puddle of crimson \ngrowing beneath him. To the"
-                " west, you see a door that leads outside. The sign \nnext to"
-                " it reads, 'Garden area this way'. At the far end of the room"
-                " is a \nrather impressive BAR, with plenty of expensive"
-                " looking bottles on display. The \ndoor to East Wing is to"
-                " your south.\n")
+                " floor, a puddle of crimson \ngrowing beneath him.\n" 
+                "\nTo the West, you see a door that leads outside. The sign"
+                "\nnext to it reads, 'Garden area this way'.\n"
+                "\nAt the far end of the room is a rather impressive BAR,"
+                " with plenty of \nexpensive looking bottles on display.\n"
+                "\nThe door to East Wing is to your South.\n")
             else:
                 type_text(generic_error)
         elif bar_choice.lower() == "i bar":
@@ -1145,7 +1415,7 @@ def bar():
                 flee()
                 break
             else:
-                type_text("\nYou leave out the south door to the East Wing.\n")
+                type_text("\nYou leave out the South door to the East Wing.\n")
                 east_wing()
                 break
         elif bar_choice.lower() == "w":
@@ -1156,7 +1426,7 @@ def bar():
                 flee()
                 break
             else:
-                type_text("\nYou leave out the west door to the Garden.\n")
+                type_text("\nYou leave out the West door to the Garden.\n")
                 garden()
                 break
         elif bar_choice.lower() == "help":
@@ -1198,7 +1468,7 @@ def garden():
 
     garden_return = ("\nYou step outside into the wind and rain, glad to"
     " escape the suffocating \ninterior of the Raven's Rest for a while.\n"
-    "\nTo the west is the Library.\n"
+    "\nTo the West is the Library.\n"
     "\nTo the East is the Bar.\n"
     "\nTo the South is the Cellar entrance.\n")
 
@@ -1214,7 +1484,7 @@ def garden():
 
         if garden_choice.lower() == "l":
             type_text("\nSeveral FLOWER BEDS are dotted around the garden.\n"
-            "\nTo the west is the Library.\n"
+            "\nTo the West is the Library.\n"
             "\nTo the East is the Bar.\n"
             "\nTo the South is the Cellar entrance.\n")
         elif garden_choice.lower() == "help":
