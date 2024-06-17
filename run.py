@@ -32,7 +32,12 @@ god_mode = {
     "Weapon": "Super Punch",
     "Skill": ["hack", "lockpick"],
     "Inventory": ["flashlight"],
-    "Insight": []
+    "Insight": ["Raven's Rest Owner Name", 
+    "Whateley's Room Location", 
+    "Chris' Room Location", 
+    "Hidden Safe", 
+    "Necronomicon",
+    "Spell Reversal"]
 }
 
 # Populated once Player Character selected
@@ -632,6 +637,8 @@ def foyer():
     """
     The Hotel Foyer - the first room the Player enters.
     """
+    global power
+
     foyer_text_initial = ("\nYou step into a wide, empty Foyer. The beam of"
     " your flashlight barely \npenetrates the surrounding shadows as you pan"
     " across the room. Ahead of you \nbeneath the gloomy red glow of an"
@@ -727,6 +734,11 @@ def foyer():
             type_text("\nYou ring the bell. A high-pitched 'ding' echoes"
             " throughout the empty room for \na moment, before silence creeps"
             " back into the foyer. No one comes.\n")
+        
+        elif foyer_choice.lower() == "let there be light":
+            power = True
+            type_text("\nPower is miraculously restored to the Hotel...\n"
+            "\nWait, how did you do that?\n")
         
         else:
             type_text(generic_error)
@@ -1339,7 +1351,7 @@ def library():
         "\nThe door to the East takes you to the Garden.\n")
 
     if "Cultist (Library)" in slain_enemies:
-        type_text(bar_safe)
+        type_text(library_safe)
     
     elif "Cultist (Library)" not in slain_enemies and "Library" in checked_rooms:
         enemy.update(cultist_library)
@@ -1467,7 +1479,7 @@ def library():
                     flee()
                     break
                 else:
-                    type_text("\nYou head through the West door into Mr Whateley's Room.\n")
+                    type_text("\nYou approach the door to Mr Whateley's Room.\n")
                     whateleys_room()
                     break
         
@@ -1859,6 +1871,7 @@ def chris_room():
         f" and slashes at you \nfor {enemy['Attack Power']}")
         if player_card["HP"] <= 0:
             game_over()
+            
         else:
             type_text(f"You have {player_card["HP"]} remaining HP."
             " Attack or attempt to flee?\n")
@@ -2094,6 +2107,210 @@ def chris_computer():
         else:
             type_text(generic_error)
 
+def whateleys_room():
+    """
+    Mr Whateley's Room - Game Location.
+    """
+    whateleys_room_initial = ("\nYou give the door knob a try, expecting it to"
+    " be locked. To your surprise, it \nturns. With a gentle push, the door"
+    " yawns open before you and you creep inside.\n"
+    "\nThe first thing you notice is the smell. A pungent mix of rotting flesh"
+    " and wet \nfur, bizarrely contrasted with the heavy scent of cheap"
+    " perfume. As though \nsomeone butchered a dog in here and tried to cover"
+    " the scent with toilet \nfreshener. You instinctively raise a hand to"
+    " cover your nose and mouth, \ndesperately trying to save yourself from"
+    " the taste of the odour.\n"
+    "\nAt first glance, the room looks relatively normal. The longer your gaze"
+    " lingers \nin anyone one part of the room, however, the more the cracks"
+    " of insanity start \nto show. Books stacked high on his desk, ranging"
+    " from subjects of the occult, \nto human anatomy, to old religious texts."
+    " Clumps of dark fur stuck to the walls \nand furniture. As you edge"
+    " around the bed, you notice dark red spatters across \nthe floor. As your"
+    " eyes follow the trail to the source, a cold chill creeps up \nyour"
+    " spine. There, lying on the floor, was a man. Eyes wide open, staring"
+    "\nvacantly at the ceiling. Skin pale, almost blue, his mouth hung open in"
+    " a \nsilent scream. There was a trace of white foam trickling from the"
+    " corner of his \nmouth and thin streaks of blood from each eye. The body"
+    " lay in front of a chest \nof drawers, one of which was still drawn. You"
+    " peer past the body and spot a \nsmall SAFE hidden inside the draw.\n")
+
+    whateleys_room_return = ("\nYou look around Mr Whateley's Room.\n"
+    "\nThe BODY of the employee lies on the floor.\n"
+    "\nA small SAFE lay inside the open drawer next to the BODY.\n"
+    "\nThe other side of the room sits a large DESK covered in various"
+    " books.\n"
+    "\nTo your South ('s') is the door back to the Library.\n")
+
+    if "Whateley's Room" in checked_rooms:
+        type_text(whateleys_room_return)
+    else:
+        type_text(whateleys_room_initial)
+        checked_rooms.append("Whateley's Room")
+
+    while True: 
+        whateleys_room_choice = input("\nWhat do you do? (If you're stuck, try"
+        " using the 'l' command to look around.)\n")
+
+        if whateleys_room_choice.lower() == "l":
+            type_text("\nYou scan the room.\n"
+            "\nThe dead BODY lies on the floor between the bed and the chest"
+            " of drawers.\n"
+            "\nThe SAFE lay inside the open drawer next to the BODY.\n"
+            "\nThe other side of the room sits a large DESK covered in various"
+            " books.\n"
+            "\nBehind you, to the South ('s'), is the door to the Library.\n")
+            if "lockpick" in player_card["Skill"]:
+                type_text("You also notice hung on the wall a large"
+                " PORTRAIT of a magpie - a bird known \nfor coveting various"
+                " treasures...\n")
+
+        elif whateleys_room_choice.lower() == "i body":
+            type_text("\nYou take a closer look at the body. A young man"
+            " wearing an employee uniform, with a name tag that reads, 'Jack'."
+            " He clearly died attempting to rob the safe, but strangely,"
+            " there's no visible wound. Almost like they succumbed a seizure,"
+            " or perhaps poison. Or maybe some other, more nefarious"
+            " afflication...\n")
+
+        elif whateleys_room_choice.lower() == "i safe":
+            if "Hidden Safe" in player_card["Insight"]:
+                type_text("\n'I guess this must be the hidden safe the Jack"
+                " wrote about in his note...'\n")
+            type_text("\nEdging around the body, you take a look at the small"
+            " safe inside the open \ndrawer. It's a combination lock. The dead"
+            " man must have known the combination, \nas it's already"
+            " unlocked.\n")
+            
+            while True:
+                decoy_safe = input("\nDo you open the safe? y / n\n")
+                if decoy_safe == "y":
+                    type_text("\nYou open the door of the safe. It's empty,"
+                    " other than a short passage of runes \nscratched into the"
+                    " back of the safe. Before you have a chance to react, the"
+                    "\nrunes flare with a purple glow. Hit with a terrible"
+                    " headache, you stumble \nbackwards, ears ringing. Tiny"
+                    " drops of crimson begin to smatter the floor as \nyour"
+                    " vision blurs red. You drop to your knees, the pain"
+                    " worsening. A desperate \nfeeling of helplessness rapidly"
+                    " building in your chest.\n")
+                    player_card["HP"] -= 50
+                    if player_card["HP"] <= 0:
+                        type_text("\nThe room spins and something heavy"
+                        " strikes the side of your head. You feel \ncarpet"
+                        " on your face and realise you've collapsed. A stale"
+                        " taste in your mouth. \nThe tingle of foam on your"
+                        " lips. Darkness.\n")
+                        print(figlet_format("GAME OVER\n", justify="center"))
+                        
+                        while True:
+                            game_over_choice = input("\nEnter 'ng' to start a"
+                            " new game from the Character Selection Menu.\n"
+                            "\nEnter 'exit' to return to the Main Menu.\n")
+
+                            if game_over_choice.lower() == "ng":
+                                reset_game_values()
+                                character_selection()
+                                return
+        
+                            elif game_over_choice.lower() == "exit":
+                                reset_game_values()
+                                main_menu()
+                                return
+        
+                            else:
+                                type_text("\nThat's not an option right"
+                                " now...\n")
+                                
+                    else:
+                        type_text("\nAfter a moment, the pain begins to"
+                        " subside. The ringing fades and your vision"
+                        "\nreturns to normal.\n"
+                        "\nYou take 50 damage.\n")
+                        whateleys_room()
+                elif decoy_safe == "n":
+                    type_text("\nGlancing at the dead body and then back at"
+                    " the safe, you decide it's probably \nbest to leave"
+                    " it.\n")
+                    whateleys_room()
+                else:
+                    type_text("\nYou can't do that now.\n")
+
+        elif whateleys_room_choice.lower() == "i desk":
+            type_text("\nAmongst the many books, you find what looks to be a"
+            " journal. You flick through, skim reading as you go. Much of it"
+            " is written in strange symbols, other parts seem to be complete"
+            " gibberish. There are several mentions of a 'Banished Lord', and"
+            " a being known as 'Yog Sothoth'. One of the pages tells of a"
+            " spell that can bind this 'Yog Sothoth' to an 'vessel of flesh'."
+            " You turn another page and read a passage that makes your body"
+            " go cold.\n"
+            "\nThe journalist proved more of a nuisance than I had"
+            " anticipated. The gamble, \nhowever, was worth it. As I"
+            " expected, I needed a vessel from beyond this putrid \ntown. The"
+            " people here may not have felt it, but the Banished Lord drained"
+            " much \nof their essence when he spoke to us that beautiful"
+            " night. The power it must \nhave taken to for him to tear"
+            " through space and time for even a moment to bless \nus with his"
+            " vision... I suppose that energy had to come from somewhere. As"
+            " a \nresult, however, the people of this town have proved too"
+            " weak to withstand the \nspells necessary to prepare them as"
+            " vessels. Even after I reversed the process \nin an attempt to"
+            " spare them, they ultimately expired. The journalist though…"
+            "\nHis body and mind have been most receptive. Once I have"
+            " located the book, I \nshall perform the final ritual and"
+            " deliver unto this unworthy rock our Banished \nLord."
+            " Yog-Sothoth guide me.\n")
+            if "Spell Reversal" not in player_card["Insight"]:
+                player_card["Insight"].append("Spell Reversal")
+                type_text("'Spell Reversal' added to Insight.")
+        
+        elif whateleys_room_choice.lower() == "i portrait":
+            if "lockpick" in player_card["Skill"]:
+                if "Hidden Safe" in player_card["Insight"]:
+                    type_text("\nYou take a closer look at the portrait.\n"
+                    "\nTracing your fingers along the edge, you realise one"
+                    " side is ever so slightly \nraised. You manage to get"
+                    " your fingernails under the lip of the edge and pull."
+                    "\nOne sie of the large portrait swings away from the"
+                    " wall; the other revealing \nitself to be fixed in"
+                    " place with two small hinges.\n"
+                    "\nBeneath the portrait lies a second safe, this one"
+                    " having a keylock. You get \nout your pick and begin"
+                    " fiddling with the tumbler. After a few seconds you hear"
+                    "\na 'clunk', and the door swings open.\n"
+                    "\nInside you find a compact, pump-action Shotgun. You"
+                    " pick it up and rack a \nshell into the chamber. For the"
+                    " first time since entering the Raven's Rest, \nyou feel"
+                    " a smile spread across your face.\n"
+                    "\n'Shotgun' is now equipped.\n")
+                    looted_items.append("Shotgun")
+                    player_card["Weapon"] = "Shotgun"
+                    player_card["Attack Power"] = "35 - 50"
+                else:
+                    type_text("\nWhy would there be a portrait of a magpie in"
+                    " the Raven's Rest...?\n")
+            else:
+                type_text(generic_error)
+        
+        elif whateleys_room_choice.lower() == "s":
+            type_text("\nYou exit out the door to the South.\n")
+        
+        elif whateleys_room_choice.lower() == "help":
+            print(help)
+        
+        elif whateleys_room_choice.lower() == "pc":
+            print(player_card)
+        
+        elif whateleys_room_choice.lower() == "exit":
+            main_menu()
+            break
+        
+        elif whateleys_room_choice.lower() == "heal":
+            heal()
+        
+        else:
+            type_text(generic_error)
+
 # Title Screen
 #main_menu()
 
@@ -2102,12 +2319,6 @@ power = False
 
 # Determines if the Player's flashlight is on
 flashlight = False
-
-# Determines if Chris' safe is locked
-chris_safe = False
-
-# Determines if Whateley's safe is locked
-whateley_safe = False
 
 # Determines Chris' status
 chris_status = "Unknown"
