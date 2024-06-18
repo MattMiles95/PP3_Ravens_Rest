@@ -90,8 +90,8 @@ cultist_chris_room = {
 }
 
 mr_whateley = {
-    "ID": "Mr Whateley",
-    "Name": "Mr Whateley",
+    "ID": "Whateley",
+    "Name": "Whateley",
     "HP": 100,
     "Attack Power": random.randint(25, 35)
 }
@@ -160,7 +160,7 @@ def atk():
         enemy["Attack Power"] = random.randint(20, 30)
 
     
-    elif enemy["ID"] == "Mr Whateley":
+    elif enemy["ID"] == "Whateley":
         enemy["Attack Power"] = random.randint(25, 35)
     
     elif enemy["ID"] == "Chris":
@@ -450,13 +450,13 @@ def intro_a():
     Part A of the games' intro, which also acts as a tutorial.
     """
     type_text("\n9 Nov 1981\n"
-    "\nInnsmouth, England\n"
+    "\nDunwich, England\n"
     "\nYou wake with a jolt to the sound of knuckles rapping on glass. Sat in"
     " a \ncarriage being drawn by two horses - a far cry from the black cabs"
     " you're used \nto in London - you peer out of the window. Presumably the"
     " carriage driver was \nletting you know that you're approaching your"
     " destination, but there's no way \nof knowing that by looking outside."
-    " Nights never get this dark in the city, \nbut here in Innsmouth, you may"
+    " Nights never get this dark in the city, \nbut here in Dunwich, you may"
     " as well be staring into a pot of ink. Add to \nthat the heavy rain"
     " beating against the glass, and trying to make out anything \nbeyond the"
     " dimly light interior of the carriage was truly an exercise in"
@@ -492,7 +492,7 @@ def intro_b():
     type_text("\nThere's a message on the back:\n"
     f"\n{player_card["Name"]},\n"
     "\nThink I've finally made some headway with the article… Currently"
-    " visiting a \nchap in Innsmouth who apparently knew one of the students"
+    " visiting a \nchap in Dunwich who apparently knew one of the students"
     " that went missing - \nhis son in fact! I'm staying at an old hotel,"
     " the Raven's Rest. Feels like \nit's been pulled straight out of the"
     " 1800s - but then again, so does the rest \nof this town. Anyways, hope"
@@ -954,7 +954,7 @@ def east_wing():
             heal()
         
         elif east_wing_choice.lower() == "i newspaper":
-            type_text("You take a closer look at the newspaper. 'The Innsmouth"
+            type_text("You take a closer look at the newspaper. 'The Dunwich"
             " Daily'. The headline \nreads, 'BODY SNATCHER STRIKES AGAIN?"
             " FOURTH MISSING PERSON REPORTED THIS YEAR'. \nYou flick through"
             " the paper, pausing when your eye is caught by a picture of \nthe"
@@ -1090,8 +1090,8 @@ def west_wing():
 
         elif west_wing_choice.lower() == "w":
             if "RW Key" in looted_items and power == True:
-                type_text("\nYou use the Raven's Wing Key to access the"
-                " service lift and descend into the \nBasement.\n")
+                type_text("\nYou use the Raven's Wing Key to unlock the"
+                " service lift.\n")
                 basement()
                 break
             elif "RW Key" not in looted_items:
@@ -1339,7 +1339,7 @@ def library():
     if "Whateley's Room Location" in player_card["Insight"]:
         library_safe = ("\nYou enter the Library, casting a glance in the"
         " diretion of the jawless man's \nBODY.\n"
-        "\nTo the West, you see the door to Mr Whateley's Room.\n"
+        "\nTo the West, you see the door to Whateley's Room.\n"
         "\nTo the South is the West Wing corridor.\n"
         "\nThe door to the East takes you to the Garden.\n")
     
@@ -1397,7 +1397,7 @@ def library():
                     "\nTo the South is the West Wing corridor.\n"
                     "\nThe door to the East takes you to the Garden.\n"
                     "\nYou also notice, hidden just out of view, a door"
-                    " leading West. This must be \nMr Whateley's Room.\n")
+                    " leading West. This must be \nWhateley's Room.\n")
                 else:
                     type_text("\nThe enormous BODY of the jawless man is sprawled"
                     " across the \nfloor.\n"
@@ -1479,7 +1479,7 @@ def library():
                     flee()
                     break
                 else:
-                    type_text("\nYou approach the door to Mr Whateley's Room.\n")
+                    type_text("\nYou approach the door to Whateley's Room.\n")
                     whateleys_room()
                     break
         
@@ -1829,8 +1829,6 @@ def chris_room():
     """
     Chris' Room - Game Location.
     """
-    global chris_safe
-
     chris_room_initial = ("\nCautiously, you step into Chris' Room. Hunched"
     " over a desk in the corner is \nanother robed figure shrouded by a black"
     " hood. You watch as they rifle through \na pile of loose sheets of paper,"
@@ -1867,8 +1865,8 @@ def chris_room():
     
     def trapped():
         player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
-        type_text(f"You attempt to flee, but {enemy['Name']} blocks the door"
-        f" and slashes at you \nfor {enemy['Attack Power']}")
+        type_text(f"You attempt to flee, but the {enemy['Name']} blocks the"
+        f" door and slashes at you \nfor {enemy['Attack Power']} damage.\n")
         if player_card["HP"] <= 0:
             game_over()
             
@@ -1973,7 +1971,8 @@ def chris_room():
 
         elif cr_choice.lower() == "n":
             if "Cultist (CR)" in slain_enemies:
-                type_text("\nYou exit out the North door to the West Wing corridor.\n")
+                type_text("\nYou exit out the North door to the West Wing"
+                " corridor.\n")
                 west_wing()
                 break
             else:
@@ -2031,7 +2030,7 @@ def chris_computer():
                 " here!\n")
             elif read_journal.lower() == "2":
                 type_text("\nFinally spoke with the man that brought me all"
-                " the way to Innsmouth today - Mr \nWhateley. The very owner"
+                " the way to Dunwich today - Mr \nWhateley. The very owner"
                 " of this Hotel. I have to say, the conversation wasn't \nat"
                 " all what I thought it would be. He seemed exceptionally"
                 " uninterested in the \nmissing persons. Rather, he wanted to"
@@ -2109,7 +2108,7 @@ def chris_computer():
 
 def whateleys_room():
     """
-    Mr Whateley's Room - Game Location.
+    Whateley's Room - Game Location.
     """
     whateleys_room_initial = ("\nYou give the door knob a try, expecting it to"
     " be locked. To your surprise, it \nturns. With a gentle push, the door"
@@ -2134,7 +2133,7 @@ def whateleys_room():
     " lay in front of a chest \nof drawers, one of which was still drawn. You"
     " peer past the body and spot a \nsmall SAFE hidden inside the draw.\n")
 
-    whateleys_room_return = ("\nYou look around Mr Whateley's Room.\n"
+    whateleys_room_return = ("\nYou look around Whateley's Room.\n"
     "\nThe BODY of the employee lies on the floor.\n"
     "\nA small SAFE lay inside the open drawer next to the BODY.\n"
     "\nThe other side of the room sits a large DESK covered in various"
@@ -2258,8 +2257,8 @@ def whateleys_room():
             " spare them, they ultimately expired. The journalist though…"
             "\nHis body and mind have been most receptive. Once I have"
             " located the book, I \nshall perform the final ritual and"
-            " deliver unto this unworthy rock our Banished \nLord."
-            " Yog-Sothoth guide me.\n")
+            " deliver unto this unworthy rock our Banished \nLord.\n"
+            "\nYog-Sothoth guide me.\n")
             if "Spell Reversal" not in player_card["Insight"]:
                 player_card["Insight"].append("Spell Reversal")
                 type_text("'Spell Reversal' added to Insight.")
@@ -2311,6 +2310,312 @@ def whateleys_room():
         else:
             type_text(generic_error)
 
+def cellar():
+    """
+    Cellar - Game Location.
+    """
+    global whateley_status
+    cellar_initial = ("\nAs you descend the Cellar steps, the chanting grows"
+    " louder. You realise now \nthat it isn't just the words that sound"
+    " alien, but the voice speaking them too. \nHarsh and guttural, each"
+    " syllable underscored with a low growl. Like a beast \nimitating a man."
+    " Your heart pounds against your chest, a mixture of fear and \nintrigue"
+    " pulling you in both directions at once.\n"
+    "\nAbout two thirds of the way down, the chanting stops. A sense of dread"
+    " roots \nyou to the spot as you listen for any further noises. Why did"
+    " he stop? Unnerved \nbut determined, you force yourself to complete the"
+    " descent.\n"
+    "\nReaching the bottom of the stairs, the narrow passage opens into"
+    " cavernous room \nwith a high domed ceiling. Torches affixed to rough"
+    " stone walls dimly light the \ndark and foreboding space. Centre of the"
+    " Cellar sits a large, irregular slab \nof black stone with an unearthly"
+    " sheen that seems to absorb light. The surface \nis carved with"
+    " intricate and bizarre symbols that seem to shift and change the \nmore"
+    " you try to focus on them.\n"
+    "\nProstrate before this dark altar, his back still turned to you, the"
+    " hooded man \nrises to his knees. Staring into the empty space above the"
+    " stone, he spreads \nhis arms out wide as though expecting an embrace."
+    " After a single deep \nexhalation, he climbs to his feet. It's only now"
+    " as he stands you realise the \nstature of the man. At least ten feet"
+    " tall, he towers over you, even from the \nother side of the Cellar. A"
+    " grotesque amalgamation of limbs that seem too long, \ntoo gangly,"
+    " defying normal human proportions. He turns to you and lowers his"
+    "\nhood, his face a twisted mockery of humanity.  Eyes coal-black and"
+    " devoid of \nany warmth or kindness glimmer with a sinister"
+    " intelligence. Without a word he \nstalks towards you.\n")
+
+    cellar_return = ("\nReluctantly, you descend the steps once more. You"
+    " find the robed giant back before the altar, hunched over in silent"
+    " prayer.\n"
+    "\nHe rises as he hears your footsteps approach, his massive frame"
+    " blocking view of the altar.\n")
+
+    if whateley_status == True:
+        cellar_safe = ("\nYou descend the steps into the Cellar. Whateley's"
+        " tremendous BODY lay sprawled across the cold stone floor.\n"
+        "\nBeyond him, you see the terrible altar. Just being near it fills"
+        " you with a deep unease.\n"
+        "\nIn the corner of the Cellar appears to be a makeshift living"
+        " quarters. A roll \nmat and blanket, pail of water and several"
+        " discarded food packages. A NOTE and \npen lie atop the mat.\n"
+        "\nBehind you, to the North ('n'), a staircase leads out of the"
+        " Cellar to the Garden.\n")
+    else:
+        cellar_safe = ("\nYou descend the steps into the Cellar. Whateley's"
+        " tattered robe lay sprawled across the cold stone floor.\n"
+        "\nBeyond it, you see the terrible altar. Just being near it fills"
+        " you with a deep unease.\n"
+        "\nIn the corner of the Cellar appears to be a makeshift living"
+        " quarters. A roll \nmat and blanket, pail of water and several"
+        " discarded food packages. A NOTE and \npen lie atop the mat.\n"
+        "\nBehind you, to the North ('n'), a staircase leads out of the"
+        " Cellar to the Garden.\n")
+
+
+    if "Whateley" in slain_enemies:
+        type_text(cellar_safe)
+
+    elif "Whateley" not in slain_enemies and "Cellar" in checked_rooms:
+        enemy.update(mr_whateley)
+        type_text(cellar_return)
+        
+    else:
+        enemy.update(mr_whateley)
+        checked_rooms.append("Cellar")
+        type_text(cellar_initial)
+    
+    def trapped():
+        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+        type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
+        f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
+        if player_card["HP"] <= 0:
+            game_over()
+            
+        else:
+            type_text(f"You have {player_card["HP"]} remaining HP."
+            " Attack or attempt to flee?\n")
+
+    def flee():
+        possible_outcomes = [garden, trapped]
+        random_outcome = random.choice(possible_outcomes)
+        random_outcome()
+
+    while True:
+        
+        if "Whateley" in slain_enemies:
+            cellar_choice = input("\nWhat do you do? (If you're stuck, try"
+            " using the 'l' command to look around.)\n")
+        else:
+            cellar_choice = input("\nWhat do you do? Use the 'atk' command to"
+            " attack, or the 'flee' command to flee.\n")
+
+        if cellar_choice.lower() == "atk":
+            atk()
+
+        elif cellar_choice.lower() == "flee":
+            if "Whateley" in slain_enemies:
+                type_text("\nThere's nothing to run from right now.\n")
+            else:
+                flee()
+
+        elif cellar_choice.lower() == "l":
+            if "Whateley" not in slain_enemies:
+                type_text("\nNow's not the time for looking around!\n")
+            else:
+                type_text("\nWhateley's tremendous BODY lay sprawled across"
+                " the cold stone floor. Beyond \nhim, you see the terrible"
+                " altar. Just being near it fills you with a deep \nunease.\n"
+                "\nIn the corner of the Cellar appears to be a makeshift"
+                " living quarters. A roll \nmat and blanket, pail of water"
+                " and several discarded food packages. A NOTE and \npen lie"
+                " atop the mat.\n"
+                "\nBehind you, to the North ('n'), a staircase leads out of"
+                " the Cellar to the Garden.\n")
+                    
+        elif cellar_choice.lower() == "i body":
+            if "Whateley" in slain_enemies:
+                if whateley_status == True:
+                    type_text("\nYou examine Whateley's grotesque physique.\n"
+                    "\nHis skin has a sickly, yellowish pallor, stretched"
+                    " taut over his sinewy frame. \nHis mouth, perpetually"
+                    " set in a sneer, reveals unnaturally sharp teeth that"
+                    "\nare uneven and stained.\n"
+                    "\nYour eyes, however, are drawn to the places where his"
+                    " robes were torn during \nthe fight, revealling a"
+                    " glimpse of the true eldritch horror that lay beneath."
+                    "\nFrom his waist down, Whateley's body is entirely"
+                    " covered in coarse black fur, \nappearing like the hind"
+                    " legs of a goat. Where he had been wounded, a"
+                    "\ngreenish-yellow ichor seeps from his body instead of"
+                    " blood. Whatever creature \nyou're looking at, it was"
+                    " certainly no man.\n"
+                    "\nAs you stare in disbelief at the slain monster before"
+                    " you, his skin begins to \nwrithe. The yellow hue of his"
+                    " flesh turns ashen and his body withers. With a \ngasp,"
+                    " you watch as Whateley's body dissolves, leaving behind"
+                    " only his tattered \nclothes and a blacked, winged"
+                    " key.\n"
+                    "\n'Raven's Wing Key' added to Inventory.\n")
+                    whateley_status = False
+                    looted_items.append("RW Key")
+                    player_card["Inventory"].append("Raven's Wing Key")
+                else:
+                    type_text("\nWhateley's body has completely dissolved. If"
+                    " it wasn't for his tattered robe \nlying on the ground"
+                    " in front of you, you'd struggle to believe what you"
+                    " saw.\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+        
+        elif cellar_choice.lower() == "i note":
+            if "Whateley" in slain_enemies:
+                type_text("\nYou pick up the note left on Whateley's"
+                " makeshift bed. It appears to be a page \nripped from his"
+                " journal:\n"
+                "\n'Without the book's spells, I am unable to maintain the"
+                " human half of my being. \nI shall have to relocate myself"
+                " to the Cellar until Albert has managed to find \nit. I"
+                " abhor hiding my true self from the insects of this town,"
+                " but it is a \nnecessary sacrifice until I am able to bring"
+                " our Banished Lord to this \nmisguided world. Once he has"
+                " ushered in a generation of my kin, I will no \nlonger be"
+                " seen as a monster, but a God.\n"
+                "\nBut for now, without the book, I cannot proceed.\n"
+                "\nI have instructed Albert to keep the vessel locked in the"
+                " basement storage \nroom. It should be cold enough down"
+                " there to preserve him, at least for a short \nwhile. Once"
+                " the book has been found I will perform the final spell and"
+                " complete \nthe ritual.\n"
+                "\nYog-Sothoth guide me.'\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+
+        elif cellar_choice.lower() == "n":
+            if "Whateley" in slain_enemies:
+                type_text("\nYou climb the steps to the North and head out"
+                " the Cellar doors.\n")
+                garden()
+                break
+            else:
+                flee()
+
+        elif cellar_choice.lower() == "help":
+            print(help)
+
+        elif cellar_choice.lower() == "pc":
+            print(player_card)
+
+        elif cellar_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif cellar_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
+def basement():
+    """
+    Basement - Game Location.
+    """
+    global chris_status
+
+    basement_initial = ("\n\n")
+
+    basement_return = ("\n\n")
+
+    basement_safe = ("\n\n")
+
+    if "Chris" in slain_enemies or chris_status == "Saved":
+        type_text(basement_safe)
+
+    elif "Chris" not in slain_enemies or chris_status == "Saved" and "Basement" in checked_rooms:
+        enemy.update(chris)
+        type_text(basement_return)
+        
+    else:
+        enemy.update(chris)
+        checked_rooms.append("Basement")
+        type_text(basement_initial)
+    
+    def trapped():
+        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+        type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
+        f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
+        if player_card["HP"] <= 0:
+            game_over()
+            
+        else:
+            type_text(f"You have {player_card["HP"]} remaining HP."
+            " Attack or attempt to flee?\n")
+
+    def flee():
+        possible_outcomes = [west_wing, trapped]
+        random_outcome = random.choice(possible_outcomes)
+        random_outcome()
+
+    while True:
+        
+        if "Chris" in slain_enemies or chris_status == "Saved":
+            basement_choice = input("\nWhat do you do? (If you're stuck, try"
+            " using the 'l' command to look around.)\n")
+        else:
+            basement_choice = input("\nWhat do you do? Use the 'atk' command to"
+            " attack, or the 'flee' command to flee.\n")
+
+        if basement_choice.lower() == "atk":
+            atk()
+
+        elif basement_choice.lower() == "flee":
+            if "Chris" in slain_enemies or chris_status == "Saved":
+                type_text("\nThere's nothing to run from right now.\n")
+            else:
+                flee()
+
+        elif basement_choice.lower() == "l":
+            if "Chris" not in slain_enemies and chris_status == "Vessel":
+                type_text("\nNow's not the time for looking around!\n")
+            else:
+                type_text("\n\n")
+                    
+        elif basement_choice.lower() == "i body":
+            if "Chris" in slain_enemies or chris_status == "Saved":
+                type_text("\n\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+        
+        elif basement_choice.lower() == "i shrine":
+            if "Chris" in slain_enemies or chris_status == "Saved":
+                type_text("\n\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+
+        elif basement_choice.lower() == "n":
+            if "Chris" in slain_enemies or chris_status == "Saved":
+                type_text("\nYou climb the steps to the North and head out"
+                " the Cellar doors.\n")
+                garden()
+                break
+            else:
+                flee()
+
+        elif basement_choice.lower() == "help":
+            print(help)
+
+        elif basement_choice.lower() == "pc":
+            print(player_card)
+
+        elif basement_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif basement_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
 # Title Screen
 #main_menu()
 
@@ -2322,5 +2627,8 @@ flashlight = False
 
 # Determines Chris' status
 chris_status = "Unknown"
+
+# Determines Whateley's status
+whateley_status = True
 
 character_selection()
