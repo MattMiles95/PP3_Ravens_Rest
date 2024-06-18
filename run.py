@@ -31,12 +31,11 @@ god_mode = {
     "Attack Power": 1000,
     "Weapon": "Super Punch",
     "Skill": ["hack", "lockpick"],
-    "Inventory": ["flashlight"],
+    "Inventory": ["flashlight", "Cipher", "Necronomicon"],
     "Insight": ["Raven's Rest Owner Name", 
     "Whateley's Room Location", 
     "Chris' Room Location", 
-    "Hidden Safe", 
-    "Necronomicon",
+    "Hidden Safe",
     "Spell Reversal"]
 }
 
@@ -196,7 +195,7 @@ def atk():
         type_text(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
         if enemy["HP"] <= 0:
             type_text(f"\nWith a final rasping breath, {enemy['Name']} drops "
-            "to the floor, his BODY cold \nand still.\n")
+            "to the floor, his body cold \nand still.\n")
             slain_enemies.append(enemy["ID"])
             return
         else:
@@ -736,9 +735,10 @@ def foyer():
             " back into the foyer. No one comes.\n")
         
         elif foyer_choice.lower() == "let there be light":
-            power = True
-            type_text("\nPower is miraculously restored to the Hotel...\n"
-            "\nWait, how did you do that?\n")
+            if player_card["Name"] == "Super Shaggy":
+                power = True
+                type_text("\nPower is miraculously restored to the Hotel...\n"
+                "\nWait, how did you do that?\n")
         
         else:
             type_text(generic_error)
@@ -1091,18 +1091,19 @@ def west_wing():
         elif west_wing_choice.lower() == "w":
             if "RW Key" in looted_items and power == True:
                 type_text("\nYou use the Raven's Wing Key to unlock the"
-                " service lift.\n")
-                basement()
+                " service lift. The metal mesh doors \nclash and clang as you"
+                " pull them open and step inside.\n")
+                basement_a()
                 break
             elif "RW Key" not in looted_items:
                 if "lockpick" in player_card["Skill"]:
-                    type_text("\nThis door is locked with a strange mechanism."
-                    " It looks like the key would need \nto be shaped"
-                    " like a pair of wings...\n")
+                    type_text("\nThis door is locked with a strange"
+                    " mechanism. It looks like the key would need \nto be"
+                    " shaped like a set of wings...\n")
                 else:
                     type_text("This door is locked.")
             elif "RW Key" in looted_items and power == False:
-                type_text("\nYou use the Raven's Wing Key to access the"
+                type_text("\nYou use the Raven's Wing Key to unlock the"
                 " service lift, but it has no power...\n")
         
         elif west_wing_choice.lower() == "help":
@@ -1290,12 +1291,9 @@ def library():
         When called during fight, Player randomly triggers function for an
         adjacent room.
         """
-        if "Whateley's Room Location" in player_card["Insight"]:
-            available_directions = [west_wing, garden, whateleys_room]
-        else:
-            available_directions = [west_wing, garden]
-            random_direction = random.choice(available_directions)
-            random_direction()
+        available_directions = [west_wing, garden]
+        random_direction = random.choice(available_directions)
+        random_direction()
 
     library_initial = ("\nThe door to the Library creaks open, and you're met"
     " with the largest room in \nRaven's Rest. High ceilings stretch far"
@@ -1423,7 +1421,7 @@ def library():
             "\n'The cover off the tombe bears a striking resemblence to a face"
             " enduring \nterrible agony. The leathery material that binds its"
             " pages is wrinkled and \nfleshy to the touch.'\n")
-            player_card["Insight"].append("Necronomicon")
+            player_card["Insight"].append("Necronomicon Description")
             type_text("\n'Necronomicon Description' added to Insight.\n")
 
         elif library_choice.lower() == "i book":
@@ -2451,7 +2449,7 @@ def cellar():
                     " certainly no man.\n"
                     "\nAs you stare in disbelief at the slain monster before"
                     " you, his skin begins to \nwrithe. The yellow hue of his"
-                    " flesh turns ashen and his body withers. With a \ngasp,"
+                    " flesh turns grey and his body withers. With a \ngasp,"
                     " you watch as Whateley's body dissolves, leaving behind"
                     " only his tattered \nclothes and a blacked, winged"
                     " key.\n"
@@ -2515,106 +2513,226 @@ def cellar():
         else:
             type_text(generic_error)
 
-def basement():
+def basement_a():
     """
-    Basement - Game Location.
+    Basement A - First Section of the Basement
     """
-    global chris_status
-
-    basement_initial = ("\n\n")
-
-    basement_return = ("\n\n")
-
-    basement_safe = ("\n\n")
-
-    if "Chris" in slain_enemies or chris_status == "Saved":
-        type_text(basement_safe)
-
-    elif "Chris" not in slain_enemies or chris_status == "Saved" and "Basement" in checked_rooms:
-        enemy.update(chris)
-        type_text(basement_return)
-        
-    else:
-        enemy.update(chris)
-        checked_rooms.append("Basement")
-        type_text(basement_initial)
-    
-    def trapped():
-        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
-        type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
-        f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
-        if player_card["HP"] <= 0:
-            game_over()
-            
-        else:
-            type_text(f"You have {player_card["HP"]} remaining HP."
-            " Attack or attempt to flee?\n")
-
-    def flee():
-        possible_outcomes = [west_wing, trapped]
-        random_outcome = random.choice(possible_outcomes)
-        random_outcome()
+    type_text("\nYou feel the air grow colder as you descend into"
+    " the earth below the Hotel. The \nlift reaches the Basement level. With"
+    " a 'ding' and a mechanical 'click', the \nlift settles and releases its"
+    " lock. You slide the doors open again and step \ninto the Basement. The"
+    " air is stale, and you feel the damp settling on your \nskin. Despite"
+    " the restoration of power, the fluorescent bulbs overhead offer \nlittle"
+    " beyond the occasional buzz and flicker of white light, revealing a"
+    "\nnarrow corridor of bare brick and concrete.\n"
+    "\nAt the end of the corridor is a red metal door with a small pane of"
+    " reinforced \nglass at eye level. The door is locked in place with a"
+    " heavy iron bar.\n")
 
     while True:
         
-        if "Chris" in slain_enemies or chris_status == "Saved":
-            basement_choice = input("\nWhat do you do? (If you're stuck, try"
-            " using the 'l' command to look around.)\n")
-        else:
-            basement_choice = input("\nWhat do you do? Use the 'atk' command to"
-            " attack, or the 'flee' command to flee.\n")
+        basement_a_choice = input("\nEnter 'move' to move towards the"
+        " door.\n")
 
-        if basement_choice.lower() == "atk":
-            atk()
+        if basement_a_choice.lower() == "move":
+            type_text("\nAs you approach the door the air grows thick with an"
+            " oppressive, otherworldly \npresence. It feels heavy and"
+            " difficult to breathe, with the acrid smell of \nsulphur and"
+            " decay worsening as you go. An eerie silence pervades the"
+            " corridor, \noccasionally broken by faint, unidentifiable"
+            " whispers that seem to emanate from \nthe walls themselves.\n"
+            "\nYou reach the door.\n")
+            basement_b()
+            break
 
-        elif basement_choice.lower() == "flee":
-            if "Chris" in slain_enemies or chris_status == "Saved":
-                type_text("\nThere's nothing to run from right now.\n")
-            else:
-                flee()
+        elif basement_a_choice.lower() == "help":
+            type_text("\nI need to see if Chris is ok.\n")
 
-        elif basement_choice.lower() == "l":
-            if "Chris" not in slain_enemies and chris_status == "Vessel":
-                type_text("\nNow's not the time for looking around!\n")
-            else:
-                type_text("\n\n")
-                    
-        elif basement_choice.lower() == "i body":
-            if "Chris" in slain_enemies or chris_status == "Saved":
-                type_text("\n\n")
-            else:
-                type_text("\n'I can't do that now.'\n")
-        
-        elif basement_choice.lower() == "i shrine":
-            if "Chris" in slain_enemies or chris_status == "Saved":
-                type_text("\n\n")
-            else:
-                type_text("\n'I can't do that now.'\n")
-
-        elif basement_choice.lower() == "n":
-            if "Chris" in slain_enemies or chris_status == "Saved":
-                type_text("\nYou climb the steps to the North and head out"
-                " the Cellar doors.\n")
-                garden()
-                break
-            else:
-                flee()
-
-        elif basement_choice.lower() == "help":
-            print(help)
-
-        elif basement_choice.lower() == "pc":
+        elif basement_a_choice.lower() == "pc":
             print(player_card)
 
-        elif basement_choice.lower() == "exit":
+        elif basement_a_choice.lower() == "exit":
             main_menu()
             break
 
-        elif basement_choice.lower() == "heal":
+        elif basement_a_choice.lower() == "heal":
             heal()
 
         else:
             type_text(generic_error)
+
+def basement_b():
+    """
+    Basement B - Second Section of the Basement
+    """
+    type_text("\nYou peer in through the small window. At first you see"
+    " nothing other than an \nempty storage room. Then, out of the shadows,"
+    " Chris appears.\n"
+    "\nYou instinctively cry out his name as sheer, overwhelming relief"
+    " consumes you. \nYour brother is alive! But… something seems off. Why"
+    " isn't he reacting to your \narrival? He's just standing there, several"
+    " metres from the door, staring at you \nthrough the glass.\n"
+    "\n'Chris?' You call out to him through the window. No reply. The light"
+    " overhead \nflickers again, and in that blink of darkness, Chris appears"
+    " the other side of \nthe window, his face less than an inch from yours."
+    " You recoil in fright, \nletting out a cry as you jump away from the"
+    " door. You see him more clearly now. \nHis skin is ashen and his eyes,"
+    " two black pits. A smirk crawls across him lips. \nThis is not your"
+    " brother anymore.\n")
+
+    while True:
+        
+        basement_b_choice = input("\nDo you leave ('l') or open the door"
+        " ('o')?\n")
+
+        if basement_b_choice.lower() == "l":
+            ending_spare()
+            break
+
+        elif basement_b_choice.lower() == "o":
+            basement_c()
+            break
+        
+        elif basement_b_choice.lower() == "help":
+            type_text("\n'Chris... What have they done to you?'\n")
+
+        elif basement_b_choice.lower() == "pc":
+            print(player_card)
+
+        elif basement_b_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif basement_b_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
+def basement_c():
+    """
+    Basement C - Third Section of the Basement
+    """
+    enemy.update(chris)
+
+    type_text("\nYou remove the iron bar and prop it against the wall, before"
+    " taking a step back \nfrom the door. Chris - or at least, the creature"
+    " that possess him - slowly \npushes the door open and steps into the"
+    " corridor, eyes fixed on you the whole \ntime. It feels as though an"
+    " eternity passes by as the two of you stare at each \nother. Looking"
+    " into his eyes, you find no trace of your brother there. Just the \nsame"
+    " shimmer of sinister intelligence you saw in Whateley's eyes. You know"
+    " what \nyou must do.\n")
+
+    while True:
+        
+        basement_c_choice = input("\nEnter 'atk' to attack Chris.\n")
+
+        if basement_c_choice.lower() == "atk":
+            atk()
+            
+            if enemy["HP"] <= 0:
+                basement_d()
+                break
+
+        elif basement_c_choice.lower() == "flee":
+            type_text("\n'I can't just run from this!'\n")
+
+        elif basement_c_choice.lower() == "help":
+            type_text("\n'There's only one way this ends... I need to"
+            " fight.'\n")
+
+        elif basement_c_choice.lower() == "pc":
+            print(player_card)
+
+        elif basement_c_choice.lower() == "exit":
+            main_menu()
+            break
+
+        elif basement_c_choice.lower() == "heal":
+            heal()
+
+        else:
+            type_text(generic_error)
+
+def basement_d():
+    """
+    Basement D - Final section of Basement
+    """
+
+    type_text("\nYou rush over to Chris' body and drop to your"
+    " knees, checking to see if he's \nstill breathing. Holding"
+    " your ear to his mouth, you hear a faint rasp and feel"
+    "\nwarm breath on your cheek. He's weak, but alive. You"
+    " don't have long.\n")
+
+    if "Cipher" and "Necronomicon" in player_card["Inventory"] and "Spell Reversal" in player_card["Insight"]:
+        type_text("\nLooking down at your brother, tears blurring"
+        " your vision, you suddenly remember \nwhat you read in"
+        " Whateley's journal. He mentioned reversing the process"
+        " of \nmaking someone a vessel by using a spell from the"
+        " Necronomicon.\n"
+        "\nYou hastily pull out the book you grabbed in the"
+        " library and the cipher you \ntook from Chris' desk."
+        " Frantically, you start searching through the pages to"
+        "\nfind any reference to vessels or reversing spells. You"
+        " eventually find a page \nthat looks like it could be"
+        " what you're looking for. But even if it is... can \nyou"
+        " wield this dark magic? And if so, what will it cost?\n")
+
+        while True:
+            ending_choice = input("\nWhat do you do?\n"
+            "\nEnter 'kill' to put Chris out of his misery, and"
+            " prevent whatever evil has \nrooted itself within"
+            " him from spreading.\n"
+            "\nEnter 'spare' to leave the Raven's Rest and spare"
+            " Chris his life.\n"
+            "\nEnter 'save' to try and reverse the spell that is"
+            " transforming Chris into a \nvessel.\n")
+                    
+            if ending_choice.lower() == "kill":
+                ending_kill()
+                return
+
+            elif ending_choice.lower() == "spare":
+                ending_spare()
+                return
+
+            elif ending_choice.lower() == "save":
+                ending_save()
+                return
+
+            elif ending_choice.lower() == "pc":
+                print(player_card)
+                    
+            else:
+                type_text("\n'I have to make a choice...'\n")
+                
+    else:
+        while True:
+            ending_choice = input("\nWhat do you do?\n"
+            "\nEnter 'kill' to put Chris out of his misery, and"
+            " prevent whatever evil has \nrooted itself within"
+            " him from spreading.\n"
+            "\nEnter 'spare' to leave the Raven's Rest and spare"
+            " Chris his life.\n")
+                    
+            if ending_choice.lower() == "kill":
+                ending_kill()
+                return
+
+            elif ending_choice.lower() == "spare":
+                ending_spare()
+                return
+
+def ending_kill():
+    print("kill")
+
+def ending_spare():
+    print("spare")
+
+def ending_save():
+    print("save")
 
 # Title Screen
 #main_menu()
