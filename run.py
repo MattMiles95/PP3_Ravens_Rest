@@ -61,6 +61,15 @@ player_card = {
     "Insight": []
     }
 
+# Determines if the Hotel has power
+power = False
+
+# Determines if the Player's flashlight is on
+flashlight = False
+
+# Determines Whateley's status
+whateley_status = True
+
 # List of rooms Player has checked
 checked_rooms = []
 
@@ -127,7 +136,7 @@ help = (
 "\nEnter 'atk' to attack."
 "\nEnter 'flee' to escape a fight in a random direction.\n"
 "\nHINT: The 'l' command is great if you need a clue as to what you can do in"
-" the room you're in!\n")
+" the \nroom you're in!\n")
 
 generic_error = ("\nYou can't do that... Use the 'help' command if you're "
 "stuck, or 'l' to look around for clues.\n")
@@ -264,6 +273,7 @@ def type_text(text):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(random.uniform(0.001, 0.09))
+    print(text)
 
 def main_menu():
     """
@@ -365,8 +375,7 @@ def how_to_play():
     "\nBe sure to pick up any weapons you might find to help you deal"
     "\nmore damage.\n"
     "\n8. Keep an eye on your HP. If it drops to zero, that's"
-    "\ngame over. Healing items can be found and used to keep you going.\n"
-    "\nThe following are common commands you'll use throughout the game:\n")
+    "\ngame over. Healing items can be found and used to keep you going.\n")
     
     type_text(help)
 
@@ -535,7 +544,7 @@ def intro_c():
     " gravel track. Bouncing \nuncomfortably on the bench for a minute or so,"
     " you're relieved when the horses \ncome to a halt. A thin grate on the"
     " driver's side of the carriage slides open.\n"
-    "\n'Make it quick,' he says. 'The horses are spooked.'\n"
+    "\n'Make it quick,' the carriage driver says. 'The horses are spooked.'\n"
     "\nYou swing open the door and step into the stormy night, tossing the"
     " driver's \nfare into a cup on the way out. You're immediately bitten by"
     " the cold and \nfumble with your collar to turn it against the wind and"
@@ -543,7 +552,7 @@ def intro_c():
     "\n'What's got them spooked?' you call out, fighting to be heard over the"
     " weather.\n"
     "\n'You'll find out soon enough, I'm sure.' He called back. With that, he"
-    " spurred \nhis horses and set off. It seems to you as though it wasn't"
+    " spurs \nhis horses and sets off. It seems to you as though it wasn't"
     " just the horses \nthat were spooked. As the carriage draws away with its"
     " lantern, so does your \nonly source of light. You're quickly plummeted"
     " into pitch darkness.\n"
@@ -551,14 +560,14 @@ def intro_c():
 
     while True:
         intro_c_choice = input()
-        global flashlight 
+        global flashlight
 
         if intro_c_choice.lower() == "pc":
             print(player_card)
-            type_text("\nA flashlight! That'll help. Enter 'use"
+            type_text("\nA flashlight! That'll help. Enter 'i"
             " flashlight'.\n")
         
-        elif intro_c_choice.lower() == "use flashlight":
+        elif intro_c_choice.lower() == "i flashlight":
             if flashlight == True:
                 type_text("\nYou've already swithced your flashlight on. Try"
                 " entering 'l' to look around.\n")
@@ -2867,12 +2876,3 @@ def ending_save():
 
 # Title Screen
 main_menu()
-
-# Determines if the Hotel has power
-power = False
-
-# Determines if the Player's flashlight is on
-flashlight = False
-
-# Determines Whateley's status
-whateley_status = True
