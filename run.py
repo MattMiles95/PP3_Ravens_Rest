@@ -198,13 +198,13 @@ def atk():
         player_card["Attack Power"] = random.randint(10, 20)
     
     elif player_card["Weapon"] == "Pitchfork":
-        player_card["Attack Power"] = random.randint(20, 30)
+        player_card["Attack Power"] = random.randint(20, 35)
     
     elif player_card["Weapon"] == "Handgun":
-        player_card["Attack Power"] = random.randint(30, 40)
+        player_card["Attack Power"] = random.randint(35, 40)
     
     elif player_card["Weapon"] == "Shotgun":
-        player_card["Attack Power"] = random.randint(35, 50)
+        player_card["Attack Power"] = random.randint(30, 50)
     
     elif player_card["Weapon"] == "Super Punch":
         player_card["Attack Power"] = 1000
@@ -584,7 +584,7 @@ def intro_c():
                 type_text("\nYou're stood in a small, wooded enclosure, just"
                 " off the gravel track. A path \nthrough the trees to the"
                 " North appears to be your only choice forward.\n"
-                "\nEnter 'n' to walk northwards.")
+                "\nEnter 'n' to walk northwards.\n")
             else:
                 type_text("\n'I can't see a thing!'\n")
         
@@ -672,12 +672,12 @@ def foyer():
     foyer_look = ("\nYou look around the Foyer.\n"
     "\nYou see the reception DESK ahead of you.\n"
     "\nA door to the East ('e') with a sign that reads, 'East Wing,"
-    " Maintenance and Bar'.\n"
-    "\nA door to the West ('w') with a sign that reads, 'West Wing, Basement"
-    " Access and Library'.\n" 
+    " Maintenance and \nBar'.\n"
+    "\nA door to the West ('w') with a sign that reads, 'West Wing,"
+    " Basement Access and \nLibrary'.\n" 
     "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
 
-    desk_inspect = ("You approach the desk for a closer look. A COMPUTER and"
+    desk_inspect = ("\nYou approach the desk for a closer look. A COMPUTER and"
     " a BELL sit on the desk. \nBehind the desk is a DOOR with a sign that"
     " reads, 'Staff Only'.\n")
 
