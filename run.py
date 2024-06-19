@@ -273,7 +273,6 @@ def type_text(text):
     for char in text:
         print(char, end='', flush=True)
         time.sleep(random.uniform(0.001, 0.09))
-    print(text)
 
 def main_menu():
     """
