@@ -24,7 +24,18 @@ claire_greenfield = {
     "Insight": []
 }
 
-# Secret Player Charater Option
+"""
+'God Mode' has been designed purely for play testing, allowing swift
+progression through the game to improve the efficiency of manually testing
+specific features. As such, 'God Mode' is not compatible with all game
+features and should not be used as an overall playthrough test. Known
+incompatiblities arise from the 'let there be light' command, which can
+be used to turn on the power from the foyer at any time. This conflicts
+with features such as the first time you enter the bar, where the game
+presumes the power is still off due to it being narratively impossible
+to have turned the power on at that point using either of the normal
+player characters. 
+"""
 god_mode = {
     "Name": "Super Shaggy",
     "HP": 1000,
@@ -245,19 +256,14 @@ def game_over():
         
         else:
             type_text("\nThat's not an option right now...\n")
-            
-#def end_game_good():
-
-#def end_game_bad():
 
 def type_text(text):
     """
     Prints text one character at a time to create a 'typing' animation.
     """
-    #for char in text:
-    #    print(char, end='', flush=True)
-    #    time.sleep(random.uniform(0.001, 0.09))
-    print(text)
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(random.uniform(0.001, 0.09))
 
 def main_menu():
     """
@@ -634,16 +640,16 @@ def intro_d():
 
 def foyer():
     """
-    The Hotel Foyer - the first room the Player enters.
+    Hotel Foyer - the first room the Player enters.
     """
     global power
 
     foyer_text_initial = ("\nYou step into a wide, empty Foyer. The beam of"
     " your flashlight barely \npenetrates the surrounding shadows as you pan"
     " across the room. Ahead of you \nbeneath the gloomy red glow of an"
-    " emergency lamp, you see the reception DESK."
+    " emergency lamp, you see the reception DESK.\n"
     "\nOn both the East and West sides of the room are doors leading out of"
-    " the Foyer.\n")
+    " the \nFoyer.\n")
 
     foyer_text_return = ("\nYou step again into the wide, empty Foyer.\n")
 
@@ -653,11 +659,13 @@ def foyer():
         type_text(foyer_text_initial)
         checked_rooms.append("Foyer")
 
-    foyer_look = ("\nYou look around the Foyer. You see the reception DESK"
-    " ahead of you. A door to \nthe East ('e') with a sign that reads, 'East"
-    " Wing, Maintenance and Bar'. A door to \nthe West ('w') with a sign that"
-    " reads, 'West Wing and Library'. Behind you, to \nthe South ('s'), is the"
-    " Hotel entrance.\n")
+    foyer_look = ("\nYou look around the Foyer.\n"
+    "\nYou see the reception DESK ahead of you.\n"
+    "\nA door to the East ('e') with a sign that reads, 'East Wing,"
+    " Maintenance and Bar'.\n"
+    "\nA door to the West ('w') with a sign that reads, 'West Wing, Basement"
+    " Access and Library'.\n" 
+    "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
 
     desk_inspect = ("You approach the desk for a closer look. A COMPUTER and"
     " a BELL sit on the desk. \nBehind the desk is a DOOR with a sign that"
@@ -711,14 +719,7 @@ def foyer():
             break
         
         elif foyer_choice.lower() == "s":
-            if chris_status == "alive":
-                end_game_good()
-            elif chris_status == "dead":
-                end_game_bad()
-            elif chris_status == "vessel":
-                end_game_bad()
-            else:
-                type_text("I'm not leaving until I've found Chris.")
+            type_text("\nI'm not leaving until I've found Chris.\n")
         
         elif foyer_choice.lower() == "i desk":
             type_text(desk_inspect)
@@ -745,7 +746,7 @@ def foyer():
 
 def foyer_computer():
     """
-    The Foyer Computer - Options
+    Foyer Computer - Options
     """
     type_text("\nThe computer is locked, but you manage to hack it.\n")
     
@@ -2726,16 +2727,146 @@ def basement_d():
                 return
 
 def ending_kill():
-    print("kill")
+    type_text("\nChris is gone. You have to accept that. Whatever twisted"
+    " entity Whateley had \nbegun to weave into the fabric of his being…"
+    " that's what you're seeing now. \nAnd after the horrors you've witnessed"
+    " this evening, you know he can't ever \nleave this place.\n"
+    "\nTears stream down your face as you remember the brother you loved."
+    " Closing \nyour eyes and picturing the smiling face from the photograph"
+    " in your pocket, \nyou bring an end to the evil that resides in Raven's"
+    " Rest.\n")
+
+    while True:
+        
+        type_text("\nThank you for playing. You've brought an end to the"
+        " eldritch horror growing \nbeneath the Raven's Rest, but at a deep"
+        " personal cost. Why not try again and \nsee if you can find a"
+        f" happier ending for Chris and {player_card["Name"]}?\n")
+        
+        game_over_choice = input("\nEnter 'ng' to start a new game from the"
+        " Character Selection Menu.\n"
+        "\nEnter 'exit' to return to the Main Menu.\n")
+
+        if game_over_choice.lower() == "ng":
+            reset_game_values()
+            character_selection()
+            return
+        
+        elif game_over_choice.lower() == "exit":
+            reset_game_values()
+            main_menu()
+            return
+        
+        else:
+            type_text("\nThat's not an option right now...\n")
 
 def ending_spare():
-    print("spare")
+    type_text("\nYou stare a long while at your brother. Despite the ashen"
+    " skin and sunken \neyes, all you see is Chris. Everything you've been"
+    " through this night - every \npain and horror endured - you did so to"
+    " save him. You simply don't have it in \nyou to stop him.\n"
+    "\nYou turn and head back to the service lift. Metal doors clang shut"
+    " behind you. \nAscending to the ground floor of the hotel, you torture"
+    " yourself with the \n'what if's. You know this basement won't hold him"
+    " for long. Someone will find \nhim. All you can hope is that when they"
+    " do, they have the will to do what you \ncouldn't. To put an end to the"
+    " evil that resides in Raven's Rest.\n")
+
+    while True:
+        
+        type_text("\nThank you for playing. You may have put a stop to"
+        " dispicable Mr Whateley, but \nthe eldritch horror growing"
+        " beneath the Raven's Rest lives on. Why not try \nagain and see if"
+        " you can defeat the evil that has taken your brother, once and for"
+        " all?\n")
+        
+        game_over_choice = input("\nEnter 'ng' to start a new game from the"
+        " Character Selection Menu.\n"
+        "\nEnter 'exit' to return to the Main Menu.\n")
+
+        if game_over_choice.lower() == "ng":
+            reset_game_values()
+            character_selection()
+            return
+        
+        elif game_over_choice.lower() == "exit":
+            reset_game_values()
+            main_menu()
+            return
+        
+        else:
+            type_text("\nThat's not an option right now...\n")
 
 def ending_save():
-    print("save")
+    type_text("\nUsing Chris' cipher, you begin to read the spell - as best"
+    " you can. Despite \nall you've seen tonight, the absurdity of you"
+    " casting actual magic feels \nalmost too much to believe. Before today,"
+    " you thought the occult only existed \nin books and movies. But as you"
+    " speak the arcane words, your voice takes on a \nharmonious drone, as"
+    " though many versions of you are speaking at once. The \nstale air of"
+    " the basement seems to be given life, gusting up and down the"
+    "\ncorridor, whipping at your clothes. The whispers of the walls grow"
+    " louder and \nlouder until they are screaming, protesting your defiance"
+    " of their Lord. You \nutter the last note of the spell, the drone of"
+    " your voice and the rushing wind \ncoming to a crescendo and then…"
+    " silence. The air dissipates. The wailing \nvoices cease.\n" 
+    "\nYou stand there in the anticlimax looking down at Chris, wondering if"
+    " it \nworked. In the flickering fluorescent light, you fail to notice at"
+    " first the \ngathering shadow beneath his body. Then you see it. The"
+    " corruption. Gushing \nfrom your brother and spreading across the floor"
+    " like ink from a shattered \nwell. It pools in the far end of the"
+    " corridor, and you watch in horror as a \nbeing of slickened black"
+    " begins to rise from the abyss. You hear the whispers \nbegin again,"
+    " chanting their Lord's Name: 'Yog-Sothoth, Yo-Sothoth'. The \neldritch"
+    " creature now stands as a man - albeit hunched and twisted - reaching"
+    "\na black hand towards you. Shadows drip from the ethereal appendage."
+    " Muttering \nit's foul language, it takes a lumbering step towards you."
+    " It's body twitches \nand contorts unnaturally as it moves, as though"
+    " pained with every moment of \nexistence. Your heart pounds as the blink"
+    " of the fluorescent light snatches \nyou too and from darkness, making"
+    " it impossible to track how quickly the \ncreature moves. You stand"
+    " defiantly before your brother and brace for whatever \ncomes next. With"
+    " a final lurch it falls before you, a blackened, slimy \nimitation of a"
+    " man. A shadowy head rears up at you, revealing an aberrant"
+    "\napproximation of a face, with only one eye and a crooked mouth. The"
+    " wretched \ncreature lets out a final, agonising scream before crashing"
+    " to the floor, a \nformless puddle of black. The shadow seems to drain"
+    " away, seeping into the \nearth below. The whispers fade once more. You"
+    " notice the light has stopped \nflickering, the constant hum of the bulb"
+    " the only sound you now hear.\n" 
+    "\nWith a great gasp, as though surfacing from deep waters, Chris bolts"
+    " upright. \nWide eyed, you stare at him, unsure what to expect. After a"
+    " moment, his blank \nexpression regains some lucidity. He looks up at"
+    " you.\n"
+    f"\n{player_card["Name"]}?\n")
+
+    while True:
+        
+        type_text("\nCongratulations on saving Chris and putting a stop to"
+        " the eldritch horror \ngrowing beneath the Raven's Rest! Your grit,"
+        " determination and keen \ninvestigative prowess has led to you"
+        " achieving the best outcome in the game. \nWhy not try again and see"
+        " what other, less fortunate endings, you managed to \navoid.\n")
+        
+        game_over_choice = input("\nEnter 'ng' to start a new game from the"
+        " Character Selection Menu.\n"
+        "\nEnter 'exit' to return to the Main Menu.\n")
+
+        if game_over_choice.lower() == "ng":
+            reset_game_values()
+            character_selection()
+            return
+        
+        elif game_over_choice.lower() == "exit":
+            reset_game_values()
+            main_menu()
+            return
+        
+        else:
+            type_text("\nThat's not an option right now...\n")
 
 # Title Screen
-#main_menu()
+main_menu()
 
 # Determines if the Hotel has power
 power = False
@@ -2743,10 +2874,5 @@ power = False
 # Determines if the Player's flashlight is on
 flashlight = False
 
-# Determines Chris' status
-chris_status = "Unknown"
-
 # Determines Whateley's status
 whateley_status = True
-
-character_selection()
