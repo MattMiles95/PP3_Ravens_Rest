@@ -46,7 +46,7 @@ god_mode = {
     "Insight": ["Raven's Rest Owner Name", 
     "Whateley's Room Location", 
     "Chris' Room Location", 
-    "Hidden Safe",
+    "Hidden Safe Location",
     "Spell Reversal"]
 }
 
@@ -149,6 +149,7 @@ def fa_kit_loot():
     player_card["Inventory"].append("First Aid Kit")
     type_text("\nYou rummage through the First Aid Kit and take some "
     "supplies.\n")
+    type_text("\n'First Aid Kit' added to Inventory.\n")
     return
 
 def heal():
@@ -158,7 +159,8 @@ def heal():
     if "First Aid Kit" in player_card["Inventory"]:
         player_card["HP"] += 30
         player_card["Inventory"].remove("First Aid Kit")
-        type_text("\nYou use a First Aid Kit and heal 30 HP.\n")
+        type_text("\nYou use a First Aid Kit and heal 30 HP.\n"
+        f"\nYour health is now {player_card["HP"]}.\n")
         return
     
     else:
@@ -212,20 +214,20 @@ def atk():
     
     else:
         enemy["HP"] = enemy["HP"] - player_card["Attack Power"]
-        type_text(f"You hit {enemy['Name']} for {player_card['Attack Power']}")
+        type_text(f"\nYou hit {enemy['Name']} for {player_card['Attack Power']} damage.\n")
         if enemy["HP"] <= 0:
             type_text(f"\nWith a final rasping breath, {enemy['Name']} drops "
-            "to the floor, his body cold \nand still.\n")
+            "to the floor, his body \ncold and still.\n")
             slain_enemies.append(enemy["ID"])
             return
         else:
             player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
-            type_text(f"{enemy['Name']} hit you for {enemy['Attack Power']}")
+            type_text(f"\n{enemy['Name']} hit you for {enemy['Attack Power']} damage.\n")
             if player_card["HP"] <= 0:
                 game_over()
             else:
-                type_text(f"You have {player_card["HP"]} remaining HP."
-                " Attack again or flee?\n")
+                type_text(f"\nYou have {player_card["HP"]} remaining HP.\n"
+                "\nAttack again or flee?\n")
     return
 
 # End Game Functions
@@ -272,7 +274,7 @@ def type_text(text):
     """
     for char in text:
         print(char, end='', flush=True)
-        time.sleep(random.uniform(0.001, 0.09))
+        time.sleep(random.uniform(0.001, 0.05))
 
 def main_menu():
     """
@@ -970,8 +972,9 @@ def east_wing():
             " Raven's Rest. The caption reads 'One year since the Raven's Rest"
             " came under \nnew management. New owner Mr Whateley says he has"
             " 'big plans' for the hotel'.\n")
-            player_card["Insight"].append("Raven's Rest Owner Name")
-            type_text("\n'Raven's Rest Owner Name' added to Insight.\n")
+            if "Raven's Rest Owner Name" not in player_card["Insight"]:
+                player_card["Insight"].append("Raven's Rest Owner Name")
+                type_text("\n'Raven's Rest Owner Name' added to Insight.\n")
         
         elif east_wing_choice.lower() == "n":
             type_text("\nYou pass through the double doors into the Bar.\n")
@@ -1197,8 +1200,9 @@ def supplies_cupboard():
                 " follow my lead.\n"
                 "\nSerious, get out before it's too late.\n"
                 "\n- Jack\n")
-                player_card["Insight"].append("Hidden Safe Location")
-                type_text("\n'Hidden Safe Location' added to Insight.\n")
+                if "Hidden Safe Location" not in player_card["Insight"]:
+                    player_card["Insight"].append("Hidden Safe Location")
+                    type_text("\n'Hidden Safe Location' added to Insight.\n")
         
         elif supplies_cupboard_choice.lower() == "n":
             type_text("\nYou exit to the north, returning to the East Wing.\n")
@@ -1430,11 +1434,12 @@ def library():
             "\n'The cover off the tombe bears a striking resemblence to a face"
             " enduring \nterrible agony. The leathery material that binds its"
             " pages is wrinkled and \nfleshy to the touch.'\n")
-            player_card["Insight"].append("Necronomicon Description")
-            type_text("\n'Necronomicon Description' added to Insight.\n")
+            if "Necronomicon Description" not in player_card["Insight"]:
+                player_card["Insight"].append("Necronomicon Description")
+                type_text("\n'Necronomicon Description' added to Insight.\n")
 
         elif library_choice.lower() == "i book":
-            if "Necronomicon" in player_card["Insight"]:
+            if "Necronomicon Description" in player_card["Insight"]:
                 type_text("\nWhat are the odds... The book you knocked off the"
                 " shelf matches the description \nof the Necronomicon. You"
                 " bend down to pick it off the floor. As you touch the \ncover"
@@ -1444,8 +1449,9 @@ def library():
                 " orbs. At once, all the eyes focus on you. Another \nflash of"
                 " light, and the vision fades. You find yourself in the"
                 " Library of \nthe Raven's Rest once more.\n")
-                player_card["Inventory"].append("Necronomicon")
-                type_text("\n'Necronomicon' added to Inventory.\n")
+                if "Necronomicon" not in player_card["Inventory"]:
+                    player_card["Inventory"].append("Necronomicon")
+                    type_text("\n'Necronomicon' added to Inventory.\n")
             else:
                 type_text("\nYou look down at the book on the floor. Maybe"
                 " you're losing it, but you could \nswear the cover looks like"
@@ -1460,8 +1466,7 @@ def library():
                 " blood.\n")
                 if "First Aid Kit (Library)" not in looted_items:
                     type_text("\nYou take a knee beside the giant and pat down"
-                    " his robes. You find medical \nsupplies in his pockets."
-                    "\n'First Aid Kit' added to Inventory.\n")
+                    " his robes. You find medical \nsupplies in his pockets.")
                     fa_kit_loot()
                     looted_items.append("First Aid Kit (Library)")
             else:
@@ -1556,12 +1561,12 @@ def bar():
         checked_rooms.append("Bar")
         type_text(bar_initial)
         flashlight = False
-        type_text("\nEnter 'use flashlight' to turn on your flashlight.\n")
+        type_text("\nEnter 'i flashlight' to turn on your flashlight.\n")
 
     while True:
         bar_choice = input()
 
-        if bar_choice == "use flashlight":
+        if bar_choice == "i flashlight":
             if flashlight == True:
                 type_text("\nYour flashlight is already on!\n")
             elif power == False and flashlight == False:
@@ -1756,7 +1761,7 @@ def garden():
             heal()
         
         elif garden_choice.lower() == "i flower beds":
-            type_text("\nYou inspect a nearby flowerbed. Unusual plants seem to"
+            type_text("\nYou inspect a nearby flower bed. Unusual plants seem to"
             " be growing here. Thick \npurple stems support dark, drooping"
             " leaves. It's as though the corruption within \nthe Hotel has"
             " seeped into the earth around it, bearing these ominious plants"
@@ -1851,7 +1856,7 @@ def chris_room():
     " you spin around to see the hooded \nfigure charge at you from the"
     " bathroom.\n")
 
-    chris_room_safe = ("\nYou walk into Chris' Room and look around.\n"
+    chris_room_safe = ("\nYou look around Chris' Room.\n"
     "\nThere's an en suite BATHROOM to your right.\n"
     "\nIn the corner of the room is the desk the cultist was pouring over,"
     " littered \nin NOTES of paper. Also on the desk sits a COMPUTER.\n"
@@ -1962,6 +1967,20 @@ def chris_room():
                     type_text("\n'Cipher' added to Inventory.\n")
                 else:
                     type_text("\nYou've already picked up the Cipher.\n")
+            else:
+                type_text("\n'I can't do that now.'\n")
+
+        elif cr_choice.lower() == "i bathroom":
+            if "Cultist (CR)" in slain_enemies:
+                if "First Aid Kit (CR)" not in looted_items:
+                    type_text("\nYou take a look inside Chris' Rooms"
+                    " bathroom. The only thing of use in here \nis a First"
+                    " Aid Kit, lying by the sink.\n")
+                    player_card["Inventory"].append("First Aid Kit")
+                    looted_items.append("First Aid Kit (CR)")
+                else:
+                    type_text("\nYou've already picked up the First Aid Kit"
+                    " in here.\n")
             else:
                 type_text("\n'I can't do that now.'\n")
         
@@ -2179,7 +2198,7 @@ def whateleys_room():
             " afflication...\n")
 
         elif whateleys_room_choice.lower() == "i safe":
-            if "Hidden Safe" in player_card["Insight"]:
+            if "Hidden Safe Location" in player_card["Insight"]:
                 type_text("\n'I guess this must be the hidden safe the Jack"
                 " wrote about in his note...'\n")
             type_text("\nEdging around the body, you take a look at the small"
@@ -2272,7 +2291,7 @@ def whateleys_room():
         
         elif whateleys_room_choice.lower() == "i portrait":
             if "lockpick" in player_card["Skill"]:
-                if "Hidden Safe" in player_card["Insight"]:
+                if "Hidden Safe Location" in player_card["Insight"]:
                     type_text("\nYou take a closer look at the portrait.\n"
                     "\nTracing your fingers along the edge, you realise one"
                     " side is ever so slightly \nraised. You manage to get"
