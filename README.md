@@ -202,96 +202,13 @@ As a future feature, I would like to work out a way of enjoying the best of both
 
 #### Validators
 
-To ensure there were no errors in the syntax of my code, each file was separately validated using direct input in the [W3C Markup Validator](https://validator.w3.org/#validate_by_input), the [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and [JSHint](https://jshint.com/)
+To ensure there were no errors in the syntax of my code, my run.py file was validated using [ExtendsClass Python Syntax Checker](https://extendsclass.com/python-tester.html).
 
-##### HTML
-
-<details><summary>index.html</summary>
-
-![Homepage Validator Result](assets/images/readme-images/w3-index.webp)
-</details>
-
-<details><summary>game-heroes.html</summary>
-
-![Heroes Page Validator Result](assets/images/readme-images/w3-heroes.webp)
-</details>
-
-<details><summary>game-villains.html</summary>
-
-![Villains Page Validator Result](assets/images/readme-images/w3-villains.webp)
-</details>
-
-##### CSS
-
-<details><summary>style.css</summary>
-
-![CSS Validator Result](assets/images/readme-images/w3-css.webp)
-</details>
-
-##### JavaScript
-
-<details><summary>home.js</summary>
-
-![JSHint Result](assets/images/readme-images/jshint-home.webp)
-</details>
-
-<details><summary>heroes.js</summary>
-
-![JSHint Result](assets/images/readme-images/jshint-heroes.webp)
-</details>
-
-<details><summary>villains.js</summary>
-
-![JSHint Result](assets/images/readme-images/jshint-villains.webp)
-</details>
-
-#### Lighthouse Testing
-
-I used the Google Lighthouse tool to test the performance, accessibility, SEO and best practices of each of webpages, generating reports for both mobile and desktop performance on each.
-
-All Lighthouse tests were conducted using Incognito Mode to ensure there was no interference from browser plugins.
-
-##### Lighthouse Test Results
-
-<details><summary>index.html</summary>
-
-![Homepage Lighthouse Result](assets/images/readme-images/lighthouse-result-index.png)
-</details>
-
-<details><summary>heroes.html</summary>
-
-![Heroes Page Lighthouse Result](assets/images/readme-images/lighthouse-result-heroes.webp)
-</details>
-
-<details><summary>villains.html</summary>
-
-![Villains Lighthouse Result](assets/images/readme-images/lighthouse-result-villains.webp)
-</details>
+![run.py Validator Result](/assets/readme-images/python_validator_result)
 
 #### Manual Testing 
  
 To test the functionality of my JavaScript, myself and several friends and family play tested the game on various devices. I then compiled the data in the following table:
-
-#### Browser Compatibility
-
-Browser | Expected Outcome  | Result
---- | --- | ---
-Google Chrome | No issues with appearance, functionality, performance or responsiveness | Pass
-Microsoft Edge | No issues with appearance, functionality, performance or responsiveness | Pass
-Mozilla Firefox | No issues with appearance, functionality, performance or responsiveness | Pass
-Safari | No issues with appearance, functionality, performance or responsiveness | Pass
-
-#### Device Compatibility
-
-Device | Expected Outcome | Result
---- | --- | ---
-Samsung Galaxy S23 Ultra (412px x 750px) | No issues with appearance, functionality, performance or responsiveness | Pass
-iPhone 13 (390px x 661px) | No issues with appearance, functionality, performance or responsiveness | Pass
-Apple iPad 8th Gen (580px x 548px) | No issues with appearance, functionality, performance or responsiveness | Pass
-15.6" Portable Monitor (1280px x 551px) | No issues with appearance, functionality, performance or responsiveness | Pass
-15.6" Windows Laptop (1536px x 695px) | No issues with appearance, functionality, performance or responsiveness | Pass 
-
-(The above viewports were calculated using [whatismyviewport.com](https://whatismyviewport.com/) on each devices' maximised browser window.)
 
 #### Play Testing
 
@@ -335,34 +252,26 @@ User Buttons Panel | Panel appears slightly below User Card on devices with view
 
 ### Local Development & Deployment
 
-#### Local Development
+The app was developed using GitPod.
 
-The website was developed using Visual Studio Code, with all local files stored in my Dropbox to provide a cloud-based backup. All live code is stored in my GitHub repository – PP2_Marvel_Top_Trumps (via routine 'git push' commands). The following VS Code extensions were used in the development of the website:
+Prior to the below deployment process, enter the "pip freeze" command in your Git Bash terminal to update your requirements.txt file. Once this has been done, you can deploy with Heroku using the following steps:
 
-* Git
-
-* GitHub Codespaces
-
-* GitHub Repositories
-
-* Live Server
-
-#### Deployment 
-
-This site was deployed via GitHub Pages, using the following steps:
-
-1. Open the GitHub repository - [PP2_Marvel_Top_Trumps](https://github.com/MattMiles95/PP2_Marvel_Top_Trumps).
-
-2. Select the Settings tab.
-
-3. Open the source-selection dropdown menu and select "Main Branch"
-
-Upon completion of the above steps, refresh the repository homepage and scroll to the Deployments section on the right-hand side of the page. Click on "github-pages" and follow the link to the live project.
+1. Log in to Heroku
+2. On the 'Dashboard', click "New" then "Create new app"
+3. Choose your unique app name and select your region
+4. Click "Create app"
+5. Under "Settings", locate "Config Vars"
+6. Click "Reveal Config Vars" and add "PORT" key and value "8000", then click "Add"
+7. Locate "Buildpack" and click "Add", then select "Python" and "Node.js", ensuring "Python" sits above "Node.js" in the build order.
+8. Click the "Deploy" tab
+9. Select GitHub as deployment method and search for your repository, then click "link"
+10. Select either "Enable Automatic Deploys" or "Manual Deploy"
+11. Wait for the build and publish process. Once completed, follow provided link to the deployed app to ensure successful deployment.
 
 #### Forking the GitHub Repository
 Forking the repository creates a copy of the original, allowing us to view and change the repository without affecting the original. This can be done by following the below steps:
 
-1. Open the GitHub repository - [PP2_Marvel_Top_Trumps](https://github.com/MattMiles95/PP2_Marvel_Top_Trumps).
+1. Open the GitHub repository - [PP3_Ravens_Rest](https://github.com/MattMiles95/PP3_Ravens_Rest).
 
 2. Select the "Fork" button in the top-right section of the page.
 
@@ -371,7 +280,7 @@ A copy of the repository should now be in your own GitHub account.
 #### Local Clone
 Cloning the repository allows you to copy the files into your own IDE for local development. This can be done by following the below steps:
 
-1. Open the GitHub repository - [PP2_Marvel_Top_Trumps](https://github.com/MattMiles95/PP2_Marvel_Top_Trumps).
+1. Open the GitHub repository - [PP3_Ravens_Rest](https://github.com/MattMiles95/PP3_Ravens_Rest).
 
 2. Navigate the 'Code' dropdown menu and select whether you wish to clone the code using HTTPS, SSH or GitHub CLI.
 

@@ -152,7 +152,7 @@ def fa_kit_loot():
     """
     Adds First Aid Kit to player inventory
     """
-    player_card["Inventory"].append("First Aid Kit")
+    player_card['Inventory'].append("First Aid Kit")
     type_text("\nYou rummage through the First Aid Kit and take some"
     " supplies.\n")
 
@@ -164,13 +164,13 @@ def heal():
     """
     Uses a First Aid Kit to heal 40 HP
     """
-    if "First Aid Kit" in player_card["Inventory"]:
-        player_card["HP"] += 40
-        player_card["Inventory"].remove("First Aid Kit")
+    if "First Aid Kit" in player_card['Inventory']:
+        player_card['HP'] += 40
+        player_card['Inventory'].remove("First Aid Kit")
 
         type_text("\nYou use a First Aid Kit and heal 40 HP.\n"
 
-        f"\nYour health is now {player_card["HP"]}.\n")
+        f"\nYour health is now {player_card['HP']}.\n")
         return
 
     else:
@@ -183,67 +183,67 @@ def atk():
     """
     # Vary Enemy Attack Power per Attack
     if enemy["ID"] == "Cultist (Bar)":
-        enemy["Attack Power"] = random.randint(10, 20)
+        enemy['Attack Power'] = random.randint(10, 20)
 
     elif enemy["ID"] == "Cultist (Lib)":
-        enemy["Attack Power"] = random.randint(15, 25)
+        enemy['Attack Power'] = random.randint(15, 25)
 
     elif enemy["ID"] == "Cultist (Chris Room)":
-        enemy["Attack Power"] = random.randint(20, 30)
+        enemy['Attack Power'] = random.randint(20, 30)
 
     elif enemy["ID"] == "Whateley":
-        enemy["Attack Power"] = random.randint(25, 35)
+        enemy['Attack Power'] = random.randint(25, 35)
 
     elif enemy["ID"] == "Chris":
-        enemy["Attack Power"] = random.randint(35, 45)
+        enemy['Attack Power'] = random.randint(35, 45)
 
     # Vary Player Attack Power per Attack
-    if player_card["Weapon"] == "Unarmed":
+    if player_card['Weapon'] == "Unarmed":
 
-        if player_card["Name"] == "Claire":
-            player_card["Attack Power"] = random.randint(10, 20)
+        if player_card['Name'] == "Claire":
+            player_card['Attack Power'] = random.randint(10, 20)
 
         else:
-            player_card["Attack Power"] = random.randint(1, 10)
+            player_card['Attack Power'] = random.randint(1, 10)
 
-    elif player_card["Weapon"] == "Bloody Knife":
-        player_card["Attack Power"] = random.randint(10, 20)
+    elif player_card['Weapon'] == "Bloody Knife":
+        player_card['Attack Power'] = random.randint(10, 20)
 
-    elif player_card["Weapon"] == "Pitchfork":
-        player_card["Attack Power"] = random.randint(20, 35)
+    elif player_card['Weapon'] == "Pitchfork":
+        player_card['Attack Power'] = random.randint(20, 35)
 
-    elif player_card["Weapon"] == "Handgun":
-        player_card["Attack Power"] = random.randint(35, 40)
+    elif player_card['Weapon'] == "Handgun":
+        player_card['Attack Power'] = random.randint(35, 40)
 
-    elif player_card["Weapon"] == "Shotgun":
-        player_card["Attack Power"] = random.randint(30, 50)
+    elif player_card['Weapon'] == "Shotgun":
+        player_card['Attack Power'] = random.randint(30, 50)
 
-    elif player_card["Weapon"] == "Super Punch":
-        player_card["Attack Power"] = 1000
+    elif player_card['Weapon'] == "Super Punch":
+        player_card['Attack Power'] = 1000
 
     if enemy["ID"] in slain_enemies:
         type_text(f"{enemy['Name']} is already dead!")
 
     else:
-        enemy["HP"] = enemy["HP"] - player_card["Attack Power"]
+        enemy['HP'] = enemy['HP'] - player_card['Attack Power']
         type_text(f"\nYou hit {enemy['Name']} for"
         f" {player_card['Attack Power']} damage.\n")
 
-        if enemy["HP"] <= 0:
+        if enemy['HP'] <= 0:
             type_text(f"\nWith a final rasping breath, {enemy['Name']} drops"
             " to the floor, his body \ncold and still.\n")
 
             slain_enemies.append(enemy["ID"])
             return
         else:
-            player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+            player_card['HP'] = player_card['HP'] - enemy['Attack Power']
             type_text(f"\n{enemy['Name']} hit you for"
             f" {enemy['Attack Power']} damage.\n")
 
-            if player_card["HP"] <= 0:
+            if player_card['HP'] <= 0:
                 game_over()
             else:
-                type_text(f"\nYou have {player_card["HP"]} remaining HP.\n"
+                type_text(f"\nYou have {player_card['HP']} remaining HP.\n"
                 "\nAttack again or flee?\n")
 
     return
@@ -553,7 +553,7 @@ def intro_b():
     Part B of the games' intro, which continues to act as a tutorial.
     """
     type_text("\nThere's a message on the back:\n"
-    f"\n{player_card["Name"]},\n"
+    f"\n{player_card['Name']},\n"
 
     "\nThink I've finally made some headway with the article… Currently"
     " visiting a \nchap in Dunwich who apparently knew one of the students"
@@ -573,7 +573,7 @@ def intro_b():
         " photograph in your inventory.\n")
 
         if intro_b_choice.lower() == "i photograph":
-            player_card["Inventory"].append("photograph")
+            player_card['Inventory'].append("photograph")
             intro_c()
             break
 
@@ -758,7 +758,7 @@ def foyer():
 
         else:
 
-            if "hack" in player_card["Skill"]:
+            if "hack" in player_card['Skill']:
                 foyer_computer()
 
             else:
@@ -766,7 +766,7 @@ def foyer():
 
 
     def foyer_door_use():
-        if "lockpick" in player_card["Skill"]:
+        if "lockpick" in player_card['Skill']:
             type_text("\nThe door is locked, but you manage to pick it.\n")
             staff_only_cupboard()
 
@@ -823,7 +823,7 @@ def foyer():
 
         elif foyer_choice.lower() == "let there be light":
 
-            if player_card["Name"] == "Super Shaggy":
+            if player_card['Name'] == "Super Shaggy":
                 power = True
                 type_text("\nPower is miraculously restored to the Hotel...\n"
 
@@ -849,19 +849,19 @@ def foyer_computer():
 
         if foyer_computer_choice.lower() == "r":
 
-            if "Raven's Rest Owner Name" in player_card["Insight"]:
+            if "Raven's Rest Owner Name" in player_card['Insight']:
                 type_text("\nYou flick through some files and discover Chris'"
                 " room number, located in the \nWest Wing. You also notice"
                 " that Mr Whateley, the owner, has a room adjacent to \nthe"
                 " Library.\n")
 
-                if "Whateley's Room Location" not in player_card["Insight"]:
-                    player_card["Insight"].append("Whateley's Room Location")
+                if "Whateley's Room Location" not in player_card['Insight']:
+                    player_card['Insight'].append("Whateley's Room Location")
                     type_text("\n'Whateley's Room Location' added to"
                     " Insight.\n")
 
-                if "Chris' Room Location" not in player_card["Insight"]:
-                    player_card["Insight"].append("Chris' Room Location")
+                if "Chris' Room Location" not in player_card['Insight']:
+                    player_card['Insight'].append("Chris' Room Location")
                     type_text("\n'Chris' Room Location' added to Insight.\n")
 
             else:
@@ -869,8 +869,8 @@ def foyer_computer():
                 type_text("\nYou flick through some files and discover Chris'"
                 " room number, located in the \nWest Wing.\n")
 
-                if "Chris' Room Location" not in player_card["Insight"]:
-                    player_card["Insight"].append("Chris' Room Location")
+                if "Chris' Room Location" not in player_card['Insight']:
+                    player_card['Insight'].append("Chris' Room Location")
                     type_text("\n'Chris' Room Location' added to Insight.\n")
 
         elif foyer_computer_choice.lower() == "m":
@@ -998,8 +998,8 @@ def staff_only_cupboard():
 
                 "\n'Bloody Knife' is now equipped.\n")
                 looted_items.append("Bloody Knife")
-                player_card["Weapon"] = "Bloody Knife"
-                player_card["Attack Power"] = "10 - 20"
+                player_card['Weapon'] = "Bloody Knife"
+                player_card['Attack Power'] = "10 - 20"
 
         elif staff_only_cupboard_choice.lower() == "i note":
             type_text("\nYou pick up the note from the laundry basket and"
@@ -1019,8 +1019,8 @@ def staff_only_cupboard():
             "\nThose robes you're so interested were covered in red wine by"
             " the looks of it, so \ndon't skimp on the stain remover.'\n")
 
-            if "Whateley's Room Location" not in player_card["Insight"]:
-                player_card["Insight"].append("Whateley's Room Location")
+            if "Whateley's Room Location" not in player_card['Insight']:
+                player_card['Insight'].append("Whateley's Room Location")
                 type_text("\n'Whateley's Room Location' added to"
                 " Insight.\n")
 
@@ -1094,8 +1094,8 @@ def east_wing():
             " Raven's Rest came under \nnew management. New owner Mr Whateley"
             " says he has 'big plans' for the hotel'.\n")
 
-            if "Raven's Rest Owner Name" not in player_card["Insight"]:
-                player_card["Insight"].append("Raven's Rest Owner Name")
+            if "Raven's Rest Owner Name" not in player_card['Insight']:
+                player_card['Insight'].append("Raven's Rest Owner Name")
                 type_text("\n'Raven's Rest Owner Name' added to Insight.\n")
 
         elif east_wing_choice.lower() == "n":
@@ -1105,7 +1105,7 @@ def east_wing():
 
         elif east_wing_choice.lower() == "e":
 
-            if "Raven's Beak Key" in player_card["Inventory"]:
+            if "Raven's Beak Key" in player_card['Inventory']:
                 type_text("\nYou use the Raven's Beak Key to access the"
                 " Maintenance Room.\n")
                 maintenance_room()
@@ -1113,7 +1113,7 @@ def east_wing():
 
             else:
 
-                if "lockpick" in player_card["Skill"]:
+                if "lockpick" in player_card['Skill']:
                     type_text("\nThis door is locked with a strange"
                     " mechanism. It looks like the key would need \nto be"
                     " beak shaped...\n")
@@ -1138,7 +1138,7 @@ def west_wing():
     """
     West Wing - Game Location.
     """
-    if "Chris' Room Location" in player_card["Insight"]:
+    if "Chris' Room Location" in player_card['Insight']:
         west_wing_initial = ("\nYou step into the West Wing. Dark wooden"
         " doors adorned with silver room numbers \nrun along both sides of"
         " the corridor. Immediately you notice a BODY heaped on \nthe floor"
@@ -1210,7 +1210,7 @@ def west_wing():
             "\nTo the West ('w') is the service lift leading to the"
             " Basement.\n")
 
-            if "Chris' Room Location" in player_card["Insight"]:
+            if "Chris' Room Location" in player_card['Insight']:
                 type_text("\nSouth ('s') of you, you spot Chris' Room.\n")
 
         elif west_wing_choice.lower() == "i body":
@@ -1231,7 +1231,7 @@ def west_wing():
 
         elif west_wing_choice.lower() == "s":
 
-            if "Chris' Room Location" in player_card["Insight"]:
+            if "Chris' Room Location" in player_card['Insight']:
 
                 if "Chris' Room" not in checked_rooms:
                     type_text("\nAs you approach Chris' Room you notice that"
@@ -1259,7 +1259,7 @@ def west_wing():
 
             elif "RW Key" not in looted_items:
 
-                if "lockpick" in player_card["Skill"]:
+                if "lockpick" in player_card['Skill']:
                     type_text("\nThis door is locked with a strange"
                     " mechanism. It looks like the key would need \nto be"
                     " shaped like a set of wings...\n")
@@ -1364,8 +1364,8 @@ def supplies_cupboard():
                 "\nSeriously, get out before it's too late.\n"
 
                 "\n- Jack\n")
-                if "Hidden Safe Location" not in player_card["Insight"]:
-                    player_card["Insight"].append("Hidden Safe Location")
+                if "Hidden Safe Location" not in player_card['Insight']:
+                    player_card['Insight'].append("Hidden Safe Location")
                     type_text("\n'Hidden Safe Location' added to Insight.\n")
 
         elif supplies_cupboard_choice.lower() == "n":
@@ -1521,7 +1521,7 @@ def library():
     " waiting for you. Looking up, you see him pacing \ntowards you, his"
     " ghastly tongue swinging from side to side as he marches.\n")
 
-    if "Whateley's Room Location" in player_card["Insight"]:
+    if "Whateley's Room Location" in player_card['Insight']:
         library_safe = ("\nYou enter the Library, casting a glance in the"
         " diretion of the jawless man's \nBODY.\n"
 
@@ -1582,7 +1582,7 @@ def library():
 
             else:
 
-                if "Whateley's Room Location" in player_card["Insight"]:
+                if "Whateley's Room Location" in player_card['Insight']:
                     type_text("\nThe enormous BODY of the jawless man is"
                     " sprawled across the \nfloor.\n"
 
@@ -1631,13 +1631,13 @@ def library():
             " face enduring \nterrible agony. The leathery material that"
             " binds its pages is wrinkled and \nfleshy to the touch.'\n")
 
-            if "Necronomicon Description" not in player_card["Insight"]:
-                player_card["Insight"].append("Necronomicon Description")
+            if "Necronomicon Description" not in player_card['Insight']:
+                player_card['Insight'].append("Necronomicon Description")
                 type_text("\n'Necronomicon Description' added to Insight.\n")
 
         elif library_choice.lower() == "i book":
 
-            if "Necronomicon Description" in player_card["Insight"]:
+            if "Necronomicon Description" in player_card['Insight']:
                 type_text("\nWhat are the odds... The book you knocked off"
                 " the shelf matches the description \nof the Necronomicon."
                 " You bend down to pick it off the floor. As you touch the"
@@ -1649,8 +1649,8 @@ def library():
                 " fades. You find yourself in the Library of \nthe Raven's"
                 " Rest once more.\n")
 
-                if "Necronomicon" not in player_card["Inventory"]:
-                    player_card["Inventory"].append("Necronomicon")
+                if "Necronomicon" not in player_card['Inventory']:
+                    player_card['Inventory'].append("Necronomicon")
                     type_text("\n'Necronomicon' added to Inventory.\n")
 
             else:
@@ -1690,7 +1690,7 @@ def library():
 
         elif library_choice.lower() == "w":
 
-            if "Whateley's Room Location" not in player_card["Insight"]:
+            if "Whateley's Room Location" not in player_card['Insight']:
                 type_text(generic_error)
 
             else:
@@ -1884,22 +1884,22 @@ def bar():
                 type_text("\nInspecting the ledger, you find Chris' name. His"
                 " room number is written in the \ncolumn next to it.\n")
 
-                if "Chris' Room" not in player_card["Insight"]:
-                    player_card["Insight"].append("Chris' Room Location")
+                if "Chris' Room" not in player_card['Insight']:
+                    player_card['Insight'].append("Chris' Room Location")
                     type_text("\n'Chris' Room Location' added to Insight.\n")
 
         elif bar_choice.lower() == "i body":
 
             if "Cultist (Bar)" in slain_enemies and \
-            "Raven's Beak Key" not in player_card["Inventory"]:
+            "Raven's Beak Key" not in player_card['Inventory']:
                 type_text("\nYou crouch down and rummage through the dead"
                 " man's robes. You find a strange, beak shaped key in his"
                 " pocket.\n"
                 "\n'Raven's Beak Key' added to Inventory.\n")
-                player_card["Inventory"].append("Raven's Beak Key")
+                player_card['Inventory'].append("Raven's Beak Key")
 
             elif "Cultist (Bar)" in slain_enemies and \
-            "Raven's Beak Key" in player_card["Inventory"]:
+            "Raven's Beak Key" in player_card['Inventory']:
                 type_text("\nYou've already looted this body for anything"
                 " usesful.\n")
 
@@ -2050,8 +2050,8 @@ def garden():
                 " of practice thrusts. Not bad.\n"
                 "\n'Pitchfork' is now equipped.\n")
                 looted_items.append("Pitchfork")
-                player_card["Weapon"] = "Pitchfork"
-                player_card["Attack Power"] = "20 - 30"
+                player_card['Weapon'] = "Pitchfork"
+                player_card['Attack Power'] = "20 - 30"
 
         elif garden_choice.lower() == "w":
 
@@ -2059,6 +2059,8 @@ def garden():
                 type_text("\nYou switch off your flashlight before heading"
                 " into the Library.\n")
                 flashlight = False
+                library()
+                break
 
             else:
                 type_text("\nYou head through the western door into the"
@@ -2072,6 +2074,8 @@ def garden():
                 type_text("\nYou switch off your flashlight before heading"
                 " into the Bar.\n")
                 flashlight = False
+                bar()
+                break
 
             else:
                 type_text("\nYou head through the eastern door into the"
@@ -2162,14 +2166,14 @@ def chris_room():
 
 
     def trapped():
-        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+        player_card['HP'] = player_card['HP'] - enemy['Attack Power']
         type_text(f"You attempt to flee, but the {enemy['Name']} blocks the"
         f" door and slashes at you \nfor {enemy['Attack Power']} damage.\n")
-        if player_card["HP"] <= 0:
+        if player_card['HP'] <= 0:
             game_over()
 
         else:
-            type_text(f"You have {player_card["HP"]} remaining HP."
+            type_text(f"You have {player_card['HP']} remaining HP."
             " Attack or attempt to flee?\n")
 
 
@@ -2240,7 +2244,7 @@ def chris_room():
 
             else:
 
-                if "hack" not in player_card["Skill"]:
+                if "hack" not in player_card['Skill']:
                     type_text("\nIt's secured with an electrical lock. A small"
                     " terminal is built into the side of it.\n"
                     "\n'No way I'm breaking into this.'\n")
@@ -2254,8 +2258,8 @@ def chris_room():
                         type_text("\nYou manage to hack into the safe's"
                         " terminal and find a Handgun inside.\n")
                         looted_items.append("Handgun")
-                        player_card["Weapon"] = "Handgun"
-                        player_card["Attack Power"] = "30 - 40"
+                        player_card['Weapon'] = "Handgun"
+                        player_card['Attack Power'] = "30 - 40"
                         type_text("'Handgun' is now equipped.")
 
         elif cr_choice.lower() == "i notes":
@@ -2270,7 +2274,7 @@ def chris_room():
                     " translating this strange \nlanguage. Eventually you find"
                     " a page that looks to show a complete alphabet, \nwhich"
                     " you hastily stuff into your pocket.\n")
-                    player_card["Inventory"].append("Ciper")
+                    player_card['Inventory'].append("Ciper")
                     looted_items.append("Ciper")
                     type_text("\n'Cipher' added to Inventory.\n")
 
@@ -2288,7 +2292,7 @@ def chris_room():
                     " bathroom. The only thing of use in here \nis a First"
                     " Aid Kit, lying by the sink.\n")
 
-                    player_card["Inventory"].append("First Aid Kit")
+                    player_card['Inventory'].append("First Aid Kit")
                     looted_items.append("First Aid Kit (CR)")
 
                 else:
@@ -2525,7 +2529,7 @@ def whateleys_room():
 
             "\nBehind you, to the East ('e'), is the door to the Library.\n")
 
-            if "lockpick" in player_card["Skill"]:
+            if "lockpick" in player_card['Skill']:
                 type_text("You also notice hung on the wall a large"
                 " PORTRAIT of a magpie - a bird known \nfor coveting various"
                 " treasures...\n")
@@ -2540,7 +2544,7 @@ def whateleys_room():
 
         elif whateleys_room_choice.lower() == "i safe":
 
-            if "Hidden Safe Location" in player_card["Insight"]:
+            if "Hidden Safe Location" in player_card['Insight']:
                 type_text("\n'I guess this must be the hidden safe the Jack"
                 " wrote about in his note...'\n")
 
@@ -2563,9 +2567,9 @@ def whateleys_room():
                     " floor as \nyour vision blurs red. You drop to your"
                     " knees, the pain worsening. A desperate \nfeeling of"
                     " helplessness rapidly building in your chest.\n")
-                    player_card["HP"] -= 50
+                    player_card['HP'] -= 50
 
-                    if player_card["HP"] <= 0:
+                    if player_card['HP'] <= 0:
                         type_text("\nThe room spins and something heavy"
                         " strikes the side of your head. You feel \ncarpet"
                         " on your face and realise you've collapsed. A stale"
@@ -2637,15 +2641,15 @@ def whateleys_room():
 
             "\nYog-Sothoth guide me.\n")
 
-            if "Spell Reversal" not in player_card["Insight"]:
-                player_card["Insight"].append("Spell Reversal")
+            if "Spell Reversal" not in player_card['Insight']:
+                player_card['Insight'].append("Spell Reversal")
                 type_text("'Spell Reversal' added to Insight.")
 
         elif whateleys_room_choice.lower() == "i portrait":
 
-            if "lockpick" in player_card["Skill"]:
+            if "lockpick" in player_card['Skill']:
 
-                if "Hidden Safe Location" in player_card["Insight"]:
+                if "Hidden Safe Location" in player_card['Insight']:
                     type_text("\nYou take a closer look at the portrait.\n"
                     "\nTracing your fingers along the edge, you realise one"
                     " side is ever so slightly \nraised. You manage to get"
@@ -2667,8 +2671,8 @@ def whateleys_room():
                     "\n'Shotgun' is now equipped.\n")
 
                     looted_items.append("Shotgun")
-                    player_card["Weapon"] = "Shotgun"
-                    player_card["Attack Power"] = "35 - 50"
+                    player_card['Weapon'] = "Shotgun"
+                    player_card['Attack Power'] = "35 - 50"
 
                 else:
                     type_text("\nWhy would there be a portrait of a magpie in"
@@ -2784,14 +2788,14 @@ def cellar():
     
 
     def trapped():
-        player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
+        player_card['HP'] = player_card['HP'] - enemy['Attack Power']
         type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
         f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
-        if player_card["HP"] <= 0:
+        if player_card['HP'] <= 0:
             game_over()
 
         else:
-            type_text(f"You have {player_card["HP"]} remaining HP."
+            type_text(f"You have {player_card['HP']} remaining HP."
             " Attack or attempt to flee?\n")
 
 
@@ -2870,7 +2874,7 @@ def cellar():
 
                     whateley_status = False
                     looted_items.append("RW Key")
-                    player_card["Inventory"].append("Raven's Wing Key")
+                    player_card['Inventory'].append("Raven's Wing Key")
 
                 else:
                     type_text("\nWhateley's body has completely dissolved. If"
@@ -3061,7 +3065,7 @@ def basement_c():
         if basement_c_choice.lower() == "atk":
             atk()
 
-            if enemy["HP"] <= 0:
+            if enemy['HP'] <= 0:
                 basement_d()
                 break
 
@@ -3097,9 +3101,9 @@ def basement_d():
     "\nwarm breath on your cheek. He's weak, but alive. You"
     " don't have long.\n")
 
-    if ("Cipher" in player_card["Inventory"]) and \
-    ("Necronomicon" in player_card["Inventory"]) and \
-    ("Spell Reversal" in player_card["Insight"]):
+    if ("Cipher" in player_card['Inventory']) and \
+    ("Necronomicon" in player_card['Inventory']) and \
+    ("Spell Reversal" in player_card['Insight']):
         type_text("\nLooking down at your brother, tears blurring"
         " your vision, you suddenly remember \nwhat you read in"
         " Whateley's journal. He mentioned reversing the process"
@@ -3181,7 +3185,7 @@ def ending_kill():
         type_text("\nThank you for playing. You've brought an end to the"
         " eldritch horror growing \nbeneath the Raven's Rest, but at a deep"
         " personal cost. Why not try again and \nsee if you can find a"
-        f" happier ending for Chris and {player_card["Name"]}?\n")
+        f" happier ending for Chris and {player_card['Name']}?\n")
 
         game_over_choice = input("\nEnter 'ng' to start a new game from the"
         " Character Selection Menu.\n"
@@ -3286,7 +3290,7 @@ def ending_save():
     " moment, his blank \nexpression regains some lucidity. He looks up at"
     " you.\n"
 
-    f"\n{player_card["Name"]}?\n")
+    f"\n{player_card['Name']}?\n")
 
     while True:
 
