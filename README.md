@@ -208,47 +208,9 @@ To ensure there were no errors in the syntax of my code, my run.py file was vali
 
 #### Manual Testing 
  
-To test the functionality of my JavaScript, myself and several friends and family play tested the game on various devices. I then compiled the data in the following table:
+Throughout the development of this game, myself and several others have extensively play tested it via the deployed app on Heroku. I have collated all the data gathered during this process and entered into a 'Manual Testing' and 'Bugs & Fixes' table contained in a separate .md file.
 
-#### Play Testing
-
-Feature | Expected Outcome | Result
---- | --- | ---
-Play Button | Positioned centre/right of viewport, responds correctly to hovering mouse, opens 'deck choice' menu when clicked and disappears from view | Pass
-Deck Choice Menu | Positioned centre of viewport, each button responds correctly to hovering mouse, each button leads to correct game page, close window button causes Play button to reappear | Pass
-Games Page | All elements appear and in correct positions, correct formatting dependent on game type | Pass
-Fight Button | Container appears above other content, button responds correctly to hovering mouse, when clicked triggers (1) User and CPU cards to flip over (2) randomly generated hero & villain (3) User Buttons panel to appear (4) correct SFX | Pass
-User & CPU Cards | Card flip animation works as expected, randomly generates characters from respective arrays (including images, names, quotes and stats), User stats visible, CPU stats hidden, characters removed from respective arrays once selecetd to avoid repetition | Pass
-User Buttons | Correctly positioned depending on viewport dimensions with correct background depending on game type, buttons respond correctly to hovering mouse, each button triggers appropriate results screen, correct SFX | Pass
-Round Win | 'Win' window appears, scoreboard adjusts accordingly, User Button panel disappears, button responds correctly to hovering mouse, button resets game and adds +1 to round counter, correct SFX | Pass
-Round Lose | 'Lose' window appears, scoreboard adjusts accordingly, User Button panel disappears, button responds correctly to hovering mouse, button resets game and adds +1 to round counter, correct SFX | Pass
-Round Draw | 'Draw' window appears, scoreboard remains the same, User Button panel disappears, button responds correctly to hovering mouse, button resets game and adds +1 to round counter, correct SFX | Pass
-Game Over - Victory | 'Victory' window appears, background image blurs, User Button panel disappears, Options buttons disappear, buttons respond correctly to hovering mouse, buttons trigger correct functions/page navigation, correct SFX | Pass
-Game Over - Defeat | 'Defeat' window appears, background image blurs, User Button panel disappears, Options buttons disappear, buttons respond correctly to hovering mouse, buttons trigger correct functions/page navigation, correct SFX | Pass
-Game Over - Empty Deck | 'Empty Deck' window appears, background image blurs, User Button panel disappears, Options buttons disappear, buttons respond correctly to hovering mouse, buttons trigger correct functions/page navigation, correct SFX | Pass
-Options Buttons | Correctly positioned depending on viewport dimensions, respond correctly to hovering mouse, trigger correct functions when clicked | Pass
-'How to Play' Window | Appears centre of viewport above all other content, close window button works as expected, correct SFX | Pass
-Audio Toggle | Default set to mute, toggle effects all audio events, icon changes accordingly | Pass
-Scoreboard | Appears top/centre of viewport, round counter and scores respond correctly at the appropriate events, triggers game over at expected values | Pass
-
-#### Bugs and Fixes
-
-During the development of my game, I encountered several bugs that required fixes. I have documented these in the table below:
-
-Feature | Expected Outcome | Actual Outcome | Fix
---- | --- | --- | ---
-Characters being randomly generated | Hero and Villain appear within User and CPU cards | Cards remained blank | moved arrays that stored characters below respective variable declarations
-Power Attack (User Button) | User & CPU 'power' stats compared and appropiate result screen triggered | 'Lose' window triggering regardless of stat values | Corrected syntax used for 'if / else if' loop (previously wrote code as 'if else')
-Intelligence Attack (User Button) | User & CPU 'intelligence' stats compared and appropiate result screen triggered | Button not triggering any event | Corrected spelling of intelligence button ID tag within the script
-Play Again Button | Reloads page to reset game | Button not triggering any event | Added [0] to getElementsByClassName() method to correctly target the Play Again button
-Play Again Button | Reloads page to reset game | Button only working within 'Victory' window | Created separate variables and event listeners for 'Victory', 'Defeat' and 'Empty Deck' windows
-Round Results Window | Each time a round ends, either the 'win', 'lose' or 'draw' window appears (nothwithstanding Game Over event triggers) | Previous rounds' results windows would begin to stack over the course of multiple rounds, leading to multiple results screens appearing at once | Added function to reset each results windows' 'display' property to 'none' when using the 'Next Game' button
-Audio Toggle Button | Upon hovering mouse, button should increase in size and brightness | Button not responding to hovering mouse | Corrected ID names in CSS
-Game Over Event | Once a team has reached 7 points, appropriate Game Over event is triggered | Game Over event not triggering for Victory or Defeat | Created a checkScore() function to check whether score limit has been reached by either team at the end of each round (triggers appropriate Game Over event if 'true')
-Removal of Previously Selected Characters | Once a character has been selected they are removed from their respective array to prevent repetition | Adding splice() method to existing card generating function caused cards to appear blank | Refactored dealCards() function into separate components to apply splice() method to only the applicable component
-Play Button | Upon mouse hovering, font increases in size and glows | Hover effect causing font to overflow container in certain screen dimensions | Adjusted font sizes in relevant media queries to eliminate overflow
-User Buttons Panel | Panel appears slightly below User Card on devices with viewport of max width 800px / max height 650px | Panel positioning at very bottom of viewport, causing large gap between User Card and panel | Changed positioning unit from % to px to keep position fixed just below User Card 
-'How to Play' Window | Window appears above all other content | Window appeared beneath 'Fight' button container | Increase z-index value to 99 to ensure window always appears on top
+You can view this data [here](/manual_testing.md)
 
 ### Local Development & Deployment
 
@@ -292,30 +254,14 @@ Cloning the repository allows you to copy the files into your own IDE for local 
 
 #### Affiliations
 
-"Marvel Top Trumps" is a game created by me solely for the purpose of this project. Any partnership or affiliation with Marvel alluded to within the game is entirely fictional and in no way represents their views.
+"Raven's Rest" is a game created by me solely for the purpose of this project.
+
+Inspiration has been taken from the works of H.P. Lovecraft, Edgar Allan Poe and the Resident Evil franchise. Any names or locations from these IPs featured in Raven's Rest are meant as homages to the original creators. 
 
 #### Copy (Written Material)
 
-* All copy used in the website was written by me.
-
-* The character quotes used in the game are all direct quotes from Marvel source material, including films, television shows and comic books (notwithstanding ‘the Creator’ card).
-
-#### Media
-
-* All background images (notwithstanding the hero image used on the homepage) were obtained from [FreePik](https://freepik.com/).
-
-* The hero image used for the homepage background was obtained from [MrWallpaper](https://mrwallpaper.com/wallpapers/cute-superheroes-x-marvel-villains-273jen8gcggcgfag.html).
-
-* All character images were obtained from [Marvel Database](https://marvel.fandom.com/wiki/Marvel_Database).
-
-* All rights to the Marvel characters featured in this game and any Marvel trademark belong to Marvel Comics.
-
-* All audio files were obtained from [Pixabay](https://pixabay.com/).
+* All written material (including narrative content) used in the game was written by me.
 
 #### Online Resources
 
-* [Photopea](https://www.photopea.com/) was used extensively throughout this project to edit the appearance of the images used, create new images and to convert image files to .webp format for optimisation.
-
-* [Google Fonts](https://fonts.google.com/) was used to import the primary font for the website, "News Cycle".
-
-* [Font Awesome](https://fontawesome.com/) was used for the stat symbols on each playing card.
+[ASCII Art - Raven](https://emojicombos.com/raven-ascii-art)

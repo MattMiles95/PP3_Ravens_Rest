@@ -298,10 +298,10 @@ def type_text(text):
     """
     Prints text one character at a time to create a 'typing' animation.
     """
-    for char in text:
-        print(char, end='', flush=True)
-        time.sleep(random.uniform(0.001, 0.05))
-
+    #for char in text:
+    #    print(char, end='', flush=True)
+    #    time.sleep(random.uniform(0.001, 0.05))
+    print(text)
 
 def main_menu():
     """
@@ -2266,7 +2266,7 @@ def chris_room():
 
             if "Cultist (CR)" in slain_enemies:
 
-                if "Ciper" not in looted_items:
+                if "Cipher" not in looted_items:
                     type_text("\nYou look through the notes on Chris' desk."
                     " Page after page of strange glyphs, \nsome with letters"
                     " or numbers scribbled in the margins. Then it dawns on"
@@ -2274,8 +2274,8 @@ def chris_room():
                     " translating this strange \nlanguage. Eventually you find"
                     " a page that looks to show a complete alphabet, \nwhich"
                     " you hastily stuff into your pocket.\n")
-                    player_card['Inventory'].append("Ciper")
-                    looted_items.append("Ciper")
+                    player_card['Inventory'].append("Cipher")
+                    looted_items.append("Cipher")
                     type_text("\n'Cipher' added to Inventory.\n")
 
                 else:
@@ -2292,7 +2292,7 @@ def chris_room():
                     " bathroom. The only thing of use in here \nis a First"
                     " Aid Kit, lying by the sink.\n")
 
-                    player_card['Inventory'].append("First Aid Kit")
+                    fa_kit_loot()
                     looted_items.append("First Aid Kit (CR)")
 
                 else:
@@ -3151,6 +3151,7 @@ def basement_d():
 
     else:
         while True:
+
             ending_choice = input("\nWhat do you do?\n"
 
             "\nEnter 'kill' to put Chris out of his misery, and"
@@ -3167,6 +3168,12 @@ def basement_d():
             elif ending_choice.lower() == "spare":
                 ending_spare()
                 return
+            
+            elif ending_choice.lower() == "pc":
+                print(player_card)
+            
+            else:
+                type_text("\n'I have to make a choice...'\n")
 
 
 def ending_kill():
