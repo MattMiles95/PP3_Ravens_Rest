@@ -5,7 +5,7 @@ import random
 # Player Charater Option 1
 lee_kennedy = {
     "Name": "Lee",
-    "HP": 100,
+    "HP": 120,
     "Attack Power": random.randint(5, 10),
     "Weapon": "Unarmed",
     "Skill": ["lockpick"],
@@ -16,7 +16,7 @@ lee_kennedy = {
 # Player Charater Option 2
 claire_greenfield = {
     "Name": "Claire",
-    "HP": 120,
+    "HP": 150,
     "Attack Power": random.randint(15, 20),
     "Weapon": "Unarmed",
     "Skill": ["hack"],
@@ -100,28 +100,28 @@ cultist_library = {
     "ID": "Cultist (Lib)",
     "Name": "Mutilated Cultist",
     "HP": 50,
-    "Attack Power": random.randint(15, 25)
+    "Attack Power": random.randint(10, 20)
 }
 
 cultist_chris_room = {
     "ID": "Cultist (CR)",
     "Name": "Mutilated Cultist",
     "HP": 40,
-    "Attack Power": random.randint(20, 30)
+    "Attack Power": random.randint(10, 25)
 }
 
 mr_whateley = {
     "ID": "Whateley",
     "Name": "Whateley",
     "HP": 100,
-    "Attack Power": random.randint(25, 35)
+    "Attack Power": random.randint(20, 35)
 }
 
 chris = {
     "ID": "Chris",
     "Name": "Chris",
-    "HP": 120,
-    "Attack Power": random.randint(35, 45)
+    "HP": 110,
+    "Attack Power": random.randint(20, 40)
 }
 
 # Help variable, for use in game
@@ -164,7 +164,7 @@ def heal():
     if "First Aid Kit" in player_card["Inventory"]:
         player_card["HP"] += 40
         player_card["Inventory"].remove("First Aid Kit")
-        type_text("\nYou use a First Aid Kit and heal 30 HP.\n"
+        type_text("\nYou use a First Aid Kit and heal 40 HP.\n"
         f"\nYour health is now {player_card["HP"]}.\n")
         return
     
