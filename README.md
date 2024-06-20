@@ -11,7 +11,7 @@ Beyond the character selection menu, the Player will then have the choice of pla
 
 Once the game begins proper, signalled by the Player Character entering the Raven’s Rest, they have complete freedom to explore the hotel in whatever order (and in however much detail) they like. The game rewards exploration and attention to detail with items that the Player Character can use, such as weapons and first aid kits. As the player explores, they will add key items to their ‘inventory’ and knowledge to their ‘insight’, both of which will be used to unlock previously hidden areas of the game – and even different endings. All Player stats (including health points (HP), attack damage, equipped weapon, skills, inventory and insight), are visible in the Player Card, which can be opened at any time by entering the command: ‘pc’.
 
-Overall, Raven’s Rest is designed to be a fun and rewarding, interactive experience with a good incentive for multiple play throughs. Whilst it requires a methodical approach to achieve the best ending, the game focuses more on investigative gameplay than outright difficulty. As such, the game is highly accessible for even the least experienced gamers. Due to the cosmic horror theme of the game, however, it is not appropriate for all ages (namely young children). 
+Overall, Raven’s Rest is designed to be a fun and rewarding, interactive experience with a good incentive for multiple playthroughs. Whilst it requires a methodical approach to achieve the best ending, the game focuses more on investigative gameplay than outright difficulty. As such, the game is highly accessible for even the least experienced gamers. Due to the cosmic horror theme of the game, however, it is not appropriate for all ages (namely young children). 
 
 
 [Play the Raven's Rest live project here.](https://ravens-rest-179aff4eb889.herokuapp.com/)
@@ -97,7 +97,7 @@ Raven's Rest features two playable characters, each with their own unique featur
 
 #### Intro & Tutorial
 
-Once the Player has selected their character, they will be able to choose whether to play through the intro or skip straight to the start of the main game. The intro offers some exposition on the games characters and narrative, whilst also acting as a tutorial for the common commands and conventions the Player will encounter during the game.
+Once the Player has selected their character, they will be able to choose whether to playthrough the intro or skip straight to the start of the main game. The intro offers some exposition on the games characters and narrative, whilst also acting as a tutorial for the common commands and conventions the Player will encounter during the game.
 
 #### Gameplay
 
@@ -130,42 +130,60 @@ As well as dealing damage, Players will have to focus on maintaining their chara
 
 ##### Equipment Management
 
-As with the first two gameplay components, Equipement Management goes hand in hand with the combat encounters. The Player will have to make sure that they are properly stocked on First Aid Kits, as well as hunt for the most powerful weapons. Managing these aspects of their equipment will ultimately determine their survival of combat encounters. 
+As with the first two gameplay components, Equipement Management goes hand in hand with the combat encounters. The Player will have to make sure that they are properly stocked on First Aid Kits, as well as hunt for more powerful weapons. Managing these aspects of their equipment will ultimately determine their survival of combat encounters. 
+
+#### Inventory & Insight
+
+The Player Card contains the Player Character's 'Inventory' and 'Insight'. These two features have the biggest impact on the gameplay and how the game functions as a whole. As the Player Character investigates, they will pick up items to store in their Inventory, as well as discover clues and secrtes that are stored in their Insight. The way the Player Character will interact with their environment will be dependent on the contents of these two features. For example, if the Player has not discovered the location of their brother's room, then they will not have 'Chris' Room Location' stored in their Insight. This means that when they enter the West Wing section of the game, the accompanying text will not include a reference to Chris' Room, thus preventing the Player access to this area. Storing 'Insight' as a visible section of the Player Card also serves as a hint to the Player. Having 'Hidden Safe Location' added to their Insight after reading a note they found in a cupboard hints to the Player that, when in the location mentioned in the note, they should be mindful of a hidden safe.  
+
+#### Continuity Variables & Lists
+
+'Continuity variables' and 'continuity Lists' are the terms I use for global variables and lists that are changed by the Player's actions, and which determine how the game then responds to further Player actions. One exmaple is the global variable, 'power'. By default, 'power = False', meaning the hotel does not have power. Whilst 'power = False', equipment that requires power (such as computers or the service lift) cannot be used. Once the Player has restored power to the Hotel, the variable 'power' is changed to equal 'True'. From this point onwards, equipment that requires power becomes usable.
+
+Another example is the 'checked_rooms' varaible. When the Player Character first enters a room, something specific might happen, playing out almost like a cutscene in a video game. However, if that same 'cutscene' were to play out every subsequent time the Player Character enters that room, it would be jarring. It would create a substantial error in narrative continuity. Therefore, after the Player Character enters a room for the first time, that room is added to a global list called 'checked_rooms'. Each time the Player Character enters a room, the game will check to see if that room is within the 'checked_rooms' list. If so, a different passage of text will be printed to the screen, allowing continuity. 
+
+The 'looted_items' and 'slain_enemies' global lists play similar roles, preventing the Player from picking up multiple of the same item or having previously defeated enemies reappear upon exiting and entering a room. By using continuity variables and lists, the world the Player Character is in responds and adapts to the Player's actions, creative a satisfying and coherent gameplay experience. 
+
+#### Type Text Function
+
+The type_text() function prints each word to the terminal one character at a time by iterating through each word individually. This coupled with the 'random' import, which allowed me to vary the time delay between each character being printed, emulates a person typing. As a result of using my type_text() function in place of print() functions, I have created a much more immersive experience for the Player. I feel this method of printing text to a terminal is especially effective for the horror aspect of the game, as the slower revealling of text helps to build suspense.
 
 ### Future Features
 
-#### Developer Features
+#### Larger Playable Area
 
-* When initially writing my code, I depended heavily on using template literals to push hard code into my game’s HTML files to build each playing card. It was only upon creating multiple characters for each JS array that I realised how inefficient this method was, as it required huge amounts of copy and pasting code that then needed to have small details individually. The vast amount of code also required me to split the JavaScript across 3 separate files (one for each html file) to keep the code from becoming too messy.
+My intial design for the game gave the Player access to additional rooms, including a gym, kitchen and an entire First Floor of the Hotel. Due to time constraints I had to downsize the playable area quite considerably, but if I were to add additional features in the fututre, this would include the original cut content. 
 
-* A future feature I would add would be to entirely refactor this section of the JavaScript for my game. Each property within the playing cards’ divs would be written into the respective HTML file, with each value set to a placeholder. Instead of the JavaScript variables for each character being a template literal, I would set parameters for each value within the playing cards (being the image, character name, quote and stat). This way, once a character is randomly selected from their array, just their individual parameters are pulled through to the HTML file, rather than the entire code for the playing card itself.
+#### Difficulty Modes
 
-* This would allow for much less verbose JavaScript, which would greatly improve readability as well as efficiency for working on the code at a later date.
+The game presently has no difficulty settings. A future feature I would like to implement would be 'Easy', 'Medium' and 'Hard' modes, which would effect the Player Character's total health, enemies' health and attack power, and the number of healing items availble. This would make the game more accessible to players that want an easier game, and more difficult for players that want to be challenged.
 
-#### User Features
+#### More Variation Between Characters
 
-* A future feature I would like to add to the game is a difficulty setting, to make it more accessible for Users with a wider spectrum of knowledge regarding Marvel characters. ‘Easy’ mode would have the opponent’s stats colour coded to indicate their strengths and weaknesses, without outright telling the User their stats (i.e., a green circle for stats ranging 1 – 3, amber circle for 4 – 7 and red for 8 – 10). ‘Normal’ mode would be the game as currently deployed. ‘Hard’ mode would also hide the User’s stats, requiring them to rely much heavier on their knowledge of the characters.
+My initial design for the game intended for the different Player Characters' unique 'Skills' to have a bigger impact on gameplay. However, as I reduced the number of rooms available to the Player, it made it more difficult to have certain areas of the map only be accessible by one of the two Player Characters. Therefore, if I expanded the size of the playable area in the future, I would increase the impact of the Player Character's skills, thus offering a bugger replayability incentive.
 
-* Other future features I’d like to add are the following game modes to add variety for the User:
+#### Unique & Randomly Generated Enemies
 
-1. ‘Battle Royale’ mode, where the User can use a mixed deck of heroes and villains.
+Another feature I originally wanted in the game were enemies that behaved uniquely, as well as areas that had randomly generated enemies.
 
-2. ‘Survival’ mode, where the User sees how many consecutive rounds they can win before being defeated.
+One example of an enemy that would behave uniquely was the 'Stalker' enemy that was a part of the original concept for the game. The Stalker would only be triggered after the power had been restored, and from that point on would hunt the Player Character. Functionally, this would be achieved by the Stalker having a percentage chance of appearing in any room that the Player Character entered. Certain actions of the Player Character could increase or decrease this percentage - for example, using guns would create a lot of noise, and thus increase the likelihood of his appearance. The Stalker would be completely immune to damamge and attack the Player Character with provocation, forcing the Player to flee whenever he appeared. This would add some more variety to the gameplay, as well as create unique experiences each playthrough. It would also enhance the 'survival horror' aspect of the gameplay.
 
-* Another feature I would like to add is a variety of different card decks, as opposed to just ‘Heroes’ and ‘Villains’. For example, a deck of just X-Men cards, or multi-verse Spider-Man variants, etc.
+Additionally, as well as the unique enemies that already feature in the game, I wanted areas where randomly generated enemies could appear. Functionally, I would have a list containing multiple enemies, and certain rooms would be coded to randomly select one of those enemies to appear. This would again offer unique experiences to each playthrough, increasing the games replayability. 
 
-* Over time, I would like to add more characters to the rosters, to keep the game feeling fresh for users.
+#### Colour
+
+I initially used the 'colorama' import to allow for coloured text in my game. I had intended to use colour to convey certain gameplay elements more easily to the User, as well as make the game more visually appealing. An example of this was using yellow for any objects that can be interacted with, making it immediately clear to the Player what they can and can't interact with. However, due to how colorama works, it was not compatiable with my type_text() function. Colorama wraps the standard output text to inject ANSI escape sequences that control the colour of the text - these ANSI escape sequences cannot be iterated through, and therefore causes an error when used in conjunction with a function such as my type_text(). As I was unwilling to remove the type_text() feature, I had to remove coloured words from the game design.
+
+As a future feature, I would like to work out a way of enjoying the best of both worlds. I think adding colour to the game would increase the accessibility and overall aesthetic of the game significantly, and so having both these features would be the ideal outcome.
 
 ### Technologies Used
 
 #### Languages 
-* [HTML 5](https://en.wikipedia.org/wiki/HTML5)
-* [CSS 3](https://en.wikipedia.org/wiki/CSS#CSS_3)
-* [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
 
 ### Frameworks, Libraries & Programs Used
 
-* [Visual Studio Code](https://code.visualstudio.com/)
+* [GitPod](https://www.gitpod.io/)
     - IDE.
 
 * [Git](https://git-scm.com/)
@@ -174,26 +192,11 @@ As with the first two gameplay components, Equipement Management goes hand in ha
 * [GitHub](https://github.com/)
     - Online storing of repository and deployment of website.
 
-* [Google Fonts](https://fonts.google.com/)
-    - Import primary font for website.
+* [Lucid](https://lucid.app/documents#/documents?folder_id=home)
+    - Logic chart design app.
 
-* [Font Awesome](https://fontawesome.com/)
-    - Import several icons.
-
-* [Balsamiq](https://balsamiq.com/)
-    - Wireframing tool.
-
-* [Freepik](https://www.freepik.com/)
-    - Library of stock images.
-
-* [Photopea](https://www.photopea.com/)
-    - Photo editing software.
-
-* [Chrome DevTools](https://developer.chrome.com/docs/devtools)
-    - For testing and auditing code.
-
-* [Chrome Eye Dropper](https://chromewebstore.google.com/detail/eye-dropper/hmdcmlfkchdmnmnmheododdhjedfccka)
-    - For sampling colours.
+* [Heroku](https://en.wikipedia.org/wiki/Heroku)
+    - Site for app deployment
 
 ### Testing
 
