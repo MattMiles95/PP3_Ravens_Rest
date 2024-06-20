@@ -220,16 +220,16 @@ def atk():
     else:
         enemy["HP"] = enemy["HP"] - player_card["Attack Power"]
         type_text(f"\nYou hit {enemy['Name']} for"
-        " {player_card['Attack Power']} damage.\n")
+        f" {player_card['Attack Power']} damage.\n")
         if enemy["HP"] <= 0:
-            type_text(f"\nWith a final rasping breath, {enemy['Name']} drops "
-            "to the floor, his body \ncold and still.\n")
+            type_text(f"\nWith a final rasping breath, {enemy['Name']} drops"
+            " to the floor, his body \ncold and still.\n")
             slain_enemies.append(enemy["ID"])
             return
         else:
             player_card["HP"] = player_card["HP"] - enemy["Attack Power"]
             type_text(f"\n{enemy['Name']} hit you for"
-            " {enemy['Attack Power']} damage.\n")
+            f" {enemy['Attack Power']} damage.\n")
             if player_card["HP"] <= 0:
                 game_over()
             else:
@@ -492,11 +492,11 @@ def intro_a():
     " beating against the glass, and trying to make out anything \nbeyond the"
     " dimly light interior of the carriage was truly an exercise in"
     "\nfutility.\n"
-    "\nYou remove a PHOTOGRAPH from your jacket pocket. It's a picture of your"
-    "\nbrother, Chris. The last time he was seen or heard from. He's grinning"
-    " at the \ncamera and giving a cheery thumbs up. Behind him, lurking like"
-    " a shadow, lies \na dark building. You can just about make out a sign" 
-    " that reads, 'Raven's Rest'.\n")
+    "\nYou remove a PHOTOGRAPH from your jacket pocket. It's a picture of"
+    " your \nbrother, Chris. The last time he was seen or heard from. He's"
+    " grinning at the \ncamera and giving a cheery thumbs up. Behind him,"
+    " lurking like a shadow, lies \na dark building. You can just about make"
+    " out a sign that reads, 'Raven's Rest'.\n")
 
     while True:
         intro_a_choice = input("\nEnter 'i photograph' to inspect the"
@@ -558,11 +558,11 @@ def intro_c():
     """
     Part C of the games' intro, which continues to act as a tutorial.
     """
-    type_text("\nYou slide the photograph back into your pocket. A loud crunch"
-    " comes from the \nwheels as the carriage veers off the road and onto a"
-    " gravel track. Bouncing \nuncomfortably on the bench for a minute or so,"
-    " you're relieved when the horses \ncome to a halt. A thin grate on the"
-    " driver's side of the carriage slides open.\n"
+    type_text("\nYou slide the photograph back into your pocket. A loud"
+    " crunch comes from the \nwheels as the carriage veers off the road and"
+    " onto a gravel track. Bouncing \nuncomfortably on the bench for a minute"
+    " or so, you're relieved when the horses \ncome to a halt. A thin grate"
+    " on the driver's side of the carriage slides open.\n"
     "\n'Make it quick,' the carriage driver says. 'The horses are spooked.'\n"
     "\nYou swing open the door and step into the stormy night, tossing the"
     " driver's \nfare into a cup on the way out. You're immediately bitten by"
@@ -572,9 +572,9 @@ def intro_c():
     " weather.\n"
     "\n'You'll find out soon enough, I'm sure.' He called back. With that, he"
     " spurs \nhis horses and sets off. It seems to you as though it wasn't"
-    " just the horses \nthat were spooked. As the carriage draws away with its"
-    " lantern, so does your \nonly source of light. You're quickly plummeted"
-    " into pitch darkness.\n"
+    " just the horses \nthat were spooked. As the carriage draws away with"
+    " its lantern, so does your \nonly source of light. You're quickly"
+    " plummeted into pitch darkness.\n"
     "\nEnter 'pc' to open your Player Card and view your inventory.\n")
 
     while True:
@@ -592,8 +592,8 @@ def intro_c():
                 " entering 'l' to look around.\n")
             else:
                 type_text("\nYou pull your flashlight from your pocket and"
-                " switch it on. A beam of bright \nlight bursts forth, slicing"
-                " through the dark like a butcher's knife.\n"
+                " switch it on. A beam of bright \nlight bursts forth,"
+                " slicing through the dark like a butcher's knife.\n"
                 "\nEnter 'l' to look around.\n")
                 flashlight = True
 
@@ -634,16 +634,16 @@ def intro_d():
     " flashlight at the looming \nstructure, but the beam is almost"
     " immediately choked by the unrelenting \nweather, preventing you from"
     " seeing even above the first storey. You get an \nuneasy feeling as your"
-    " eyes follow the slate grey walls, receding into the \ndarkness above. As"
-    " though the hotel seems much larger than it really is.\n"
+    " eyes follow the slate grey walls, receding into the \ndarkness above."
+    " As though the hotel seems much larger than it really is.\n"
     "\nEventually you come across a long wooden porch that leads you to the"
     " hotel \nentrance. Double black DOORS set against white wooden slats. In"
     " the gloom of \nnight, it looks like the gaping maw of a beast. 'Raven's"
     " Rest', is scrawled in \nblack lettering above the DOORS.\n")
 
     while True:
-        intro_d_choice = input("\nEnter 'i doors' to open the DOORS and enter the"
-        " Raven's Rest.\n")
+        intro_d_choice = input("\nEnter 'i doors' to open the DOORS and enter"
+        " the Raven's Rest.\n")
 
         if intro_d_choice.lower() == "i doors":
             type_text("\nWith a shrill creak, the doors yawn open...\n")
@@ -697,9 +697,9 @@ def foyer():
     " Basement Access and \nLibrary'.\n" 
     "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
 
-    desk_inspect = ("\nYou approach the desk for a closer look. A COMPUTER and"
-    " a BELL sit on the desk. \nBehind the desk is a DOOR with a sign that"
-    " reads, 'Staff Only'.\n")
+    desk_inspect = ("\nYou approach the desk for a closer look. A COMPUTER"
+    " and a BELL sit on the desk. \nBehind the desk is a DOOR with a sign"
+    " that reads, 'Staff Only'.\n")
 
 
     def foyer_computer_use():
@@ -918,20 +918,22 @@ def staff_only_cupboard():
                 player_card["Attack Power"] = "10 - 20"
 
         elif staff_only_cupboard_choice.lower() == "i note":
-            type_text("\nYou pick up the note from the laundry basket and give"
-            " it a read.\n"
+            type_text("\nYou pick up the note from the laundry basket and"
+            " give it a read.\n"
             "\n'Barry,\n"
             "\nI don't know why the boss has so many black robes in his"
             " laundry. Nor do I \nreally care. Just deliver the basket to his"
             " room (the one by the library) and \nstop asking pointless"
             " questions. He's little on patience and big on temper, so \ndo"
-            " yourself a favour and don't pry where your nose ain't welcome.\n"
+            " yourself a favour and don't pry where your nose ain't"
+            " welcome.\n"
             "\nP.S.\n"
-            "\nThose robes you're so interested were covered in red wine by the"
-            " looks of it, so \ndon't skimp on the stain remover.'\n")
+            "\nThose robes you're so interested were covered in red wine by"
+            " the looks of it, so \ndon't skimp on the stain remover.'\n")
             if "Whateley's Room Location" not in player_card["Insight"]:
                     player_card["Insight"].append("Whateley's Room Location")
-                    type_text("\n'Whateley's Room Location' added to Insight.\n")
+                    type_text("\n'Whateley's Room Location' added to"
+                    " Insight.\n")
 
         elif staff_only_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
@@ -947,12 +949,12 @@ def east_wing():
     East Wing - Game Location.
     """
     east_wing_initial = ("\nYou step into the East Wing. Dark wooden doors"
-    " adorned with silver room numbers \nrun along both sides of the corridor."
-    " There is no trace of any patron or \nemployee. As you creep through the"
-    " silent passage, you notice a Supplies \nCupboard to the South ('s')." 
-    " Further East ('e') appears to be a Maintenance \nRoom. To the north"
-    " ('n') are a set of double doors, leading to the Bar. To the \nwest ('w')"
-    " is the Foyer.\n")
+    " adorned with silver room numbers \nrun along both sides of the"
+    " corridor. There is no trace of any patron or \nemployee. As you creep"
+    " through the silent passage, you notice a Supplies \nCupboard to the"
+    " South ('s'). Further East ('e') appears to be a Maintenance \nRoom."
+    " To the north ('n') are a set of double doors, leading to the Bar. To"
+    " the \nwest ('w') is the Foyer.\n")
 
     east_wing_return = ("\nYou step into the East Wing.\n")
 
@@ -993,10 +995,10 @@ def east_wing():
             type_text("You take a closer look at the newspaper. 'The Dunwich"
             " Daily'. The headline \nreads, 'BODY SNATCHER STRIKES AGAIN?"
             " FOURTH MISSING PERSON REPORTED THIS YEAR'. \nYou flick through"
-            " the paper, pausing when your eye is caught by a picture of \nthe"
-            " Raven's Rest. The caption reads 'One year since the Raven's Rest"
-            " came under \nnew management. New owner Mr Whateley says he has"
-            " 'big plans' for the hotel'.\n")
+            " the paper, pausing when your eye is caught by a picture of"
+            "\nthe Raven's Rest. The caption reads 'One year since the"
+            " Raven's Rest came under \nnew management. New owner Mr Whateley"
+            " says he has 'big plans' for the hotel'.\n")
             if "Raven's Rest Owner Name" not in player_card["Insight"]:
                 player_card["Insight"].append("Raven's Rest Owner Name")
                 type_text("\n'Raven's Rest Owner Name' added to Insight.\n")
@@ -1014,7 +1016,8 @@ def east_wing():
                 break
             else:
                 if "lockpick" in player_card["Skill"]:
-                    type_text("\nThis door is locked with a strange mechanism."
+                    type_text("\nThis door is locked with a strange"
+                    " mechanism."
                     " It looks like the key would need \nto be beak"
                     " shaped...\n")
                 else:
@@ -1042,7 +1045,8 @@ def west_wing():
         west_wing_initial = ("\nYou step into the West Wing. Dark wooden"
         " doors adorned with silver room numbers \nrun along both sides of"
         " the corridor. Immediately you notice a BODY heaped on \nthe floor"
-        " just a few metres from you. You rush over to them and drop \nto one knee.\n"
+        " just a few metres from you. You rush over to them and drop \nto"
+        " one knee.\n"
         "\n'Are you OK?' you whisper, placing your hands on their shoulders."
         " You get your \nanswer as you roll them over and see their face."
         " Jumping back and stifling a \nscream, you drop the BODY to the"
