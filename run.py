@@ -2831,15 +2831,33 @@ def cellar():
                 type_text("\nNow's not the time for looking around!\n")
 
             else:
-                type_text("\nWhateley's tremendous BODY lay sprawled across"
-                " the cold stone floor. Beyond \nhim, you see the terrible"
-                " altar. Just being near it fills you with a deep \nunease.\n"
-                "\nIn the corner of the Cellar appears to be a makeshift"
-                " living quarters. A roll \nmat and blanket, pail of water"
-                " and several discarded food packages. A NOTE and \npen lie"
-                " atop the mat.\n"
-                "\nBehind you, to the North ('n'), a staircase leads out of"
-                " the Cellar to the Garden.\n")
+
+                if whateley_status is True:
+                    type_text("\nWhateley's tremendous BODY lay sprawled across"
+                    " the cold stone floor. Beyond \nhim, you see the terrible"
+                    " altar. Just being near it fills you with a deep \nunease.\n"
+
+                    "\nIn the corner of the Cellar appears to be a makeshift"
+                    " living quarters. A roll \nmat and blanket, pail of water"
+                    " and several discarded food packages. A NOTE and \npen lie"
+                    " atop the mat.\n"
+
+                    "\nBehind you, to the North ('n'), a staircase leads out of"
+                    " the Cellar to the Garden.\n")
+
+                else:
+                    type_text("\nWhateley's tattered robes lay sprawled"
+                    " across the cold stone floor. Beyond \nthem, you see the"
+                    " terrible altar. Just being near it fills you with a"
+                    " deep \nunease.\n"
+
+                    "\nIn the corner of the Cellar appears to be a makeshift"
+                    " living quarters. A roll \nmat and blanket, pail of"
+                    " water and several discarded food packages. A NOTE and"
+                    "\npen lie atop the mat.\n"
+
+                    "\nBehind you, to the North ('n'), a staircase leads out"
+                    " of the Cellar to the Garden.\n")
 
         elif cellar_choice.lower() == "i body":
 
