@@ -371,7 +371,7 @@ def how_to_play():
     type_text("\n1. Mind your manners! Don't interrupt your GM. If you type"
     " whilst Poe is \ntyping, you might cause an error, preventing your next"
     " command from being \nrecognised. Let him finish before typing"
-    " anything.\n”
+    " anything.\n"
     "\n2. If you type something that isn't a command, you'll be prompted to"
     " try again.\n"
     "\n3. You can quit to the main menu at any time by using the 'exit'"
@@ -1039,10 +1039,10 @@ def west_wing():
     West Wing - Game Location.
     """
     if "Chris' Room Location" in player_card["Insight"]:
-        west_wing_initial = ("\nYou step into the West Wing. Dark wooden doors"
-        " adorned with silver room numbers \nrun along both sides of the"
-        " corridor. Immediately you notice a BODY heaped on \nthe floor just a"
-        " few metres from you. You rush over to them and drop \nto one knee.\n"
+        west_wing_initial = ("\nYou step into the West Wing. Dark wooden"
+        " doors adorned with silver room numbers \nrun along both sides of"
+        " the corridor. Immediately you notice a BODY heaped on \nthe floor"
+        " just a few metres from you. You rush over to them and drop \nto one knee.\n"
         "\n'Are you OK?' you whisper, placing your hands on their shoulders."
         " You get your \nanswer as you roll them over and see their face."
         " Jumping back and stifling a \nscream, you drop the BODY to the"
@@ -1059,7 +1059,8 @@ def west_wing():
         west_wing_initial = ("\nYou step into the West Wing. Dark wooden doors"
         " adorned with silver room numbers \nrun along both sides of the"
         " corridor. Immediately you notice a BODY heaped on \nthe floor just a"
-        " few metres from you. You rush over to them and drop \nto one knee.\n"
+        " few metres from you. You rush over to them and drop \nto one"
+        " knee.\n"
         "\n'Are you OK?' you whisper, placing your hands on their shoulders."
         " You get your \nanswer as you roll them over and see their face."
         " Jumping back and stifling a \nscream, you drop the BODY to the"
@@ -1077,7 +1078,7 @@ def west_wing():
 
     if "West Wing" in checked_rooms:
         type_text(west_wing_return)
-    
+
     else:
         type_text(west_wing_initial)
         checked_rooms.append("West Wing")
@@ -1097,9 +1098,9 @@ def west_wing():
                 type_text("\nSouth ('s') of you, you spot Chris' Room.\n")
 
         elif west_wing_choice.lower() == "i body":
-            type_text("\nYou take a closer look at the body. It's a man, maybe"
-            " in his mid-thirties. \nLooks like he was an employee here. His"
-            " name tag reads, 'Barry'.\n")
+            type_text("\nYou take a closer look at the body. It's a man,"
+            " maybe in his mid-thirties. \nLooks like he was an employee"
+            " here. His name tag reads, 'Barry'.\n")
 
         elif west_wing_choice.lower() == "n":
             type_text("\nYou pass through the double doors to the North, into"
@@ -1116,8 +1117,9 @@ def west_wing():
             if "Chris' Room Location" in player_card["Insight"]:
                 if "Chris' Room" not in checked_rooms:
                     type_text("\nAs you approach Chris' Room you notice that"
-                    " the door is slightly ajar, its \nwooden frame spintered."
-                    " Someone must've forced their way inside...\n")
+                    " the door is slightly ajar, its \nwooden frame"
+                    " spintered. Someone must've forced their way"
+                    " inside...\n")
                     chris_room()
                     break
                 else:
@@ -1143,7 +1145,7 @@ def west_wing():
             elif "RW Key" in looted_items and power == False:
                 type_text("\nYou use the Raven's Wing Key to unlock the"
                 " service lift, but it has no power...\n")
-        
+
         elif west_wing_choice.lower() == "help":
             print(help)
 
@@ -1188,20 +1190,20 @@ def supplies_cupboard():
             else: 
                 type_text("\nA FIRST AID KIT sits on the shelf. The East Wing"
                 " is to your North ('n').\n")
-        
+    
         elif supplies_cupboard_choice.lower() == "help":
             print(help)
-        
+
         elif supplies_cupboard_choice.lower() == "pc":
             print(player_card)
-        
+
         elif supplies_cupboard_choice.lower() == "exit":
             main_menu()
             break
-        
+
         elif supplies_cupboard_choice.lower() == "heal":
             heal()
-        
+
         elif supplies_cupboard_choice.lower() == "i first aid kit":
             if "First Aid Kit (SC)" in looted_items:
                 type_text("\nYou've already taken the First Aid Kit.\n")
@@ -1212,30 +1214,31 @@ def supplies_cupboard():
                 " hidden note is knocked to the floor. It reads:\n"
                 "\nJill,\n"
                 "\nThings here have been getting weirder and weirder lately."
-                " I was working a shift \nthe other night, and when I went for"
-                " a smoke in the Garden, I could've sworn I \nheard chanting"
-                " coming from the Cellar. And those freaks with the black"
-                " robes \n- I still get shivers when I remember seeing them"
-                " come up from the basement. \nThe screams I heard coming from"
-                " down there... I'm still sure it's got something \nto do with"
-                " all these missing people. And I'm not waiting around to be"
-                " the next \nface on a 'Missing' poster. Apparently Whateley's"
-                " got a hidden safe somewhere \nin his room - I'm breaking in"
-                " there tonight, clearing out anything worth a damn \nand"
-                " getting the hell out of this town. I'll be gone by the time"
-                " you read this, \nbut if you know what's good for you, you'll"
-                " follow my lead.\n"
-                "\nSerious, get out before it's too late.\n"
+                " I was working a shift \nthe other night, and when I went"
+                " for a smoke in the Garden, I could've sworn I \nheard"
+                " chanting coming from the Cellar. And those freaks with the"
+                " black robes \n- I still get shivers when I remember seeing"
+                " them come up from the basement. \nThe screams I heard"
+                " coming from down there... I'm still sure it's got something"
+                "\nto do with all these missing people. And I'm not waiting"
+                " around to be the next \nface on a 'Missing' poster."
+                " Apparently Whateley's got a hidden safe somewhere \nin his"
+                " room - I'm breaking in there tonight, clearing out anything"
+                " worth a damn \nand getting the hell out of this town. I'll"
+                " be gone by the time you read this, \nbut if you know what's"
+                " good for you, you'll follow my lead.\n"
+                "\nSeriously, get out before it's too late.\n"
                 "\n- Jack\n")
                 if "Hidden Safe Location" not in player_card["Insight"]:
                     player_card["Insight"].append("Hidden Safe Location")
                     type_text("\n'Hidden Safe Location' added to Insight.\n")
-        
+
         elif supplies_cupboard_choice.lower() == "n":
-            type_text("\nYou exit to the north, returning to the East Wing.\n")
+            type_text("\nYou exit to the north, returning to the East"
+            " Wing.\n")
             east_wing()
             return
-        
+
         else:
             type_text(generic_error)
 
