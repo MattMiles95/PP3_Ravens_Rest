@@ -34,7 +34,7 @@ be used to turn on the power from the foyer at any time. This conflicts
 with features such as the first time you enter the bar, where the game
 presumes the power is still off due to it being narratively impossible
 to have turned the power on at that point using either of the normal
-player characters. 
+player characters.
 """
 god_mode = {
     "Name": "Super Shaggy",
@@ -43,9 +43,9 @@ god_mode = {
     "Weapon": "Super Punch",
     "Skill": ["hack", "lockpick"],
     "Inventory": ["flashlight", "Cipher", "Necronomicon"],
-    "Insight": ["Raven's Rest Owner Name", 
-    "Whateley's Room Location", 
-    "Chris' Room Location", 
+    "Insight": ["Raven's Rest Owner Name",
+    "Whateley's Room Location",
+    "Chris' Room Location",
     "Hidden Safe Location",
     "Spell Reversal"]
 }
@@ -245,7 +245,7 @@ def atk():
             else:
                 type_text(f"\nYou have {player_card["HP"]} remaining HP.\n"
                 "\nAttack again or flee?\n")
-    
+
     return
 
 
@@ -271,7 +271,7 @@ def game_over():
     " beaten, you struggle \nto focus your vision.\n"
 
     "\n'I'm sorry, Chris...', you mutter, before collapsing on the floor.\n")
-    print(figlet_format("GAME OVER\n", justify = "center"))
+    print(figlet_format("GAME OVER\n", justify="center"))
 
     while True:
 
@@ -299,7 +299,7 @@ def type_text(text):
     Prints text one character at a time to create a 'typing' animation.
     """
     for char in text:
-        print(char, end = '', flush = True)
+        print(char, end='', flush=True)
         time.sleep(random.uniform(0.001, 0.05))
 
 
@@ -325,19 +325,19 @@ def main_menu():
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠙⠛⠋⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
     """
     title = r"""
-    ______  ___  _   _ _____ _   _ _ _____ 
+    ______  ___  _   _ _____ _   _ _ _____
     | ___ \/ _ \| | | |  ___| \ | ( )  ___|
-    | |_/ / /_\ \ | | | |__ |  \| |/\ `--. 
+    | |_/ / /_\ \ | | | |__ |  \| |/\ `--.
     |    /|  _  | | | |  __|| . ` |  `--. \
     | |\ \| | | \ \_/ / |___| |\  | /\__/ /
-    \_| \_\_| |_/\___/\____/\_| \_/ \____/ 
+    \_| \_\_| |_/\___/\____/\_| \_/ \____/
 
-    ______ _____ _____ _____ 
+    ______ _____ _____ _____
     | ___ \  ___/  ___|_   _|
-    | |_/ / |__ \ `--.  | |  
-    |    /|  __| `--. \ | |  
-    | |\ \| |___/\__/ / | |  
-    \_| \_\____/\____/  \_/  
+    | |_/ / |__ \ `--.  | |
+    |    /|  __| `--. \ | |
+    | |\ \| |___/\__/ / | |
+    \_| \_\____/\____/  \_/
 
     """
     spacer = ' ' * 1
@@ -348,8 +348,8 @@ def main_menu():
     type_text("\nWelcome to Raven's Rest, a text-based adventure game!"
     "\nI'm Poe, your digital Game Master (or 'GM' for short)."
     "\nType out what you want to do, and I'll try my best to make it happen!"
-    "\nIf this is your first time playing, please be sure to read the rules before"
-    "\nyou start.\n"
+    "\nIf this is your first time playing, please be sure to read the rules"
+    " before \nyou start.\n"
 
     "\nTo read how to play, enter 'h2p'.\n"
 
@@ -368,7 +368,7 @@ def main_menu():
             break
 
         else:
-            type_text("\nI don't know that one..." 
+            type_text("\nI don't know that one..."
             "Enter 'play' to start the game or 'h2p' to read how to play.\n")
 
 
@@ -384,7 +384,7 @@ def how_to_play():
 
     "\nHere are the rules:\n")
 
-    print(figlet_format("How to Play\n", justify = "center"))
+    print(figlet_format("How to Play\n", justify="center"))
 
     type_text("\n1. Mind your manners! Don't interrupt your GM. If you type"
     " whilst Poe is \ntyping, you might cause an error, preventing your next"
@@ -447,14 +447,14 @@ def character_selection():
     Section where the Player must select their Player Character.
     """
     character_selection_text = ("\nChoose your character:\n"
-    "\nLee Kennedy" 
-    "\nAge: 36" 
-    "\nOccupation: Locksmith" 
+    "\nLee Kennedy"
+    "\nAge: 36"
+    "\nOccupation: Locksmith"
     "\nHobby: Bird Watching\n"
 
-    "\nClaire Greenfield" 
-    "\nAge: 29" 
-    "\nOccupation: Programmer" 
+    "\nClaire Greenfield"
+    "\nAge: 29"
+    "\nOccupation: Programmer"
     "\nHobby: Kickboxing\n")
     type_text(character_selection_text)
 
@@ -628,7 +628,7 @@ def intro_c():
 
         elif intro_c_choice.lower() == "i flashlight":
 
-            if flashlight == True:
+            if flashlight is True:
                 type_text("\nYou've already swithced your flashlight on. Try"
                 " entering 'l' to look around.\n")
 
@@ -641,7 +641,7 @@ def intro_c():
 
         elif intro_c_choice.lower() == "l":
 
-            if flashlight == True:
+            if flashlight is True:
                 type_text("\nYou're stood in a small, wooded enclosure, just"
                 " off the gravel track. A path \nthrough the trees to the"
                 " North appears to be your only choice forward.\n"
@@ -651,7 +651,7 @@ def intro_c():
 
         elif intro_c_choice.lower() == "n":
 
-            if flashlight == True:
+            if flashlight is True:
                 intro_d()
                 break
 
@@ -666,7 +666,7 @@ def intro_c():
             break
 
         else:
-            if flashlight == True:
+            if flashlight is True:
                 type_text("\nYou can't do that now.\n")
 
 
@@ -712,7 +712,7 @@ def intro_d():
             break
 
         else:
-            type_text("\nYou can't do that now.\n")  
+            type_text("\nYou can't do that now.\n")
 
 
 def foyer():
@@ -743,7 +743,7 @@ def foyer():
     "\nA door to the East ('e') with a sign that reads, 'East Wing,"
     " Maintenance and \nBar'.\n"
     "\nA door to the West ('w') with a sign that reads, 'West Wing,"
-    " Basement Access and \nLibrary'.\n" 
+    " Basement Access and \nLibrary'.\n"
     "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
 
     desk_inspect = ("\nYou approach the desk for a closer look. A COMPUTER"
@@ -752,7 +752,7 @@ def foyer():
 
 
     def foyer_computer_use():
-        if power == False:
+        if power is False:
             type_text("\nThe power is still out. Maybe you can find a way to"
             " turn it back on...\n")
 
@@ -886,7 +886,7 @@ def foyer_computer():
             " please \nremember:\n"
 
             "\nThe Raven's Beak Key opens the Maintenance Room.\n"
-    
+
             "\nThe Raven's Wing Key opens the service lift.\n"
 
             "\nThe Raven's Foot key opens the Cellar.\n"
@@ -938,20 +938,20 @@ def staff_only_cupboard():
         type_text(staff_only_cupboard_initial)
         checked_rooms.append("Staff Only Cupboard")
 
-    while True: 
+    while True:
         staff_only_cupboard_choice = input("\nWhat do you do? (If you're"
         " stuck, try using the 'l' command to look around.)\n")
 
         if staff_only_cupboard_choice.lower() == "l":
             if "Bloody Knife" in looted_items:
-                type_text("\nA dead BODY lies slumped on the floor.\n" 
+                type_text("\nA dead BODY lies slumped on the floor.\n"
 
                 "\nA washing machine sits in the corner with a basket of"
                 " laundry on top. A small NOTE \nlies amongst the clothes.\n"
 
                 "\nThe foyer is to your South ('s').\n")
 
-            else: 
+            else:
                 type_text("\nYou take a moment to collect yourself, then look"
                 " around the cupboard.\n"
 
@@ -1020,9 +1020,9 @@ def staff_only_cupboard():
             " the looks of it, so \ndon't skimp on the stain remover.'\n")
 
             if "Whateley's Room Location" not in player_card["Insight"]:
-                    player_card["Insight"].append("Whateley's Room Location")
-                    type_text("\n'Whateley's Room Location' added to"
-                    " Insight.\n")
+                player_card["Insight"].append("Whateley's Room Location")
+                type_text("\n'Whateley's Room Location' added to"
+                " Insight.\n")
 
         elif staff_only_cupboard_choice.lower() == "s":
             type_text("\nYou exit to the south, returning to the Foyer.\n")
@@ -1250,7 +1250,7 @@ def west_wing():
 
         elif west_wing_choice.lower() == "w":
 
-            if "RW Key" in looted_items and power == True:
+            if "RW Key" in looted_items and power is True:
                 type_text("\nYou use the Raven's Wing Key to unlock the"
                 " service lift. The metal mesh doors \nclash and clang as you"
                 " pull them open and step inside.\n")
@@ -1267,7 +1267,7 @@ def west_wing():
                 else:
                     type_text("This door is locked.")
 
-            elif "RW Key" in looted_items and power == False:
+            elif "RW Key" in looted_items and power is False:
                 type_text("\nYou use the Raven's Wing Key to unlock the"
                 " service lift, but it has no power...\n")
 
@@ -1314,11 +1314,11 @@ def supplies_cupboard():
                 type_text("\nThere's nothing else of use here. The East Wing"
                 " is to your North ('n').\n")
 
-            else: 
+            else:
 
                 type_text("\nA FIRST AID KIT sits on the shelf. The East Wing"
                 " is to your North ('n').\n")
-    
+
         elif supplies_cupboard_choice.lower() == "help":
             print(help)
 
@@ -1414,7 +1414,7 @@ def maintenance_room():
 
         if maintenance_room_choice.lower() == "l":
 
-            if power == True:
+            if power is True:
                 type_text("\nThe grounds keeper's BODY lies in the centre of" 
                 " the room. Behind you, to the \nwest, is the East Wing. The"
                 " generator across the room now hums with power.\n")
@@ -1439,7 +1439,7 @@ def maintenance_room():
             heal()
 
         elif maintenance_room_choice.lower() == "i circuit breaker":
-            if power == True:
+            if power is True:
                 type_text("\nThe generator seems to be running smoothly.\n")
 
             else: 
@@ -1783,10 +1783,10 @@ def bar():
 
         if bar_choice == "i flashlight":
 
-            if flashlight == True:
+            if flashlight is True:
                 type_text("\nYour flashlight is already on!\n")
 
-            elif power == False and flashlight == False:
+            elif power is False and flashlight is False:
 
                 flashlight = True
 
@@ -1816,10 +1816,10 @@ def bar():
 
         elif bar_choice.lower() == "atk":
 
-            if flashlight == True and enemy not in slain_enemies:
+            if flashlight is True and enemy not in slain_enemies:
                 atk()
 
-            elif flashlight == False and power == False:
+            elif flashlight is False and power is False:
                 type_text("\n'I can't see a thing!'\n")
 
             else:
@@ -1827,7 +1827,7 @@ def bar():
 
         elif bar_choice.lower() == "flee":
 
-            if flashlight == True and enemy not in slain_enemies:
+            if flashlight is True and enemy not in slain_enemies:
                 type_text("\nIn a blind panic, you sprint for the nearest"
                 " door.\n")
                 flee()
@@ -1836,7 +1836,7 @@ def bar():
             elif "Cultist (Bar)" in slain_enemies:
                 type_text("\nThere's nothing to run from right now.\n")
 
-            elif flashlight == False and power == False:
+            elif flashlight is False and power is False:
                 type_text("\n'I can't see a thing!'\n")
 
             else:
@@ -1844,19 +1844,22 @@ def bar():
 
         elif bar_choice.lower() == "l":
 
-            if flashlight == False and power == False:
+            if flashlight is False and power is False:
                 type_text("\n'I can't see a thing!'\n")
 
-            elif flashlight == True and "Cultist (Bar)" not in slain_enemies:
+            elif flashlight is True and "Cultist (Bar)" not in slain_enemies:
                 type_text("\nNow's not the time for looking around!\n")
 
             elif "Cultist (Bar)" in slain_enemies:
                 type_text("\nThe BODY of the mutilated man lies still on the"
-                " floor, a puddle of crimson \ngrowing beneath him.\n" 
+                " floor, a puddle of crimson \ngrowing beneath him.\n"
+
                 "\nTo the West, you see a door that leads outside. The sign"
                 "\nnext to it reads, 'Garden area this way'.\n"
+
                 "\nAt the far end of the room is a rather impressive BAR,"
                 " with plenty of \nexpensive looking bottles on display.\n"
+
                 "\nThe door to East Wing is to your South.\n")
 
             else:
@@ -1864,7 +1867,7 @@ def bar():
 
         elif bar_choice.lower() == "i bar":
 
-            if flashlight == False and power == False:
+            if flashlight is False and power is False:
                 type_text("\n'I can't see a thing!'\n")
 
             else:
@@ -1874,7 +1877,7 @@ def bar():
 
         elif bar_choice.lower() == "i ledger":
 
-            if flashlight == False and power == False:
+            if flashlight is False and power is False:
                 type_text("\n'I can't see a thing!'\n")
 
             else:
@@ -1887,14 +1890,16 @@ def bar():
 
         elif bar_choice.lower() == "i body":
 
-            if "Cultist (Bar)" in slain_enemies and "Raven's Beak Key" not in player_card["Inventory"]:
+            if "Cultist (Bar)" in slain_enemies and \
+            "Raven's Beak Key" not in player_card["Inventory"]:
                 type_text("\nYou crouch down and rummage through the dead"
                 " man's robes. You find a strange, beak shaped key in his"
                 " pocket.\n"
                 "\n'Raven's Beak Key' added to Inventory.\n")
                 player_card["Inventory"].append("Raven's Beak Key")
 
-            elif "Cultist (Bar)" in slain_enemies and "Raven's Beak Key" in player_card["Inventory"]:
+            elif "Cultist (Bar)" in slain_enemies and \
+            "Raven's Beak Key" in player_card["Inventory"]:
                 type_text("\nYou've already looted this body for anything"
                 " usesful.\n")
 
@@ -1903,10 +1908,10 @@ def bar():
 
         elif bar_choice.lower() == "s":
 
-            if flashlight == False and power == False:
+            if flashlight is False and power is False:
                 type_text("\n'I can't see where I'm going!\n")
 
-            elif flashlight == True and "Cultist (Bar)" not in slain_enemies:
+            elif flashlight is True and "Cultist (Bar)" not in slain_enemies:
                 type_text("\nIn your panic, you flee in a random direction.\n")
                 flee()
                 break
@@ -1918,10 +1923,10 @@ def bar():
 
         elif bar_choice.lower() == "w":
 
-            if flashlight == False and power == False:
+            if flashlight is False and power is False:
                 type_text("\n'I can't see where I'm going!\n")
 
-            elif flashlight == True and "Cultist (Bar)" not in slain_enemies:
+            elif flashlight is True and "Cultist (Bar)" not in slain_enemies:
                 type_text("\nIn your panic, you flee in a random direction.\n")
                 flee()
                 break
@@ -1954,7 +1959,7 @@ def garden():
     """
     global flashlight
 
-    if power == True:
+    if power is True:
 
         flashlight = True
 
@@ -2050,7 +2055,7 @@ def garden():
 
         elif garden_choice.lower() == "w":
 
-            if power == True:
+            if power is True:
                 type_text("\nYou switch off your flashlight before heading"
                 " into the Library.\n")
                 flashlight = False
@@ -2063,7 +2068,7 @@ def garden():
 
         elif garden_choice.lower() == "e":
 
-            if power == True:
+            if power is True:
                 type_text("\nYou switch off your flashlight before heading"
                 " into the Bar.\n")
                 flashlight = False
@@ -2221,7 +2226,7 @@ def chris_room():
 
             else:
 
-                if power == False:
+                if power is False:
                     type_text("\nThe power is still out. Maybe you can find a"
                     " way to turn it back on...\n")
 
@@ -2422,17 +2427,18 @@ def chris_computer():
                 " cellar and finding something tangible I can take to the"
                 "\npolice. I may not have any proof, but Whately and his"
                 " lunatic cult are behind \nthose disappearances, I'm sure of"
-                " it. That book was pure evil. I got Jack to \nstick it in the"
-                " library so it looks like it just got tidied away by accident,"
-                " \nbut Whateley definitely suspects me. For now, I've locked"
-                " myself in my room. \nThere's a gun in the safe should things"
-                " get desperate. Just one more night, \nthen I'm getting out of"
-                " this nightmare town and never looking back.\n")
+                " it. That book was pure evil. I got Jack to \nstick it in"
+                " the library so it looks like it just got tidied away by"
+                " accident, \nbut Whateley definitely suspects me. For now,"
+                " I've locked myself in my room. \nThere's a gun in the safe"
+                " should things get desperate. Just one more night, \nthen"
+                " I'm getting out of this nightmare town and never looking"
+                " back.\n")
 
             elif read_journal.lower() == "back":
                 chris_computer()
 
-            else: 
+            else:
                 type_text("\nAn Error Message appears on screen.\n")
 
         elif chris_computer_choice.lower() == "back":
@@ -2736,7 +2742,7 @@ def cellar():
     "\nHe rises as he hears your footsteps approach, his massive frame"
     " blocking view of the altar.\n")
 
-    if whateley_status == True:
+    if whateley_status is True:
         cellar_safe = ("\nYou descend the steps into the Cellar. Whateley's"
         " tremendous BODY lay sprawled across the cold stone floor.\n"
 
@@ -2835,7 +2841,7 @@ def cellar():
 
             if "Whateley" in slain_enemies:
 
-                if whateley_status == True:
+                if whateley_status is True:
                     type_text("\nYou examine Whateley's grotesque physique.\n"
 
                     "\nHis skin has a sickly, yellowish pallor, stretched"
