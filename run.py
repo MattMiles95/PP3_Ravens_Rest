@@ -298,10 +298,9 @@ def type_text(text):
     """
     Prints text one character at a time to create a 'typing' animation.
     """
-    #for char in text:
-    #    print(char, end='', flush=True)
-    #    time.sleep(random.uniform(0.001, 0.05))
-    print(text)
+    for char in text:
+        print(char, end='', flush=True)
+        time.sleep(random.uniform(0.001, 0.05))
 
 def main_menu():
     """
