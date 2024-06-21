@@ -253,7 +253,7 @@ def trapped():
     player_card['HP'] = player_card['HP'] - enemy['Attack Power']
     type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
     f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
-    
+
     if player_card['HP'] <= 0:
         game_over()
 
@@ -271,10 +271,14 @@ def reset_game_values():
     global checked_rooms
     global slain_enemies
     global looted_items
+    global power
+    global flashlight
 
     checked_rooms = []
     slain_enemies = []
     looted_items = []
+    power = False
+    flashlight = False
     return
 
 
@@ -3020,14 +3024,14 @@ def basement_b():
 
     while True:
 
-        basement_b_choice = input("\nDo you leave ('l') or open the door"
-        " ('o')?\n")
+        basement_b_choice = input("\nDo you leave ('leave') or open the door"
+        " ('open')?\n")
 
-        if basement_b_choice.lower() == "l":
+        if basement_b_choice.lower() == "leave":
             ending_spare()
             break
 
-        elif basement_b_choice.lower() == "o":
+        elif basement_b_choice.lower() == "open":
             basement_c()
             break
 
