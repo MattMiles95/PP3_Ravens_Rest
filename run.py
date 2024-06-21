@@ -5,7 +5,7 @@ import random
 # Player Charater Option 1
 lee_kennedy = {
     "Name": "Lee",
-    "HP": 120,
+    "HP": 100,
     "Attack Power": random.randint(5, 10),
     "Weapon": "Unarmed",
     "Skill": ["lockpick"],
@@ -16,7 +16,7 @@ lee_kennedy = {
 # Player Charater Option 2
 claire_greenfield = {
     "Name": "Claire",
-    "HP": 150,
+    "HP": 120,
     "Attack Power": random.randint(15, 20),
     "Weapon": "Unarmed",
     "Skill": ["hack"],
@@ -162,13 +162,13 @@ def fa_kit_loot():
 
 def heal():
     """
-    Uses a First Aid Kit to heal 40 HP
+    Uses a First Aid Kit to heal 50 HP
     """
     if "First Aid Kit" in player_card['Inventory']:
-        player_card['HP'] += 40
+        player_card['HP'] += 50
         player_card['Inventory'].remove("First Aid Kit")
 
-        type_text("\nYou use a First Aid Kit and heal 40 HP.\n"
+        type_text("\nYou use a First Aid Kit and heal 50 HP.\n"
 
         f"\nYour health is now {player_card['HP']}.\n")
         return
@@ -1015,8 +1015,8 @@ def staff_only_cupboard():
 
             "\nP.S.\n"
 
-            "\nThose robes you're so interested were covered in red wine by"
-            " the looks of it, so \ndon't skimp on the stain remover.'\n")
+            "\nThose robes you're so interested in were covered in red wine"
+            " by the looks of it, so \ndon't skimp on the stain remover.'\n")
 
             if "Whateley's Room Location" not in player_card['Insight']:
                 player_card['Insight'].append("Whateley's Room Location")
@@ -1815,18 +1815,18 @@ def bar():
 
         elif bar_choice.lower() == "atk":
 
-            if flashlight is True and enemy not in slain_enemies:
+            if flashlight is True:
                 atk()
 
-            elif flashlight is False and power is False:
-                type_text("\n'I can't see a thing!'\n")
-
             else:
-                type_text(generic_error)
+                type_text("\n'I can't see a thing!'\n")
 
         elif bar_choice.lower() == "flee":
 
-            if flashlight is True and enemy not in slain_enemies:
+            if flashlight is False and "Cultist (Bar)" not in slain_enemies:
+                type_text("\n'I can't see a thing!'\n")
+            
+            elif flashlight is True and enemy not in slain_enemies:
                 type_text("\nIn a blind panic, you sprint for the nearest"
                 " door.\n")
                 flee()
@@ -1834,9 +1834,6 @@ def bar():
 
             elif "Cultist (Bar)" in slain_enemies:
                 type_text("\nThere's nothing to run from right now.\n")
-
-            elif flashlight is False and power is False:
-                type_text("\n'I can't see a thing!'\n")
 
             else:
                 type_text(generic_error)
@@ -1892,10 +1889,13 @@ def bar():
             if "Cultist (Bar)" in slain_enemies and \
             "Raven's Beak Key" not in player_card['Inventory']:
                 type_text("\nYou crouch down and rummage through the dead"
-                " man's robes. You find a strange, beak shaped key in his"
+                " man's robes. You find a strange, \nbeak shaped key in his"
                 " pocket.\n"
-                "\n'Raven's Beak Key' added to Inventory.\n")
+                "\n'Raven's Beak Key' added to Inventory.\n"
+                "\nYou also find some first aid supplies.\n")
                 player_card['Inventory'].append("Raven's Beak Key")
+                fa_kit_loot()
+                looted_items.append("First Aid Kit (Bar)")
 
             elif "Cultist (Bar)" in slain_enemies and \
             "Raven's Beak Key" in player_card['Inventory']:
@@ -2653,7 +2653,7 @@ def whateleys_room():
                     "\nTracing your fingers along the edge, you realise one"
                     " side is ever so slightly \nraised. You manage to get"
                     " your fingernails under the lip of the edge and pull."
-                    "\nOne sie of the large portrait swings away from the"
+                    "\nOne side of the large portrait swings away from the"
                     " wall; the other revealing \nitself to be fixed in"
                     " place with two small hinges.\n"
 
