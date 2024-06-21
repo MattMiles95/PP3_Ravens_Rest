@@ -1028,7 +1028,7 @@ def staff_only_cupboard():
             "\nP.S.\n"
 
             "\nThose robes you're so interested in were covered in red wine"
-            " by the looks of it, so \ndon't skimp on the stain remover.'\n")
+            " by the looks of it, \nso don't skimp on the stain remover.'\n")
 
             if "Whateley's Room Location" not in player_card['Insight']:
                 player_card['Insight'].append("Whateley's Room Location")
