@@ -690,7 +690,7 @@ def intro_d():
     Part D of the games' intro, which continues to act as a tutorial.
     """
     type_text("\nNearly completely hidden amongst the darkness, the black"
-    " building seems to \nappear almost out of nowhere. You shine your"
+    " building seems to \nappear out of nowhere. You shine your"
     " flashlight at the looming \nstructure, but the beam is almost"
     " immediately choked by the unrelenting \nweather, preventing you from"
     " seeing even above the first storey. You get an \nuneasy feeling as your"
@@ -753,18 +753,6 @@ def foyer():
         type_text(foyer_text_initial)
         checked_rooms.append("Foyer")
 
-    foyer_look = ("\nYou look around the Foyer.\n"
-    "\nYou see the reception DESK ahead of you.\n"
-    "\nA door to the East ('e') with a sign that reads, 'East Wing,"
-    " Maintenance and \nBar'.\n"
-    "\nA door to the West ('w') with a sign that reads, 'West Wing,"
-    " Basement Access and \nLibrary'.\n"
-    "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
-
-    desk_inspect = ("\nYou approach the desk for a closer look. A COMPUTER"
-    " and a BELL sit on the desk. \nBehind the desk is a DOOR with a sign"
-    " that reads, 'Staff Only'.\n")
-
 
     def foyer_computer_use():
         if power is False:
@@ -794,7 +782,13 @@ def foyer():
         " the 'l' command to look around.)\n")
 
         if foyer_choice.lower() == "l":
-            type_text(foyer_look)
+            type_text("\nYou look around the Foyer.\n"
+            "\nYou see the reception DESK ahead of you.\n"
+            "\nA door to the East ('e') with a sign that reads, 'East Wing,"
+            " Maintenance and \nBar'.\n"
+            "\nA door to the West ('w') with a sign that reads, 'West Wing,"
+            " Basement Access \nand Library'.\n"
+            "\nBehind you, to the South ('s'), is the Hotel entrance.\n")
 
         elif foyer_choice.lower() == "help":
             print(help)
@@ -823,7 +817,9 @@ def foyer():
             type_text("\nI'm not leaving until I've found Chris.\n")
 
         elif foyer_choice.lower() == "i desk":
-            type_text(desk_inspect)
+            type_text("\nYou approach the desk for a closer look. A COMPUTER"
+            " and a BELL sit on the desk. \nBehind the desk is a DOOR with a"
+            " sign that reads, 'Staff Only'.\n")
 
         elif foyer_choice.lower() == "i computer":
             foyer_computer_use()
