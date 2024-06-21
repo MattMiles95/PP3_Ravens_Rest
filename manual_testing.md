@@ -26,6 +26,8 @@ flee() - Library variant | Randomly calls west_wing() or garden() | Pass
  flee() - Bar variant | Randomly calls east_wing() or garden() | Pass
  garden() | Features multiple choices: 'l', 'help', 'pc', 'exit', 'heal', 'e', 's', 'w', 'i flower beds', 'i pitchfork', 'y', 'n'. Incorrect input by Player generates a generic error message with useful hints. | All if/elif statement options perform as expected
  chris_room() | Features multiple choices: 'l', 'help', 'pc', 'exit', 'heal', 'n', 'i body', 'i notes', 'i computer', 'i bathroom', 'i safe', 'atk', 'flee'. Incorrect input by Player generates a generic error message with useful hints. | All if/elif statement options perform as expected
+ flee() - Chris' Room variant | Randomly calls west_wing() or trapped() | Pass
+ trapped()
 
 ## Bugs and Fixes
 

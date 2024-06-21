@@ -249,6 +249,18 @@ def atk():
     return
 
 
+def trapped():
+    player_card['HP'] = player_card['HP'] - enemy['Attack Power']
+    type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
+    f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
+    
+    if player_card['HP'] <= 0:
+        game_over()
+
+    else:
+        type_text(f"You have {player_card['HP']} remaining HP."
+            " Attack or attempt to flee?\n")
+
 # End Game Functions
 
 
@@ -2164,18 +2176,6 @@ def chris_room():
         type_text(chris_room_initial)
 
 
-    def trapped():
-        player_card['HP'] = player_card['HP'] - enemy['Attack Power']
-        type_text(f"You attempt to flee, but the {enemy['Name']} blocks the"
-        f" door and slashes at you \nfor {enemy['Attack Power']} damage.\n")
-        if player_card['HP'] <= 0:
-            game_over()
-
-        else:
-            type_text(f"You have {player_card['HP']} remaining HP."
-            " Attack or attempt to flee?\n")
-
-
     def flee():
         possible_outcomes = [west_wing, trapped]
         random_outcome = random.choice(possible_outcomes)
@@ -2784,18 +2784,6 @@ def cellar():
         enemy.update(mr_whateley)
         checked_rooms.append("Cellar")
         type_text(cellar_initial)
-    
-
-    def trapped():
-        player_card['HP'] = player_card['HP'] - enemy['Attack Power']
-        type_text(f"You attempt to flee, but {enemy['Name']} blocks the way"
-        f" out and strikes you \nfor {enemy['Attack Power']} damage.\n")
-        if player_card['HP'] <= 0:
-            game_over()
-
-        else:
-            type_text(f"You have {player_card['HP']} remaining HP."
-            " Attack or attempt to flee?\n")
 
 
     def flee():
